@@ -3,14 +3,16 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from 'react-redux';
 import ItemDetails from './screens/ItemDetails';
 import { store } from "./redux/store";
+import Test from './screens/test/Test';
 
 export default function App() {
   return (
-    <Provider store={store}>
+     <Provider store={store}>
       <ItemDetails/>
-      <StatusBar style="auto" />
+      {/* <Test/> */}
+      <StatusBar style="auto" animated/>
     </Provider>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

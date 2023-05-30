@@ -27,7 +27,7 @@ const ItemDetailsStates = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setItems, setData, toggleWishlisted, setSeeExtra } =
+export const { setItems, setData, toggleWishlisted, setSeeExtra} =
   ItemDetailsStates.actions;
 
 export default ItemDetailsStates.reducer;
