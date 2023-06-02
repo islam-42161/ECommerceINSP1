@@ -1,9 +1,9 @@
 import React from 'react'
 import { TouchableOpacity, View, Text, ScrollView } from 'react-native'
-import { useAnimatedRef, useDerivedValue, useSharedValue, scrollTo } from 'react-native-reanimated'
+import Animated, { useAnimatedRef, useDerivedValue, useSharedValue, scrollTo } from 'react-native-reanimated'
 
 const ITEM_COUNT = 10
-const ITEM_SIZE = 100
+const ITEM_SIZE = 300
 const ITEM_MARGIN = 10
 
 export default Test = () => {
@@ -11,7 +11,7 @@ export default Test = () => {
   const scroll = useSharedValue(0)
 
   useDerivedValue(() => {
-    scrollTo(aref, 0, scroll.value * (ITEM_SIZE + 2 * ITEM_MARGIN), true)
+    scrollTo(aref, scroll.value * (ITEM_SIZE + 2 * ITEM_MARGIN), 0, true)
   })
 
   const items = Array.from(Array(ITEM_COUNT).keys())
@@ -34,7 +34,7 @@ export default Test = () => {
     <View style={{ flex: 1, flexDirection: 'column' }}>
       <Incrementor increment={1} />
       <View style={{ width: '100%', height: (ITEM_SIZE + 2 * ITEM_MARGIN) * 2 }}>
-        <ScrollView ref={aref} style={{ backgroundColor: 'orange' }}>
+        <Animated.ScrollView horizontal ref={aref} style={{ backgroundColor: 'orange' }}>
           {items.map((_, i) => (
             <View
               key={i}
@@ -49,7 +49,7 @@ export default Test = () => {
               <Text style={{ textAlign: 'center' }}>{i}</Text>
             </View>
           ))}
-        </ScrollView>
+        </Animated.ScrollView>
       </View>
 
       <Incrementor increment={-1} />

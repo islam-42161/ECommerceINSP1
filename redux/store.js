@@ -4,7 +4,7 @@ import ItemDetailsStates from './slices/ItemDetailsStates'
 
 export const store = configureStore({
   reducer: {
-    states: ItemDetailsStates,
+    item_details_states: ItemDetailsStates,
     globals: GlobalSlice,
   },
 })

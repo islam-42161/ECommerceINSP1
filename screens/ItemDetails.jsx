@@ -2,35 +2,42 @@ import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import ImageCarousel from "../components/ImageCarousel";
-import { useAnimatedRef, useSharedValue } from "react-native-reanimated";
+import Animated, { useAnimatedRef, useSharedValue } from "react-native-reanimated";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import DotsCarousel from "../components/DotsCarousel";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleWishlisted } from "../redux/slices/ItemDetailsStates";
 const { height, width } = Dimensions.get("window");
 const ItemDetails = () => {
   // image scrollx value
   const animatedScrollX = useSharedValue(0);
-const imageCarouselRef = useAnimatedRef()
+  const imageCarouselRef = useAnimatedRef();
 
+const {wishlisted} = useSelector((state)=>({
+  wishlisted:state.item_details_states.wishlisted,
+}))
+
+const dispatch = useDispatch()
   return (
     <View style={styles.container}>
       <View style={styles.headerBar}>
         <Ionicons
           name="chevron-back-sharp"
-          onPress={() => console.log("pressed back button")}
+          onPress={() => console.log("back button functioning")}
           style={styles.headerButtons}
         />
         <Ionicons
-          name="md-heart-outline"
-          onPress={() => console.log("pressed heart button")}
+          name={wishlisted?"md-heart":"md-heart-outline"}
+          onPress={() => dispatch(toggleWishlisted(!wishlisted))}
           style={styles.headerButtons}
         />
       </View>
-      <ImageCarousel animatedScrollX={animatedScrollX} aniamtedRef={imageCarouselRef}/>
+      <ImageCarousel animatedScrollX={animatedScrollX} animatedRef={imageCarouselRef}/>
 
       {/* Bottom Info */}
-      <View style={styles.bottomInfo}>
+      <Animated.View style={styles.bottomInfo}>
 
-        <DotsCarousel items={[1, 2, 3]} aniamtedRef={imageCarouselRef} animatedScrollX={animatedScrollX} />
+        <DotsCarousel animatedRef={imageCarouselRef} animatedScrollX={animatedScrollX} />
 
         {/* title */}
         <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
@@ -134,9 +141,9 @@ const imageCarouselRef = useAnimatedRef()
 
           {/* cart button */}
 
-          <Text style={styles.addTOCartButton}>Add to cart</Text>
+          <Text onPress={()=>console.log('add to cart')} style={styles.addTOCartButton}>Add to cart</Text>
         </View>
-      </View>
+      </Animated.View>
     </View>
   );
 };
@@ -162,6 +169,7 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 10,
     justifyContent: "space-between",
+    // zIndex:10
   },
   title: {
     fontSize: 12 * 4,
