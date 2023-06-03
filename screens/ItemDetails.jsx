@@ -1,25 +1,65 @@
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import ImageCarousel from "../components/ImageCarousel";
-import Animated, { useAnimatedRef, useSharedValue } from "react-native-reanimated";
+import Animated, {
+  interpolate,
+  interpolateColor,
+  useAnimatedRef,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import DotsCarousel from "../components/DotsCarousel";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleWishlisted } from "../redux/slices/ItemDetailsStates";
+import {
+  setActiveColorIndex,
+  toggleWishlisted,
+} from "../redux/slices/ItemDetailsStates";
 const { height, width } = Dimensions.get("window");
 const ItemDetails = () => {
   // image scrollx value
   const animatedScrollX = useSharedValue(0);
   const imageCarouselRef = useAnimatedRef();
 
-const {wishlisted} = useSelector((state)=>({
-  wishlisted:state.item_details_states.wishlisted,
-}))
+  const { wishlisted, activeColorIndex } = useSelector((state) => ({
+    wishlisted: state.item_details_states.wishlisted,
+    activeColorIndex: state.item_details_states.activeColorIndex,
+  }));
+  const colors = ["white","#151515", "lightgreen", "lightgray", "pink"];
+  const COLOR_SIZE = 30;
+  const COLOR_GAP = 5;
+  const dispatch = useDispatch();
+  const activeColorPosition = useSharedValue(0);
+  const bottomStyle = useAnimatedStyle(()=>({
+    backgroundColor: interpolateColor(
+      activeColorPosition.value,
+      colors.map((_,index)=>(index*(COLOR_GAP+COLOR_SIZE))),
+      colors
+      )
+  }))
+  const colorChoiceStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: activeColorPosition.value,
+      },
+    ],
+  }));
 
-const dispatch = useDispatch()
+  const handleColorPress = (index) => {
+    // console.log(new Array(colors.length).fill(colors.map((_,index)=>(index*(COLOR_GAP+COLOR_SIZE)))))
+    activeColorPosition.value = withTiming(index * (COLOR_SIZE+COLOR_GAP)); //35 = indicator size(30) + gap between indicators(5)
+  };
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container,bottomStyle]}>
       <View style={styles.headerBar}>
         <Ionicons
           name="chevron-back-sharp"
@@ -27,17 +67,22 @@ const dispatch = useDispatch()
           style={styles.headerButtons}
         />
         <Ionicons
-          name={wishlisted?"md-heart":"md-heart-outline"}
+          name={wishlisted ? "md-heart" : "md-heart-outline"}
           onPress={() => dispatch(toggleWishlisted(!wishlisted))}
           style={styles.headerButtons}
         />
       </View>
-      <ImageCarousel animatedScrollX={animatedScrollX} animatedRef={imageCarouselRef}/>
+      <ImageCarousel
+        animatedScrollX={animatedScrollX}
+        animatedRef={imageCarouselRef}
+      />
 
       {/* Bottom Info */}
-      <Animated.View style={styles.bottomInfo}>
-
-        <DotsCarousel animatedRef={imageCarouselRef} animatedScrollX={animatedScrollX} />
+      <Animated.View style={[styles.bottomInfo]}>
+        <DotsCarousel
+          animatedRef={imageCarouselRef}
+          animatedScrollX={animatedScrollX}
+        />
 
         {/* title */}
         <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
@@ -50,54 +95,47 @@ const dispatch = useDispatch()
 
         {/* choice section */}
         <View style={styles.choice}>
-          <LinearGradient
+          {/* <LinearGradient
+
             style={styles.colorChoice}
             colors={["white", "transparent", "white"]}
-          >
+          > */}
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ gap: 5 }}
+              contentContainerStyle={{ gap: COLOR_GAP }}
             >
-              <View
-                style={{
-                  padding: 3,
-                  borderWidth: 2,
-                  borderRadius: 20,
-                  borderColor: "dodgerblue",
-                }}
-              >
-                <View
+              <Animated.View
+                style={[
+                  {
+                    backgroundColor: "transparent",
+                    borderWidth: 3,
+                    borderColor: "gray",
+                    height: COLOR_SIZE,
+                    width: COLOR_SIZE,
+                    borderRadius: COLOR_SIZE/2,
+                    position: "absolute",
+                    zIndex: 5,
+                  },
+                  colorChoiceStyle,
+                ]}
+              />
+              {colors.map((color, index) => (
+                <Pressable
+                  key={index}
                   style={{
-                    backgroundColor: "black",
-                    width: 30,
-                    height: 30,
-                    borderRadius: 15,
+                    backgroundColor: color,
+                    width: COLOR_SIZE,
+                    height: COLOR_SIZE,
+                    borderRadius: COLOR_SIZE / 2,
+                    elevation:2
+                    // overflow:'hidden'
                   }}
-                />
-              </View>
-              <View style={{ padding: 3 }}>
-                <View
-                  style={{
-                    backgroundColor: "lightgreen",
-                    width: 30,
-                    height: 30,
-                    borderRadius: 15,
-                  }}
-                />
-              </View>
-              <View style={{ padding: 3 }}>
-                <View
-                  style={{
-                    backgroundColor: "lightgray",
-                    width: 30,
-                    height: 30,
-                    borderRadius: 15,
-                  }}
-                />
-              </View>
+                  onPress={() => handleColorPress(index)}
+                ></Pressable>
+              ))}
             </ScrollView>
-          </LinearGradient>
+          {/* </LinearGradient> */}
 
           <View style={styles.addremoveCart}>
             <AntDesign
@@ -141,10 +179,15 @@ const dispatch = useDispatch()
 
           {/* cart button */}
 
-          <Text onPress={()=>console.log('add to cart')} style={styles.addTOCartButton}>Add to cart</Text>
+          <Text
+            onPress={() => console.log("add to cart")}
+            style={styles.addTOCartButton}
+          >
+            Add to cart
+          </Text>
         </View>
       </Animated.View>
-    </View>
+    </Animated.View>
   );
 };
 

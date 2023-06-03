@@ -5,6 +5,7 @@ const initialState = {
   data: null,
   wishlisted: false,
   seeExtra: true,
+  activeColorIndex:0
 };
 
 const ItemDetailsStates = createSlice({
@@ -23,11 +24,14 @@ const ItemDetailsStates = createSlice({
     setSeeExtra: (state, action) => {
       state.seeExtra = action.payload;
     },
+    setActiveColorIndex:(state,action)=>{
+state.activeColorIndex = action.payload
+    }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setItems, setData, toggleWishlisted, setSeeExtra} =
+export const { setItems, setData, toggleWishlisted, setSeeExtra,setActiveColorIndex} =
   ItemDetailsStates.actions;
 
 export default ItemDetailsStates.reducer;
