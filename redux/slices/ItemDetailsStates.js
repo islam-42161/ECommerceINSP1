@@ -5,7 +5,8 @@ const initialState = {
   data: null,
   wishlisted: false,
   seeExtra: true,
-  activeColorIndex:0
+  activeColorIndex:0,
+  ambienceColor:'#151515'
 };
 
 const ItemDetailsStates = createSlice({
@@ -26,12 +27,15 @@ const ItemDetailsStates = createSlice({
     },
     setActiveColorIndex:(state,action)=>{
 state.activeColorIndex = action.payload
+    },
+    setAmbienceColor:(state,action)=>{
+      state.ambienceColor = action.payload
     }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setItems, setData, toggleWishlisted, setSeeExtra,setActiveColorIndex} =
+export const { setItems, setData, toggleWishlisted, setSeeExtra,setActiveColorIndex,setAmbienceColor} =
   ItemDetailsStates.actions;
 
 export default ItemDetailsStates.reducer;

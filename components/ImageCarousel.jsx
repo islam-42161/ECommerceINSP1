@@ -11,7 +11,7 @@ const {height,width} = Dimensions.get('window')
 const ImageCarousel = ({
   images = [
     {
-      uri: "https://images.pexels.com/photos/716398/pexels-photo-716398.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      uri: "https://images.pexels.com/photos/2421953/pexels-photo-2421953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       key: 10,
     },
     {

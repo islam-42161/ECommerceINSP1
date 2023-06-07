@@ -14,6 +14,7 @@ import Animated, {
   interpolateColor,
   useAnimatedRef,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
@@ -25,28 +26,41 @@ import {
   toggleWishlisted,
 } from "../redux/slices/ItemDetailsStates";
 const { height, width } = Dimensions.get("window");
+
+//animated components
+const AnimatedIconAnt = Animated.createAnimatedComponent(AntDesign);
+const AnimatedIconIon = Animated.createAnimatedComponent(Ionicons);
+
 const ItemDetails = () => {
+
   // image scrollx value
   const animatedScrollX = useSharedValue(0);
   const imageCarouselRef = useAnimatedRef();
 
-  const { wishlisted, activeColorIndex } = useSelector((state) => ({
+  const { wishlisted, activeColorIndex} = useSelector((state) => ({
     wishlisted: state.item_details_states.wishlisted,
     activeColorIndex: state.item_details_states.activeColorIndex,
   }));
-  const colors = ["white","#151515", "lightgreen", "lightgray", "pink"];
+  const colors = ["#151515",'lightblue', "lightgreen", "hotpink"];
   const COLOR_SIZE = 30;
   const COLOR_GAP = 5;
   const dispatch = useDispatch();
   const activeColorPosition = useSharedValue(0);
-  const bottomStyle = useAnimatedStyle(()=>({
-    backgroundColor: interpolateColor(
-      activeColorPosition.value,
-      colors.map((_,index)=>(index*(COLOR_GAP+COLOR_SIZE))),
-      colors
-      )
+  const backgroundColorAnimated = useSharedValue('#151515');
+
+  // changing background color on color position change
+  useDerivedValue(()=>{
+      backgroundColorAnimated.value =  interpolateColor(
+        activeColorPosition.value,
+        colors.map((_,index)=>(index*(COLOR_GAP+COLOR_SIZE))),
+        colors
+        )
+    },[activeColorPosition.value])
+
+  const ambienceStyle = useAnimatedStyle(()=>({
+    backgroundColor: backgroundColorAnimated.value
   }))
-  const colorChoiceStyle = useAnimatedStyle(() => ({
+  const selectedColorPositionStyle = useAnimatedStyle(() => ({
     transform: [
       {
         translateX: activeColorPosition.value,
@@ -55,21 +69,23 @@ const ItemDetails = () => {
   }));
 
   const handleColorPress = (index) => {
-    // console.log(new Array(colors.length).fill(colors.map((_,index)=>(index*(COLOR_GAP+COLOR_SIZE)))))
-    activeColorPosition.value = withTiming(index * (COLOR_SIZE+COLOR_GAP)); //35 = indicator size(30) + gap between indicators(5)
+    //35 = indicator size(30) + gap between indicators(5)
+    activeColorPosition.value = withTiming(index * (COLOR_SIZE+COLOR_GAP))
   };
+  
+
   return (
-    <Animated.View style={[styles.container,bottomStyle]}>
+    <Animated.View style={[styles.container,ambienceStyle]}>
       <View style={styles.headerBar}>
         <Ionicons
           name="chevron-back-sharp"
           onPress={() => console.log("back button functioning")}
-          style={styles.headerButtons}
+          style={[styles.headerButtons]}
         />
         <Ionicons
           name={wishlisted ? "md-heart" : "md-heart-outline"}
           onPress={() => dispatch(toggleWishlisted(!wishlisted))}
-          style={styles.headerButtons}
+          style={[styles.headerButtons]}
         />
       </View>
       <ImageCarousel
@@ -117,7 +133,7 @@ const ItemDetails = () => {
                     position: "absolute",
                     zIndex: 5,
                   },
-                  colorChoiceStyle,
+                  selectedColorPositionStyle,
                 ]}
               />
               {colors.map((color, index) => (
@@ -145,14 +161,14 @@ const ItemDetails = () => {
             <Text style={{ fontSize: 14 }}>2</Text>
             <AntDesign
               name="plus"
-              style={{
+              style={[{
                 padding: 10,
                 backgroundColor: "#1A1A1A",
                 borderRadius: width / 8,
                 color: "white",
                 marginLeft: 8,
                 fontSize: 10,
-              }}
+              }]}
             />
           </View>
         </View>
@@ -179,12 +195,12 @@ const ItemDetails = () => {
 
           {/* cart button */}
 
-          <Text
+          <Animated.Text
             onPress={() => console.log("add to cart")}
-            style={styles.addTOCartButton}
+            style={[styles.addTOCartButton]}
           >
             Add to cart
-          </Text>
+          </Animated.Text>
         </View>
       </Animated.View>
     </Animated.View>
@@ -273,6 +289,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderRadius: 14,
     color: "white",
-    elevation: 5,
+    // elevation: 5,
   },
 });
