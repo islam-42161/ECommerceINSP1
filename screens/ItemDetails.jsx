@@ -27,10 +27,6 @@ import {
 } from "../redux/slices/ItemDetailsStates";
 const { height, width } = Dimensions.get("window");
 
-//animated components
-const AnimatedIconAnt = Animated.createAnimatedComponent(AntDesign);
-const AnimatedIconIon = Animated.createAnimatedComponent(Ionicons);
-
 const ItemDetails = () => {
 
   // image scrollx value
@@ -60,6 +56,7 @@ const ItemDetails = () => {
   const ambienceStyle = useAnimatedStyle(()=>({
     backgroundColor: backgroundColorAnimated.value
   }))
+
   const selectedColorPositionStyle = useAnimatedStyle(() => ({
     transform: [
       {
@@ -91,6 +88,7 @@ const ItemDetails = () => {
       <ImageCarousel
         animatedScrollX={animatedScrollX}
         animatedRef={imageCarouselRef}
+        ambienceColor = {backgroundColorAnimated}
       />
 
       {/* Bottom Info */}
@@ -289,6 +287,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderRadius: 14,
     color: "white",
-    // elevation: 5,
+    elevation: 5,
   },
 });
