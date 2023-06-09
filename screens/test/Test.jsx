@@ -1,58 +1,39 @@
-import React from 'react'
-import { TouchableOpacity, View, Text, ScrollView } from 'react-native'
-import Animated, { useAnimatedRef, useDerivedValue, useSharedValue, scrollTo } from 'react-native-reanimated'
+import { Dimensions, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import * as ScreenOrientation from "expo-screen-orientation";
 
-const ITEM_COUNT = 10
-const ITEM_SIZE = 300
-const ITEM_MARGIN = 10
-
-export default Test = () => {
-  const aref = useAnimatedRef()
-  const scroll = useSharedValue(0)
-
-  useDerivedValue(() => {
-    scrollTo(aref, scroll.value * (ITEM_SIZE + 2 * ITEM_MARGIN), 0, true)
-  })
-
-  const items = Array.from(Array(ITEM_COUNT).keys())
-
-  const Incrementor = ({ increment }) => (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <TouchableOpacity
-        onPress={() => {
-          scroll.value =
-            scroll.value + increment > 0 ? scroll.value + increment : ITEM_COUNT - 1 + increment
-
-          if (scroll.value >= ITEM_COUNT - 2) scroll.value = 0
-        }}>
-        <Text>{`Scroll ${Math.abs(increment)} ${increment > 0 ? 'down' : 'up'}`}</Text>
-      </TouchableOpacity>
-    </View>
-  )
+const Test = () => {
+  const [orientationIsLandscape, setOrientation] = useState(true);
+  async function changeScreenOrientation() {
+    if (orientationIsLandscape == true) {
+      ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.LANDSCAPE_LEFT
+      );
+    } else if (orientationIsLandscape == false) {
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    }
+    return Dimensions.get('screen');
+  }
+  async function toggleOrientation() {
+    setOrientation(!orientationIsLandscape);
+    changeScreenOrientation().then((value) => {
+      console.log(value);
+    });
+  }
 
   return (
-    <View style={{ flex: 1, flexDirection: 'column' }}>
-      <Incrementor increment={1} />
-      <View style={{ width: '100%', height: (ITEM_SIZE + 2 * ITEM_MARGIN) * 2 }}>
-        <Animated.ScrollView horizontal ref={aref} style={{ backgroundColor: 'orange' }}>
-          {items.map((_, i) => (
-            <View
-              key={i}
-              style={{
-                backgroundColor: 'white',
-                aspectRatio: 1,
-                width: ITEM_SIZE,
-                margin: ITEM_MARGIN,
-                justifyContent: 'center',
-                alignContent: 'center',
-              }}>
-              <Text style={{ textAlign: 'center' }}>{i}</Text>
-            </View>
-          ))}
-        </Animated.ScrollView>
-      </View>
-
-      <Incrementor increment={-1} />
+    <View style={styles.container}>
+      <Text onPress={toggleOrientation}>Click to toggle orientation</Text>
     </View>
-  )
-}
+  );
+};
+
+export default Test;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

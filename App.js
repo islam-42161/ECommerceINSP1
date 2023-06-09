@@ -4,12 +4,14 @@ import { Provider } from 'react-redux';
 import ItemDetails from './screens/ItemDetails';
 import { store } from "./redux/store";
 import Test from './screens/test/Test';
+import HomeHeader from './components/HomeHeader';
 
 export default function App() {
   return (
      <Provider store={store}>
-      <ItemDetails/>
+      {/* <ItemDetails/> */}
       {/* <Test/> */}
+      <HomeHeader/>
       <StatusBar style="auto" animated/>
     </Provider>
   )
