@@ -13,8 +13,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
-const HomeHeader = () => {
-  const keyboardref = useRef().current;
+const HomeHeader = ({keyboardref}) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -22,12 +21,11 @@ const HomeHeader = () => {
         <Ionicons name="ios-person-circle-sharp" style={styles.headerbuttons} />
       </View>
       <Text style={styles.headertext}>
-        We have prepared new products{" "}
-        <Text style={styles.specialText}>for you ✌️</Text>
+        We have prepared new products <Text style={styles.specialText}>for you ✌️</Text>
       </Text>
 
       <View style={styles.searchsection}>
-        <Pressable style={styles.textinput}>
+        <Pressable style={styles.textinput} onPress={()=>keyboardref.current.focus()}>
           <EvilIcons style={styles.searchicon} name="search" />
           <TextInput
             placeholder="Search"
@@ -38,10 +36,7 @@ const HomeHeader = () => {
         </Pressable>
         <FontAwesome
           name="sliders"
-          style={[
-            styles.headerbuttons,
-            { elevation: 0, height: 48, width: 48, borderRadius: 24 },
-          ]}
+          style={styles.preferenceicon}
         />
       </View>
     </View>
@@ -54,14 +49,15 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 1.5 * STATUSBAR_HEIGHT,
     padding: 20,
-    flex: 0.3,
-    backgroundColor: "#151515", //remove
-    borderBottomColor: "#474747", //remove
-    borderBottomWidth: 5,//remove
-    borderBottomStartRadius: 50,//remove
-    borderBottomEndRadius: 50,//remove
+    // flex: 0.3,
+    // backgroundColor: "#151515", //remove
+    // borderBottomColor: "#474747", //remove
+    // borderBottomWidth: 5,//remove
+    // borderBottomStartRadius: 50,//remove
+    // borderBottomEndRadius: 50,//remove
     overflow: "hidden",
     justifyContent: "space-between",
+    rowGap:20
   },
   header: {
     flexDirection: "row",
@@ -80,7 +76,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textAlignVertical: "center",
     fontSize: 24,
-    borderRadius: 20,
+    borderRadius: 15,
     color: "white",
     elevation: 5,
   },
@@ -109,4 +105,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     columnGap: 10,
   },
+  preferenceicon:{
+    height: 48, 
+    width: 48, 
+    borderRadius: 24,
+    backgroundColor: "#343434",
+    textAlign: "center",
+    textAlignVertical: "center",
+    fontSize: 16,
+    color: "white",
+    elevation: 0, 
+  }
 });

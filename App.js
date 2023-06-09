@@ -5,13 +5,15 @@ import ItemDetails from './screens/ItemDetails';
 import { store } from "./redux/store";
 import Test from './screens/test/Test';
 import HomeHeader from './components/HomeHeader';
+import Homescreen from './screens/Homescreen';
 
 export default function App() {
   return (
      <Provider store={store}>
       {/* <ItemDetails/> */}
       {/* <Test/> */}
-      <HomeHeader/>
+      {/* <HomeHeader/> */}
+      <Homescreen/>
       <StatusBar style="auto" animated/>
     </Provider>
   )
