@@ -30,8 +30,11 @@ const HomeHeader = ({keyboardref}) => {
           <TextInput
             placeholder="Search"
             placeholderTextColor={"gray"}
-            style={{ padding: 5 }}
+            style={{ padding: 5,flex:1,color:'white'}}
             ref={keyboardref}
+            cursorColor={'gray'}
+            selectionColor={'gray'}
+            autoCorrect={false}
           />
         </Pressable>
         <FontAwesome
