@@ -25,7 +25,7 @@ const HomeHeader = () => {
         We have prepared new products <Text style={styles.specialText}>for you ✌️</Text>
       </Text>
 
-<SearchBar enablePreference searchable={false}/>
+<SearchBar showPreference searchable={false}/>
     </View>
   );
 };

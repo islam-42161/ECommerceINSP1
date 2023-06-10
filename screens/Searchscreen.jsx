@@ -7,7 +7,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import SearchBar from "../components/SearchBar";
 import { Image } from "expo-image";
 
-const Searchscreen = ({enablePreference=true}) => {
+const Searchscreen = ({showPreference=true}) => {
   const dispatch = useDispatch();
   // const keyboardref = useRef();
   const { visible,screen } = useSelector((state) => ({
@@ -25,7 +25,7 @@ const Searchscreen = ({enablePreference=true}) => {
           style={styles.closebutton}
           onPress={() => dispatch(setVisible(false))}
         />
-        <SearchBar enablePreference={enablePreference} searchable={true} />
+        <SearchBar showPreference={showPreference} searchable={true} />
         <Image
           source={{
             uri: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e3b670100497525.5f0a205f0a3fb.gif",

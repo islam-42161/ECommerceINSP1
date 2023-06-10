@@ -1,11 +1,11 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setScreen, setVisible } from "../redux/slices/bottomsheetSlice";
 
-const SearchBar = ({ enablePreference = true, searchable = true }) => {
+const SearchBar = ({ showPreference = true, searchable = true }) => {
   const dispatch = useDispatch();
   const keyboardref = useRef();
   const handlePress = () => {
@@ -19,9 +19,22 @@ const SearchBar = ({ enablePreference = true, searchable = true }) => {
 
   const handlePreferencePress =()=>{
     dispatch(setVisible(true));
-    dispatch(setScreen("preference"));
+    if(searchable){
+      dispatch(setScreen("preference-search"));
+    }
+    else{
+      dispatch(setScreen("preference-home"));
+    }
   }
-
+    const { visible,screen } = useSelector((state) => ({
+    visible: state.bottomsheet_states.visible,
+    screen: state.bottomsheet_states.screen,
+  }));
+// useEffect(()=>{
+//   if(showPreference && screen === 'preference')
+//   dispatch(setVisible(true));
+//   dispatch(setScreen("search"));
+// },[visible])
   return (
     <View style={styles.searchsection}>
       <Pressable style={styles.textinput} onPress={handlePress}>
@@ -37,7 +50,7 @@ const SearchBar = ({ enablePreference = true, searchable = true }) => {
           editable={searchable}
         />
       </Pressable>
-      {enablePreference ? (
+      {showPreference ? (
         <FontAwesome name="sliders" style={styles.preferenceicon} onPress={handlePreferencePress} />
       ) : null}
 

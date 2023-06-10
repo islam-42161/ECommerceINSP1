@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, StatusBar, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Animated, {
   FadeIn,
   FadeOut,
@@ -7,17 +7,30 @@ import Animated, {
   SlideOutDown,
 } from "react-native-reanimated";
 import { useDispatch, useSelector } from "react-redux";
-import { setVisible } from "../redux/slices/bottomsheetSlice";
+import { setScreen, setVisible } from "../redux/slices/bottomsheetSlice";
 
 const AniamtedPressable = Animated.createAnimatedComponent(Pressable);
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 const BottomSheet = ({ children,contentContainerStyle,topPosition=STATUSBAR_HEIGHT}) => {
 
 
-    const { visible } = useSelector((state) => ({
-        visible: state.bottomsheet_states.visible
+    const { visible,screen } = useSelector((state) => ({
+        visible: state.bottomsheet_states.visible,
+        screen: state.bottomsheet_states.screen,
       }));
+      const onClose = ()=>{
+        dispatch(setVisible(!visible))
+      }
+      useEffect(() => {
+        // Anything in here is fired on component mount.
+        return () => {
+            if(screen==='preference-search'){
+        dispatch(setVisible(true))
+        dispatch(setScreen('search'))
 
+            }
+        }
+    }, [])
 //   const [show, setShow] = useState(visible);
 const dispatch = useDispatch();
   return (
@@ -26,7 +39,7 @@ const dispatch = useDispatch();
         entering={FadeIn}
         exiting={FadeOut}
         style={[StyleSheet.absoluteFillObject, styles.backdrop]}
-        onPress={() => dispatch(setVisible(!visible))}
+        onPress={onClose}
       />
       {/* children */}
       <Animated.View

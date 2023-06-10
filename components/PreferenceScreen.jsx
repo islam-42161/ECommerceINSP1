@@ -9,7 +9,7 @@ const PreferenceScreen = () => {
         screen: state.bottomsheet_states.screen
       }));
         
-  return visible && screen === 'preference' ? (
+  return visible && (screen === 'preference-search' || screen === 'preference-home' ) ? (
     <BottomSheet topPosition={"50%"} contentContainerStyle={styles.container}>
     <Text style={{fontSize:48}}>🙈</Text>
     </BottomSheet>
