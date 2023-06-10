@@ -3,24 +3,30 @@ import React, { useRef } from "react";
 import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { setVisible } from "../redux/slices/bottomsheetSlice";
+import { setScreen, setVisible } from "../redux/slices/bottomsheetSlice";
 
 const SearchBar = ({ enablePreference = true, searchable = true }) => {
   const dispatch = useDispatch();
   const keyboardref = useRef();
-  const handlePress=()=>{
-    if(searchable){
-keyboardref.current.focus()
+  const handlePress = () => {
+    if (searchable) {
+      keyboardref.current.focus();
+    } else {
+      dispatch(setVisible(true));
+      dispatch(setScreen("search"));
     }
-else{
-  dispatch(setVisible(true))
-}
   }
+
+  const handlePreferencePress =()=>{
+    dispatch(setVisible(true));
+    dispatch(setScreen("preference"));
+  }
+
   return (
     <View style={styles.searchsection}>
       <Pressable style={styles.textinput} onPress={handlePress}>
         <EvilIcons style={styles.searchicon} name="search" />
-          <TextInput
+        <TextInput
           placeholder="Search"
           placeholderTextColor={"gray"}
           style={{ padding: 5, flex: 1, color: "white" }}
@@ -32,8 +38,10 @@ else{
         />
       </Pressable>
       {enablePreference ? (
-        <FontAwesome name="sliders" style={styles.preferenceicon} />
+        <FontAwesome name="sliders" style={styles.preferenceicon} onPress={handlePreferencePress} />
       ) : null}
+
+      {/* <PreferenceScreen/> */}
     </View>
   );
 };

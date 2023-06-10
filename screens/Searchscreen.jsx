@@ -1,6 +1,6 @@
 import { Keyboard, Pressable, StyleSheet } from "react-native";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setVisible } from "../redux/slices/bottomsheetSlice";
 import BottomSheet from "../components/BottomSheet";
 import { EvilIcons } from "@expo/vector-icons";
@@ -10,7 +10,11 @@ import { Image } from "expo-image";
 const Searchscreen = ({enablePreference=true}) => {
   const dispatch = useDispatch();
   // const keyboardref = useRef();
-  return (
+  const { visible,screen } = useSelector((state) => ({
+    visible: state.bottomsheet_states.visible,
+    screen: state.bottomsheet_states.screen
+  }));
+  return visible && screen === 'search'?(
     <BottomSheet>
       <Pressable
         style={styles.bottomSheetContentStyle}
@@ -35,7 +39,7 @@ const Searchscreen = ({enablePreference=true}) => {
         />
       </Pressable>
     </BottomSheet>
-  );
+  ):null;
 };
 
 export default Searchscreen;

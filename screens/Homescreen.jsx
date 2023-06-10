@@ -3,6 +3,7 @@ import React, { useRef } from 'react'
 import HomeHeader from '../components/HomeHeader'
 import Searchscreen from './Searchscreen';
 import { useSelector } from 'react-redux';
+import PreferenceScreen from '../components/PreferenceScreen';
 
 const Homescreen = () => {
   const { visible } = useSelector((state) => ({
@@ -13,6 +14,7 @@ const Homescreen = () => {
     <View style={styles.container}>
       <HomeHeader/>
       <Searchscreen enablePreference={false}/>
+      <PreferenceScreen/>
     </View>
   )
 }

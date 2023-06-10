@@ -20,7 +20,7 @@ const BottomSheet = ({ children,contentContainerStyle,topPosition=STATUSBAR_HEIG
 
 //   const [show, setShow] = useState(visible);
 const dispatch = useDispatch();
-  return visible ? (
+  return (
     <View style={styles.container}>
       <AniamtedPressable
         entering={FadeIn}
@@ -37,7 +37,7 @@ const dispatch = useDispatch();
         {children}
       </Animated.View>
     </View>
-  ) : null;
+  )
 };
 
 export default BottomSheet;
