@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { setScreen, setVisible } from "../redux/slices/bottomsheetSlice";
+import { setScreen } from "../redux/slices/bottomsheetSlice";
 
 const SearchBar = ({ showPreference = true, searchable = true }) => {
   const dispatch = useDispatch();
@@ -12,13 +12,11 @@ const SearchBar = ({ showPreference = true, searchable = true }) => {
     if (searchable) {
       keyboardref.current.focus();
     } else {
-      dispatch(setVisible(true));
       dispatch(setScreen("search"));
     }
   }
 
   const handlePreferencePress =()=>{
-    dispatch(setVisible(true));
     if(searchable){
       dispatch(setScreen("preference-search"));
     }
@@ -26,15 +24,10 @@ const SearchBar = ({ showPreference = true, searchable = true }) => {
       dispatch(setScreen("preference-home"));
     }
   }
-    const { visible,screen } = useSelector((state) => ({
-    visible: state.bottomsheet_states.visible,
+    const { screen } = useSelector((state) => ({
     screen: state.bottomsheet_states.screen,
   }));
-// useEffect(()=>{
-//   if(showPreference && screen === 'preference')
-//   dispatch(setVisible(true));
-//   dispatch(setScreen("search"));
-// },[visible])
+
   return (
     <View style={styles.searchsection}>
       <Pressable style={styles.textinput} onPress={handlePress}>

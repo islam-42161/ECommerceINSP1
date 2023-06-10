@@ -3,17 +3,16 @@ import React, { useRef } from 'react'
 import HomeHeader from '../components/HomeHeader'
 import Searchscreen from './Searchscreen';
 import PreferenceScreen from '../components/PreferenceScreen';
+import ChangeHomeView from '../components/ChangeHomeView';
 
 const Homescreen = () => {
-  // const { visible } = useSelector((state) => ({
-  //   visible: state.bottomsheet_states.visible
-  // }));
-    
+
   return (
     <View style={styles.container}>
       <HomeHeader/>
       <Searchscreen showPreference={true}/>
       <PreferenceScreen/>
+      <ChangeHomeView/>
     </View>
   )
 }

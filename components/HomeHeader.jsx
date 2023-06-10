@@ -7,18 +7,24 @@ import {
   Pressable,
 } from "react-native";
 import React, { useRef } from "react";
-import { Entypo } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import SearchBar from "./SearchBar";
+import { useDispatch } from "react-redux";
+import { setScreen } from "../redux/slices/bottomsheetSlice";
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 const HomeHeader = () => {
+  const handleViewChange=()=>{
+    dispatch(setScreen('change_home_list_view'))
+  }
+  const dispatch = useDispatch()
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Entypo name="grid" style={styles.headerbuttons} />
+        <MaterialIcons name="grid-view" style={styles.headerbuttons} onPress={handleViewChange}/>
         <Ionicons name="ios-person-circle-sharp" style={styles.headerbuttons} />
       </View>
       <Text style={styles.headertext}>
