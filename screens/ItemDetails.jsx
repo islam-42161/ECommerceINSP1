@@ -37,10 +37,11 @@ const ItemDetails = () => {
     wishlisted: state.item_details_states.wishlisted,
     activeColorIndex: state.item_details_states.activeColorIndex,
   }));
+  const dispatch = useDispatch();
+  
   const colors = ["#151515",'lightblue', "lightgreen", "hotpink"];
   const COLOR_SIZE = 30;
   const COLOR_GAP = 5;
-  const dispatch = useDispatch();
   const activeColorPosition = useSharedValue(0);
   const backgroundColorAnimated = useSharedValue('#151515');
 
