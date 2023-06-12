@@ -4,6 +4,7 @@ import HomeHeader from '../components/HomeHeader'
 import Searchscreen from './Searchscreen';
 import PreferenceScreen from '../components/PreferenceScreen';
 import ChangeHomeView from '../components/ChangeHomeView';
+import UserProfileView from '../components/UserProfileView';
 
 const Homescreen = () => {
 
@@ -13,6 +14,7 @@ const Homescreen = () => {
       <Searchscreen showPreference={true}/>
       <PreferenceScreen/>
       <ChangeHomeView/>
+      <UserProfileView/>
     </View>
   )
 }

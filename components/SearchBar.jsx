@@ -5,7 +5,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setScreen } from "../redux/slices/bottomsheetSlice";
 
-const SearchBar = ({ showPreference = true, searchable = true }) => {
+const SearchBar = ({ showPreference = true, searchable = true}) => {
   const dispatch = useDispatch();
   const keyboardref = useRef();
   const handlePress = () => {

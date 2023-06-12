@@ -13,6 +13,7 @@ const Searchscreen = ({showPreference=true}) => {
   const { screen } = useSelector((state) => ({
     screen: state.bottomsheet_states.screen
   }));
+  
   return screen === 'search'?(
     <BottomSheet>
       <Pressable

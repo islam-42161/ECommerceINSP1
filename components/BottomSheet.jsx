@@ -11,14 +11,16 @@ import { setScreen } from "../redux/slices/bottomsheetSlice";
 
 const AniamtedPressable = Animated.createAnimatedComponent(Pressable);
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
-const BottomSheet = ({ children,contentContainerStyle,topPosition=STATUSBAR_HEIGHT}) => {
+const BottomSheet = ({ children,contentContainerStyle,closePressOutside = true,topPosition=STATUSBAR_HEIGHT}) => {
 
 
     const { screen } = useSelector((state) => ({
         screen: state.bottomsheet_states.screen,
       }));
       const onClose = ()=>{
-        dispatch(setScreen('none'))
+        if(closePressOutside){
+          dispatch(setScreen('none'))
+        }
       }
       useEffect(() => {
         // Anything in here is fired on component mount.
@@ -54,7 +56,7 @@ export default BottomSheet;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     position:'absolute',
     height:'100%',
     width:'100%',
@@ -67,7 +69,6 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     bottom: 0,
-    // top: STATUSBAR_HEIGHT,
     borderTopLeftRadius:20,
     borderTopRightRadius:20,
     // backgroundColor: "white",

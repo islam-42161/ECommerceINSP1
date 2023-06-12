@@ -12,20 +12,28 @@ import { Ionicons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import SearchBar from "./SearchBar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setScreen } from "../redux/slices/bottomsheetSlice";
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 const HomeHeader = () => {
+
+  const { view } = useSelector((state) => ({
+    view: state.homescreen_states.view,
+  }));
+
   const handleViewChange=()=>{
     dispatch(setScreen('change_home_list_view'))
+  }
+  const handleUserPress=()=>{
+    dispatch(setScreen('user-profile-view'))
   }
   const dispatch = useDispatch()
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <MaterialIcons name="grid-view" style={styles.headerbuttons} onPress={handleViewChange}/>
-        <Ionicons name="ios-person-circle-sharp" style={styles.headerbuttons} />
+        <MaterialIcons name={view} style={styles.headerbuttons} onPress={handleViewChange}/>
+        <Ionicons name="ios-person-circle-sharp" style={styles.headerbuttons} onPress={handleUserPress} />
       </View>
       <Text style={styles.headertext}>
         We have prepared new products <Text style={styles.specialText}>for you ✌️</Text>
