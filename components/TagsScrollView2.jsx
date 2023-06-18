@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Dimensions,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -134,12 +135,12 @@ export default function TagsScrollView2() {
             key={item}
             style={{ flex: index === 1 ? 2 : 1 }}
           >
-            <TouchableOpacity
+            <Pressable
               style={styles.headerItem}
               onPress={() => onPressHeader(index)}
             >
-              <Text>{item}</Text>
-            </TouchableOpacity>
+              <Text style={styles.headerText}>{item}</Text>
+            </Pressable>
           </View>
         ))}
       </Animated.ScrollView>
@@ -182,9 +183,7 @@ const styles = StyleSheet.create({
   item: {
     height: "100%",
     width: width,
-    backgroundColor: "grey",
-    borderWidth: 5,
-    borderColor: "#fff",
+    backgroundColor: "#151515",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -202,6 +201,9 @@ const styles = StyleSheet.create({
   txt: {
     fontSize: 30,
     color: "#fff",
-    textTransform: "capitalize",
+  },
+  headerText: {
+    textTransform: "uppercase",
+    fontWeight: "bold",
   },
 });
