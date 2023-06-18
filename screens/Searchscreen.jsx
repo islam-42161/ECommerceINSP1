@@ -25,7 +25,7 @@ const Searchscreen = ({showPreference=true}) => {
           style={styles.closebutton}
           onPress={() => dispatch(setScreen('none'))}
         />
-        <SearchBar showPreference={showPreference} searchable={true} />
+        <SearchBar showPreference={showPreference} searchable={true} focus={true}/>
         <Image
           source={{
             uri: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e3b670100497525.5f0a205f0a3fb.gif",

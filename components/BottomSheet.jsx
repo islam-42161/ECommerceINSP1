@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, StatusBar, View } from "react-native";
+import { Pressable, StyleSheet, StatusBar, View, Dimensions } from "react-native";
 import React, { useEffect, useState } from "react";
 import Animated, {
   FadeIn,
@@ -11,6 +11,7 @@ import { setScreen } from "../redux/slices/bottomsheetSlice";
 
 const AniamtedPressable = Animated.createAnimatedComponent(Pressable);
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
+const {width,height} = Dimensions.get('window')
 const BottomSheet = ({ children,contentContainerStyle,closePressOutside = true,topPosition=STATUSBAR_HEIGHT}) => {
 
 
@@ -58,8 +59,8 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     position:'absolute',
-    height:'100%',
-    width:'100%',
+    height:height,
+    width:width,
   },
   backdrop: {
     backgroundColor: "rgba(0,0,0,0.5)",

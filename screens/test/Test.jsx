@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useRef } from 'react'
+import TagsScrollView from '../../components/TagsScrollView'
 
 const Test = () => {
+
   return (
-    <View>
-      <Text>Test</Text>
+    <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+    <TagsScrollView/>
     </View>
   )
 }
