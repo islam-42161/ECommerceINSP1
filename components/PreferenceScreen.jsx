@@ -7,6 +7,7 @@ const PreferenceScreen = () => {
     const { screen } = useSelector((state) => ({
         screen: state.bottomsheet_states.screen
       }));
+
         
   return screen === 'preference-search' || screen === 'preference-home' ? (
     <BottomSheet topPosition={"50%"} contentContainerStyle={styles.container}>

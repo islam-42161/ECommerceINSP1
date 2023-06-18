@@ -11,10 +11,15 @@ const Homescreen = () => {
   return (
     <View style={styles.container}>
       <HomeHeader/>
+      <>
       <Searchscreen showPreference={true}/>
       <PreferenceScreen/>
       <ChangeHomeView/>
       <UserProfileView/>
+      </>
+
+
+      
     </View>
   )
 }
