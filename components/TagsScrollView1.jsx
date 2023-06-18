@@ -67,6 +67,7 @@ const Indicator = ({ measures, scrollX }) => {
   return <Animated.View style={indicatorStyle} />;
 };
 const Tabs = ({ data, scrollX }) => {
+  console.log(scrollX.value);
   const containerRef = React.useRef();
   const [measures, setMeasures] = useState([]);
   React.useEffect(() => {
@@ -84,12 +85,12 @@ const Tabs = ({ data, scrollX }) => {
           });
           if (m.length === data.length) {
             setMeasures(m);
+            // console.log(measures);
           }
         }
       );
     });
   }, []);
-  console.log(measures);
   return (
     <View style={{ position: "absolute", width, top: 70 }} ref={containerRef}>
       <ScrollView
@@ -107,13 +108,13 @@ const Tabs = ({ data, scrollX }) => {
     </View>
   );
 };
-export default function TagsScrollView() {
+export default function TagsScrollView1() {
   const scrollX = useSharedValue(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       scrollX.value = event.contentOffset.x;
-      console.log(Math.round(scrollX.value / width));
+      // console.log(Math.round(scrollX.value / width));
     },
   });
   return (
