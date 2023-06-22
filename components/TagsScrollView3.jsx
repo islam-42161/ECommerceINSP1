@@ -1,6 +1,7 @@
 import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Animated, {
+  interpolate,
   runOnUI,
   scrollTo,
   useAnimatedRef,
@@ -13,7 +14,7 @@ import Animated, {
 
 const { width, height } = Dimensions.get("window");
 const FONT_SIZE = 12;
-const Tag = ({ value, index, containerRef, indicatorPosition }) => {
+const Tag = ({ value, containerRef, indicatorPosition }) => {
   const ref = useRef();
   useDerivedValue(() => {
     scrollTo(containerRef, indicatorPosition.value, 0, true);
@@ -35,7 +36,7 @@ const Tag = ({ value, index, containerRef, indicatorPosition }) => {
   );
 };
 const TagsScrollView3 = ({
-  tags = ["All", "Newest", "Popular", "Men", "Women", "Kids"],
+  tags = ["All", "Newest", "Popular", "Men", "Women", "Kids", "Mevlana"],
 }) => {
   const indicatorPosition = useSharedValue(0);
   const indicatorStyle = useAnimatedStyle(() => ({
@@ -71,7 +72,6 @@ const TagsScrollView3 = ({
             <Tag
               value={value}
               containerRef={containerRef}
-              index={index}
               key={index}
               indicatorPosition={indicatorPosition}
             />
