@@ -14,19 +14,19 @@ import Animated, {
 
 const { width, height } = Dimensions.get("window");
 const FONT_SIZE = 12;
-const Tag = ({ value, containerRef, indicatorPosition }) => {
+const Tag = ({ value, containerRef, indicatorPosition, tagsScrollX }) => {
   const ref = useRef();
-  useDerivedValue(() => {
-    scrollTo(containerRef, indicatorPosition.value, 0, true);
-  });
   const handlePress = () => {
     ref.current.measureLayout(containerRef.current, (x, _, tag_width, __) => {
-      console.log(x, tag_width);
       indicatorPosition.value = withTiming(x, {
         duration: 500,
       });
+      runOnUI(scrollTo)(containerRef, x - width / 3, 0, true);
     });
 
+    // if (indicatorPosition.value < tagsScrollX.value + width / 3) {
+    //   scrollTo(containerRef, indicatorPosition.value - width / 3, 0, true);
+    // }
     //set tag index here
   };
   return (
@@ -36,7 +36,21 @@ const Tag = ({ value, containerRef, indicatorPosition }) => {
   );
 };
 const TagsScrollView3 = ({
-  tags = ["All", "Newest", "Popular", "Men", "Women", "Kids", "Mevlana"],
+  tags = [
+    "All",
+    "Newest",
+    "Popular",
+    "Men",
+    "Women",
+    "Kids",
+    "Electronics & Gadgets",
+    "Fashion & Apparel",
+    "Home & Decor",
+    "Health & Beauty",
+    "Sports & Fitness",
+    "Books & Stationery",
+    "Toys & Games",
+  ],
 }) => {
   const indicatorPosition = useSharedValue(0);
   const indicatorStyle = useAnimatedStyle(() => ({
@@ -56,6 +70,10 @@ const TagsScrollView3 = ({
   }));
 
   const containerRef = useAnimatedRef();
+  const tagsScrollX = useSharedValue(0);
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    tagsScrollX.value = event.contentOffset.x;
+  });
 
   return (
     <View style={styles.mainContainer}>
@@ -64,6 +82,7 @@ const TagsScrollView3 = ({
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.tagsConainerStyle}
+        onScroll={scrollHandler}
         ref={containerRef}
       >
         <Animated.View style={indicatorStyle} />
@@ -74,6 +93,7 @@ const TagsScrollView3 = ({
               containerRef={containerRef}
               key={index}
               indicatorPosition={indicatorPosition}
+              tagsScrollX={tagsScrollX}
             />
           );
         })}
