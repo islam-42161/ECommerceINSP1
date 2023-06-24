@@ -8,7 +8,7 @@ import {
   StatusBar,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, MasonryFlashList } from "@shopify/flash-list";
 import { Image } from "expo-image";
 
 const { width, height } = Dimensions.get("window");
@@ -26,10 +26,17 @@ const FlashListTest = () => {
   return (
     data && (
       <View style={styles.container}>
-        <FlashList
+        <MasonryFlashList
           data={data}
           renderItem={({ item }) => (
-            <Pressable style={styles.itemContainer}>
+            <Pressable
+              style={[
+                styles.itemContainer,
+                {
+                  height: Math.floor(Math.random() * 200) + 400,
+                },
+              ]}
+            >
               <View style={styles.item}>
                 <Image
                   style={StyleSheet.absoluteFillObject}
