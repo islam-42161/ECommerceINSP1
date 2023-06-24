@@ -12,15 +12,16 @@ import { FlashList, MasonryFlashList } from "@shopify/flash-list";
 import { Image } from "expo-image";
 
 const { width, height } = Dimensions.get("window");
+const IMAGE_WIDTH = width * 0.5;
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 const FlashListTest = () => {
   const [data, setData] = useState(null);
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
+    fetch("https://dummyjson.com/products/")
       .then((response) => response.json())
       .then((json) => {
-        console.log(json.length);
-        setData(json);
+        console.log(json.products.length);
+        setData(json.products);
       });
   }, []);
   return (
@@ -33,7 +34,7 @@ const FlashListTest = () => {
               style={[
                 styles.itemContainer,
                 {
-                  height: Math.floor(Math.random() * 200) + 400,
+                  height: Math.floor(Math.random() * 50) + 200,
                 },
               ]}
             >
@@ -41,12 +42,12 @@ const FlashListTest = () => {
                 <Image
                   style={StyleSheet.absoluteFillObject}
                   source={{
-                    uri: "https://imagesvibe.com/wp-content/uploads/2023/03/Cute-Panda-Images4.jpg",
+                    uri: item.thumbnail,
                   }}
                 />
-                <Text numberOfLines={2} style={styles.title}>
+                {/* <Text numberOfLines={2} style={styles.title}>
                   {item.title}
-                </Text>
+                </Text> */}
               </View>
             </Pressable>
           )}
@@ -55,7 +56,7 @@ const FlashListTest = () => {
           numColumns={2}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
-          snapToOffsets={data.map((_, index) => index * 200)}
+          // snapToOffsets={data.map((_, index) => index * 200)}
         />
       </View>
     )
@@ -70,8 +71,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemContainer: {
-    width: width / 2,
-    height: 200,
+    width: IMAGE_WIDTH,
     padding: 10,
   },
   item: {

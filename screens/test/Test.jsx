@@ -6,7 +6,7 @@ import Homescreen from "../Homescreen";
 
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 const Test = () => {
-  return <FlashListTest />;
+  return <Homescreen />;
 };
 
 export default Test;
