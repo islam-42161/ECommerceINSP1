@@ -21,7 +21,8 @@ const Tag = ({ value, containerRef, indicatorPosition, tagsScrollX }) => {
       indicatorPosition.value = withTiming(x, {
         duration: 500,
       });
-      runOnUI(scrollTo)(containerRef, x - width / 3, 0, true);
+      // scroll to middle of the page, minus columngap
+      runOnUI(scrollTo)(containerRef, x - width * 0.33, 0, true);
     });
 
     // if (indicatorPosition.value < tagsScrollX.value + width / 3) {
@@ -35,7 +36,7 @@ const Tag = ({ value, containerRef, indicatorPosition, tagsScrollX }) => {
     </Text>
   );
 };
-const TagsScrollView3 = ({
+const TagsScrollView = ({
   tags = [
     "All",
     "Newest",
@@ -102,16 +103,16 @@ const TagsScrollView3 = ({
   );
 };
 
-export default TagsScrollView3;
+export default TagsScrollView;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    width: width,
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "center",
     justifyContent: "space-evenly",
-    paddingHorizontal: 5,
+    paddingHorizontal: 20,
   },
   tagsConainerStyle: {
     columnGap: 20,

@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
+    "@shopify/flash-list": "1.4.0",
     "expo": "~48.0.5",
     "expo-blur": "~12.2.2",
+    "expo-dev-client": "~2.2.1",
     "expo-image": "~1.0.1",
     "expo-linear-gradient": "~12.1.2",
     "expo-screen-capture": "~5.1.1",

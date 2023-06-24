@@ -5,13 +5,16 @@ import Searchscreen from "./Searchscreen";
 import PreferenceScreen from "../components/PreferenceScreen";
 import ChangeHomeView from "../components/ChangeHomeView";
 import UserProfileView from "../components/UserProfileView";
-import TagsScrollView3 from "../components/TagsScrollView3";
+import TagsScrollView from "../components/TagsScrollView";
+import FlashListTest from "./test/FlashListTest";
 
 const Homescreen = () => {
   return (
     <View style={styles.container}>
       <HomeHeader />
-      <TagsScrollView3 />
+      <TagsScrollView />
+      <FlashListTest />
+
       <>
         <Searchscreen showPreference={true} />
         <PreferenceScreen />

@@ -1,23 +1,21 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, StatusBar } from "react-native";
 import React, { useRef } from "react";
-import TagsScrollView1 from "../../components/TagsScrollView1";
-import TagsScrollView2 from "../../components/TagsScrollView2";
-import TagsScrollView3 from "../../components/TagsScrollView3";
+import ColorThemeTest from "./ColorThemeTest";
+import FlashListTest from "./FlashListTest";
+import Homescreen from "../Homescreen";
 
+const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 const Test = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <TagsScrollView3 />
-    </View>
-  );
+  return <FlashListTest />;
 };
 
 export default Test;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: STATUSBAR_HEIGHT,
+  },
+});

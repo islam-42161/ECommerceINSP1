@@ -13,9 +13,9 @@ export default function App() {
   return (
     <Provider store={store}>
       {/* <ItemDetails/> */}
-      {/* <Test/> */}
+      <Test />
       {/* <HomeHeader/> */}
-      <Homescreen />
+      {/* <Homescreen /> */}
       <StatusBar style="auto" animated />
     </Provider>
   );
