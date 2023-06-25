@@ -17,29 +17,37 @@ import { setScreen } from "../redux/slices/bottomsheetSlice";
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 const HomeHeader = () => {
-
   const { view } = useSelector((state) => ({
     view: state.homescreen_states.view,
   }));
 
-  const handleViewChange=()=>{
-    dispatch(setScreen('change_home_list_view'))
-  }
-  const handleUserPress=()=>{
-    dispatch(setScreen('user-profile-view'))
-  }
-  const dispatch = useDispatch()
+  const handleViewChange = () => {
+    dispatch(setScreen("change_home_list_view"));
+  };
+  const handleUserPress = () => {
+    dispatch(setScreen("user-profile-view"));
+  };
+  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <MaterialIcons name={view} style={styles.headerbuttons} onPress={handleViewChange}/>
-        <Ionicons name="ios-person-circle-sharp" style={styles.headerbuttons} onPress={handleUserPress} />
+        <MaterialIcons
+          name={view}
+          style={styles.headerbuttons}
+          onPress={handleViewChange}
+        />
+        <Ionicons
+          name="ios-person-circle-sharp"
+          style={styles.headerbuttons}
+          onPress={handleUserPress}
+        />
       </View>
       <Text style={styles.headertext}>
-        We have prepared new products <Text style={styles.specialText}>for you ✌️</Text>
+        We have prepared new products{" "}
+        <Text style={styles.specialText}>for you ✌️</Text>
       </Text>
 
-<SearchBar showPreference searchable={false}/>
+      <SearchBar showPreference searchable={false} />
     </View>
   );
 };
@@ -58,7 +66,7 @@ const styles = StyleSheet.create({
     // borderBottomEndRadius: 50,//remove
     overflow: "hidden",
     justifyContent: "space-between",
-    rowGap:20
+    rowGap: 20,
   },
   header: {
     flexDirection: "row",

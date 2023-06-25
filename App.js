@@ -7,15 +7,13 @@ import Test from "./screens/test/Test";
 import HomeHeader from "./components/HomeHeader";
 import Homescreen from "./screens/Homescreen";
 import { usePreventScreenCapture } from "expo-screen-capture";
+import AppNavigationContainer from "./AppNavigationContainer";
 
 export default function App() {
   usePreventScreenCapture();
   return (
     <Provider store={store}>
-      {/* <ItemDetails/> */}
-      <Test />
-      {/* <HomeHeader/> */}
-      {/* <Homescreen /> */}
+      <AppNavigationContainer />
       <StatusBar style="auto" animated />
     </Provider>
   );

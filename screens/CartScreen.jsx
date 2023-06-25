@@ -2,16 +2,16 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-const Test = () => {
+const CartScreen = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Text onPress={() => navigation.goBack()}>Test: Go back</Text>
+      <Text onPress={() => navigation.goBack()}>Cart: Go back</Text>
     </View>
   );
 };
 
-export default Test;
+export default CartScreen;
 
 const styles = StyleSheet.create({
   container: {

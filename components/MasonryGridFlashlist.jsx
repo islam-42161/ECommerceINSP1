@@ -1,20 +1,11 @@
-import {
-  Dimensions,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  StatusBar,
-} from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FlashList, MasonryFlashList } from "@shopify/flash-list";
 import { Image } from "expo-image";
 
 const { width, height } = Dimensions.get("window");
 const IMAGE_WIDTH = width * 0.5;
-const STATUSBAR_HEIGHT = StatusBar.currentHeight;
-const FlashListTest = () => {
+const MasonryGridFlashlist = ({ items }) => {
   const [data, setData] = useState(null);
   useEffect(() => {
     fetch("https://dummyjson.com/products/")
@@ -45,9 +36,9 @@ const FlashListTest = () => {
                     uri: item.thumbnail,
                   }}
                 />
-                {/* <Text numberOfLines={2} style={styles.title}>
-                  {item.title}
-                </Text> */}
+                <Text numberOfLines={2} style={styles.title}>
+                  {item.title} • ${item.price}
+                </Text>
               </View>
             </Pressable>
           )}
@@ -56,6 +47,7 @@ const FlashListTest = () => {
           numColumns={2}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
+          ListFooterComponentStyle={{ padding: 60 }}
           // snapToOffsets={data.map((_, index) => index * 200)}
         />
       </View>
@@ -63,33 +55,28 @@ const FlashListTest = () => {
   );
 };
 
-export default FlashListTest;
+export default MasonryGridFlashlist;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: STATUSBAR_HEIGHT,
     flex: 1,
+    paddingHorizontal: 20,
   },
   itemContainer: {
-    width: IMAGE_WIDTH,
-    padding: 10,
+    width: IMAGE_WIDTH - 20,
+    padding: 5,
   },
   item: {
-    alignItems: "center",
     justifyContent: "flex-end",
     flex: 1,
-    borderRadius: 12,
+    borderRadius: 20,
     overflow: "hidden",
-    elevation: 5,
   },
   title: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: "bold",
     color: "white",
-    padding: 5,
-    backgroundColor: "rgba(0,0,0,0.7)",
-    width: "100%",
-    height: 50,
     textTransform: "capitalize",
+    padding: 5,
   },
 });
