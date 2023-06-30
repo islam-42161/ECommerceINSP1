@@ -2,8 +2,8 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-const Test = () => {
-  const navigation = useNavigation();
+const Test = ({ navigation }) => {
+  // const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Text onPress={() => navigation.goBack()}>Test: Go back</Text>

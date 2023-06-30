@@ -16,7 +16,11 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
 const AnimatedIcon = Animated.createAnimatedComponent(Ionicons);
-const BottomTab = ({ tabs = ["home", "cart", "heart", "settings"] }) => {
+const BottomTab = ({
+  tabs = ["home", "cart", "heart", "settings"],
+  listScrollY,
+  bottomPosition,
+}) => {
   const navigation = useNavigation();
   const pressHandler = useCallback((screen) => {
     navigation.navigate(screen);
@@ -25,7 +29,6 @@ const BottomTab = ({ tabs = ["home", "cart", "heart", "settings"] }) => {
   const { screen } = useSelector((state) => ({
     screen: state.bottomsheet_states.screen,
   }));
-  const bottomPosition = useSharedValue(20);
   useDerivedValue(() => {
     if (screen === "none") {
       bottomPosition.value = withTiming(20);
@@ -33,6 +36,7 @@ const BottomTab = ({ tabs = ["home", "cart", "heart", "settings"] }) => {
       bottomPosition.value = withTiming(-100);
     }
   }, [screen]);
+
   const bottomStyle = useAnimatedStyle(() => ({
     bottom: bottomPosition.value,
   }));

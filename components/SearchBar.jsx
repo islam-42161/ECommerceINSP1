@@ -7,10 +7,14 @@ import { setScreen } from "../redux/slices/bottomsheetSlice";
 import { setSearchText } from "../redux/slices/search_screen_slices";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
-const SearchBar = ({ showPreference = true, searchable = true,focus=false}) => {
-  const { screen,search_text } = useSelector((state) => ({
+const SearchBar = ({
+  showPreference = true,
+  searchable = true,
+  focus = false,
+}) => {
+  const { screen, search_text } = useSelector((state) => ({
     screen: state.bottomsheet_states.screen,
-    search_text: state.search_screen_states.search_text
+    search_text: state.search_screen_states.search_text,
   }));
   const dispatch = useDispatch();
   const keyboardref = useRef();
@@ -20,19 +24,18 @@ const SearchBar = ({ showPreference = true, searchable = true,focus=false}) => {
     } else {
       dispatch(setScreen("search"));
     }
-  }
+  };
 
-  const handlePreferencePress =()=>{
-    if(searchable){
+  const handlePreferencePress = () => {
+    if (searchable) {
       dispatch(setScreen("preference-search"));
-    }
-    else{
+    } else {
       dispatch(setScreen("preference-home"));
     }
-  }
-  const handleTextInput=(text)=>{
-    dispatch(setSearchText(text))
-  }
+  };
+  const handleTextInput = (text) => {
+    dispatch(setSearchText(text));
+  };
   return (
     <View style={styles.searchsection}>
       <Pressable style={styles.textinput} onPress={handlePress}>
@@ -40,7 +43,7 @@ const SearchBar = ({ showPreference = true, searchable = true,focus=false}) => {
         <TextInput
           placeholder="Search"
           placeholderTextColor={"gray"}
-          style={{ padding: 5, flex: 1, color: "white",fontWeight:'600' }}
+          style={{ padding: 5, flex: 1, color: "white", fontWeight: "600" }}
           ref={keyboardref}
           cursorColor={"gray"}
           selectionColor={"gray"}
@@ -50,12 +53,23 @@ const SearchBar = ({ showPreference = true, searchable = true,focus=false}) => {
           onChangeText={handleTextInput}
           value={search_text}
         />
-        {searchable && search_text?(
-        <Animated.Text entering={FadeIn} exiting={FadeOut} style={styles.clearTextStyle} onPress={()=>handleTextInput('')}>Clear</Animated.Text>
-        ):null}
+        {searchable && search_text ? (
+          <Animated.Text
+            entering={FadeIn}
+            exiting={FadeOut}
+            style={styles.clearTextStyle}
+            onPress={() => handleTextInput("")}
+          >
+            Clear
+          </Animated.Text>
+        ) : null}
       </Pressable>
       {showPreference ? (
-        <FontAwesome name="sliders" style={styles.preferenceicon} onPress={handlePreferencePress} />
+        <FontAwesome
+          name="sliders"
+          style={[styles.preferenceicon]}
+          onPress={handlePreferencePress}
+        />
       ) : null}
 
       {/* <PreferenceScreen/> */}
@@ -98,8 +112,8 @@ const styles = StyleSheet.create({
     color: "white",
     elevation: 0,
   },
-  clearTextStyle:{
-    fontSize:12,
-color:'lightgray'
-  }
+  clearTextStyle: {
+    fontSize: 12,
+    color: "lightgray",
+  },
 });

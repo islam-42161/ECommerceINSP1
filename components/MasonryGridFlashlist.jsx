@@ -10,22 +10,33 @@ import React, { useEffect, useState } from "react";
 import { FlashList, MasonryFlashList } from "@shopify/flash-list";
 import { Image } from "expo-image";
 import TagsScrollView from "./TagsScrollView";
+import Animated, {
+  useAnimatedScrollHandler,
+  useDerivedValue,
+  withTiming,
+} from "react-native-reanimated";
+
+const AnimatedMasonry = Animated.createAnimatedComponent(MasonryFlashList);
 
 const { width, height } = Dimensions.get("window");
 const COL_NUM = 2;
 const IMAGE_WIDTH = width / COL_NUM;
-const MasonryGridFlashlist = ({ items }) => {
-  const [data, setData] = useState(null);
-  useEffect(() => {
-    fetch("https://dummyjson.com/products/")
-      .then((response) => response.json())
-      .then((json) => {
-        setData(json.products);
-      });
-  }, []);
+const MasonryGridFlashlist = ({ data, listScrollY, bottomPosition }) => {
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      listScrollY.value = event.contentOffset.y;
+      if (event.velocity?.y > 0.5) {
+        bottomPosition.value = withTiming(-100);
+      } else {
+        bottomPosition.value = withTiming(20);
+      }
+    },
+  });
+
   return data ? (
     <View style={styles.container}>
-      <MasonryFlashList
+      <AnimatedMasonry
+        onScroll={scrollHandler}
         data={data}
         estimatedItemSize={200}
         keyExtractor={(_, index) => index}
@@ -73,7 +84,6 @@ export default MasonryGridFlashlist;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // paddingHorizontal: 20,
     // paddingHorizontal: IMAGE_WIDTH * 0.01,
   },
   indicator: {

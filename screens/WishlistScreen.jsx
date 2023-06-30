@@ -2,8 +2,8 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-const WishlistScreen = () => {
-  const navigation = useNavigation();
+const WishlistScreen = ({ navigation }) => {
+  // const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Text onPress={() => navigation.goBack()}>Wishlist: Go back</Text>

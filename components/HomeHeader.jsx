@@ -58,12 +58,6 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 1.5 * STATUSBAR_HEIGHT,
     padding: 20,
-    // flex: 0.3,
-    // backgroundColor: "#151515", //remove
-    // borderBottomColor: "#474747", //remove
-    // borderBottomWidth: 5,//remove
-    // borderBottomStartRadius: 50,//remove
-    // borderBottomEndRadius: 50,//remove
     overflow: "hidden",
     justifyContent: "space-between",
     rowGap: 20,

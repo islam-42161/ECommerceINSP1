@@ -2,8 +2,8 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-const CartScreen = () => {
-  const navigation = useNavigation();
+const CartScreen = ({ navigation }) => {
+  // const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Text onPress={() => navigation.goBack()}>Cart: Go back</Text>
