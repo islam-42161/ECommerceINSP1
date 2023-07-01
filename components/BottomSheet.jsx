@@ -4,6 +4,7 @@ import {
   StatusBar,
   View,
   Dimensions,
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Animated, {
@@ -16,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setScreen } from "../redux/slices/bottomsheetSlice";
 
 const AniamtedPressable = Animated.createAnimatedComponent(Pressable);
+const AnimatedView = Animated.createAnimatedComponent(KeyboardAvoidingView);
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 const { width, height } = Dimensions.get("window");
 const BottomSheet = ({
@@ -27,6 +29,7 @@ const BottomSheet = ({
   const { screen } = useSelector((state) => ({
     screen: state.bottomsheet_states.screen,
   }));
+  const dispatch = useDispatch();
   const onClose = () => {
     if (closePressOutside) {
       dispatch(setScreen("none"));
@@ -40,7 +43,6 @@ const BottomSheet = ({
       }
     };
   }, []);
-  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
       <AniamtedPressable
@@ -49,7 +51,6 @@ const BottomSheet = ({
         style={[StyleSheet.absoluteFillObject, styles.backdrop]}
         onPress={onClose}
       />
-      {/* children */}
       <Animated.View
         entering={SlideInDown}
         exiting={SlideOutDown}
@@ -58,6 +59,7 @@ const BottomSheet = ({
           contentContainerStyle,
         ]}
       >
+        {/* children */}
         {children}
       </Animated.View>
     </View>

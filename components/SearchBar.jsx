@@ -1,4 +1,11 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Keyboard,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import React, { useMemo, useRef } from "react";
 import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -27,10 +34,14 @@ const SearchBar = ({
   };
 
   const handlePreferencePress = () => {
-    if (searchable) {
-      dispatch(setScreen("preference-search"));
+    if (Keyboard.isVisible()) {
+      Keyboard.dismiss();
     } else {
-      dispatch(setScreen("preference-home"));
+      if (searchable) {
+        dispatch(setScreen("preference-search"));
+      } else {
+        dispatch(setScreen("preference-home"));
+      }
     }
   };
   const handleTextInput = (text) => {
