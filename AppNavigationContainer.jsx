@@ -31,7 +31,6 @@ const AppNavigationContainer = () => {
             bottomPosition: bottomPosition,
           }}
         />
-
         <Screen name="cart" component={CartScreen} />
         <Screen name="heart" component={WishlistScreen} />
         <Screen name="settings" component={Test} />

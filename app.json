@@ -24,7 +24,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "requireFullScreen":true
+      "requireFullScreen": true
     },
     "android": {
       "adaptiveIcon": {
@@ -34,6 +34,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "040001f3-aad5-413e-bb05-1d6ef1d9b91c"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/040001f3-aad5-413e-bb05-1d6ef1d9b91c"
     }
   }
 }

@@ -21,6 +21,7 @@ const AnimatedMasonry = Animated.createAnimatedComponent(MasonryFlashList);
 const { width, height } = Dimensions.get("window");
 const COL_NUM = 2;
 const IMAGE_WIDTH = width / COL_NUM;
+const item_image_heights = [IMAGE_WIDTH * 0.7, IMAGE_WIDTH * 1.4];
 const MasonryGridFlashlist = ({ data, listScrollY, bottomPosition }) => {
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
@@ -50,8 +51,9 @@ const MasonryGridFlashlist = ({ data, listScrollY, bottomPosition }) => {
               styles.itemContainer,
               {
                 height:
-                  Math.floor(Math.random() * IMAGE_WIDTH * 0.4) +
-                  IMAGE_WIDTH * 0.8,
+                  item_image_heights[
+                    Math.floor(Math.random() * item_image_heights.length)
+                  ],
               },
             ]}
           >
@@ -84,7 +86,6 @@ export default MasonryGridFlashlist;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // paddingHorizontal: IMAGE_WIDTH * 0.01,
   },
   indicator: {
     flex: 1,
@@ -107,7 +108,8 @@ const styles = StyleSheet.create({
     color: "lightgray",
     textTransform: "capitalize",
     padding: IMAGE_WIDTH * 0.06,
-    // padding: IMAGE_WIDTH * 0.04,
+    // paddingVertical: IMAGE_WIDTH * 0.06,
+    // paddingHorizontal: IMAGE_WIDTH * 0.03,
     backgroundColor: "rgba(52,52,52,0.7)",
     textAlignVertical: "center",
   },

@@ -14,6 +14,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import SearchBar from "./SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { setScreen } from "../redux/slices/bottomsheetSlice";
+import TagsScrollView from "./TagsScrollView";
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 const HomeHeader = () => {
@@ -42,12 +43,13 @@ const HomeHeader = () => {
           onPress={handleUserPress}
         />
       </View>
-      <Text style={styles.headertext}>
+      <Text numberOfLines={2} adjustsFontSizeToFit style={styles.headertext}>
         We have prepared new products{" "}
         <Text style={styles.specialText}>for you ✌️</Text>
       </Text>
 
       <SearchBar showPreference searchable={false} />
+      <TagsScrollView />
     </View>
   );
 };
@@ -57,10 +59,10 @@ export default HomeHeader;
 const styles = StyleSheet.create({
   container: {
     paddingTop: 1.5 * STATUSBAR_HEIGHT,
-    padding: 20,
+    padding: 30,
     overflow: "hidden",
     justifyContent: "space-between",
-    rowGap: 20,
+    rowGap: 30,
   },
   header: {
     flexDirection: "row",
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#343434",
     textAlign: "center",
     textAlignVertical: "center",
-    fontSize: 24,
+    fontSize: 20,
     borderRadius: 15,
     color: "white",
     elevation: 5,

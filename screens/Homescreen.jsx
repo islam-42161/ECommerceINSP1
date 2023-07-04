@@ -24,7 +24,6 @@ const Homescreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <HomeHeader listScrollY={listScrollY} />
-      <TagsScrollView />
       <MasonryGridFlashlist
         data={data}
         bottomPosition={bottomPosition}
@@ -47,6 +46,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#151515",
-    rowGap: 20,
+    // rowGap: 20,
   },
 });
