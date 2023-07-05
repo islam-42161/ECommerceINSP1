@@ -18,8 +18,22 @@ import Animated, {
 
 const AnimatedMasonry = Animated.createAnimatedComponent(MasonryFlashList);
 
+{
+  /* <View style={styles.item}>
+<Image
+  style={StyleSheet.absoluteFillObject}
+  source={{
+    uri: item.thumbnail,
+  }}
+/>
+<Text numberOfLines={2} style={styles.title}>
+  {item.title} • ${item.price}
+</Text>
+</View> */
+}
 const { width, height } = Dimensions.get("window");
 const COL_NUM = 2;
+const _gap = 30;
 const IMAGE_WIDTH = width / COL_NUM;
 const item_image_heights = [IMAGE_WIDTH * 0.7, IMAGE_WIDTH * 1.4];
 const MasonryGridFlashlist = ({ data, listScrollY, bottomPosition }) => {
@@ -86,6 +100,7 @@ export default MasonryGridFlashlist;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: "6%",
   },
   indicator: {
     flex: 1,
@@ -94,10 +109,21 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     width: IMAGE_WIDTH,
-    padding: IMAGE_WIDTH * 0.03,
+    // backgroundColor: "pink",
+    // padding: IMAGE_WIDTH * 0.03,
+    // padding: IMAGE_WIDTH * 0.11,
+    // backgroundColor: "pink",
+    // borderWidth: 1,
   },
   item: {
-    flex: 1,
+    // flex: 1,
+    // height: "100%",
+    // width: "70%",
+    position: "absolute",
+    top: 10,
+    bottom: 10,
+    left: 10,
+    right: _gap + 10,
     borderRadius: IMAGE_WIDTH * 0.12,
     overflow: "hidden",
     justifyContent: "flex-end",
