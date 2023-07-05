@@ -18,22 +18,8 @@ import Animated, {
 
 const AnimatedMasonry = Animated.createAnimatedComponent(MasonryFlashList);
 
-{
-  /* <View style={styles.item}>
-<Image
-  style={StyleSheet.absoluteFillObject}
-  source={{
-    uri: item.thumbnail,
-  }}
-/>
-<Text numberOfLines={2} style={styles.title}>
-  {item.title} • ${item.price}
-</Text>
-</View> */
-}
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 const COL_NUM = 2;
-const _gap = 30;
 const IMAGE_WIDTH = width / COL_NUM;
 const item_image_heights = [IMAGE_WIDTH * 0.7, IMAGE_WIDTH * 1.4];
 const MasonryGridFlashlist = ({ data, listScrollY, bottomPosition }) => {
@@ -78,10 +64,10 @@ const MasonryGridFlashlist = ({ data, listScrollY, bottomPosition }) => {
                   uri: item.thumbnail,
                 }}
               />
-              <Text numberOfLines={2} style={styles.title}>
-                {item.title} • ${item.price}
-              </Text>
             </View>
+            <Text numberOfLines={2} style={styles.title}>
+              {item.title} • ${item.price}
+            </Text>
           </Pressable>
         )}
       />
@@ -108,22 +94,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   itemContainer: {
-    width: IMAGE_WIDTH,
-    // backgroundColor: "pink",
-    // padding: IMAGE_WIDTH * 0.03,
-    // padding: IMAGE_WIDTH * 0.11,
-    // backgroundColor: "pink",
-    // borderWidth: 1,
+    width: "94%",
+    alignSelf: "center",
+    paddingVertical: IMAGE_WIDTH * 0.03,
+    paddingHorizontal: IMAGE_WIDTH * 0.015,
   },
   item: {
-    // flex: 1,
-    // height: "100%",
-    // width: "70%",
-    position: "absolute",
-    top: 10,
-    bottom: 10,
-    left: 10,
-    right: _gap + 10,
+    flex: 1,
     borderRadius: IMAGE_WIDTH * 0.12,
     overflow: "hidden",
     justifyContent: "flex-end",
@@ -133,10 +110,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "lightgray",
     textTransform: "capitalize",
-    padding: IMAGE_WIDTH * 0.06,
-    // paddingVertical: IMAGE_WIDTH * 0.06,
-    // paddingHorizontal: IMAGE_WIDTH * 0.03,
-    backgroundColor: "rgba(52,52,52,0.7)",
     textAlignVertical: "center",
+    padding: IMAGE_WIDTH * 0.03,
   },
 });
