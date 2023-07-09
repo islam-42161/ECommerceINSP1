@@ -16,12 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
 const AnimatedIcon = Animated.createAnimatedComponent(Ionicons);
-const BottomTab = ({
-  state,
-  descriptors,
-  navigation,
-  tabs = ["home", "cart", "heart", "settings"],
-}) => {
+const BottomTab = ({ state, descriptors, navigation }) => {
   const listScrollY = useSharedValue(0);
   const bottomPosition = useSharedValue(20);
   const { screen } = useSelector((state) => ({
@@ -81,7 +76,8 @@ const BottomTab = ({
             onPress={onPress}
             key={index}
             onLongPress={onLongPress}
-            name={`ios-${label.toLowerCase()}-outline`}
+            // name={`ios-${label.toLowerCase()}-outline`}
+            name={route.params?.name}
             style={[
               styles.bottomButtons,
               {

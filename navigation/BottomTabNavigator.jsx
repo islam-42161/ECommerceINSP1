@@ -25,78 +25,30 @@ export default function BottomTabNavigator() {
       >
         <Tab.Screen
           name="Home"
-          component={Homescreen}
-          options={{
-            tabBarIcon: ({ focused }) => {
-              return (
-                <AnimatedIcon
-                  name={`ios-home-outline`}
-                  style={[
-                    styles.bottomButtons,
-                    {
-                      color: focused ? "lightgray" : "gray",
-                    },
-                  ]}
-                />
-              );
-            },
+          initialParams={{
+            name: "ios-home-outline",
           }}
+          component={Homescreen}
         />
         <Tab.Screen
           name="Cart"
           component={CartScreen}
-          options={{
-            tabBarIcon: ({ focused }) => {
-              return (
-                <AnimatedIcon
-                  name={`ios-cart-outline`}
-                  style={[
-                    styles.bottomButtons,
-                    {
-                      color: focused ? "lightgray" : "gray",
-                    },
-                  ]}
-                />
-              );
-            },
+          initialParams={{
+            name: "ios-cart-outline",
           }}
         />
         <Tab.Screen
-          name="Heart"
+          name="Wishlist"
           component={WishlistScreen}
-          options={{
-            tabBarIcon: ({ focused }) => {
-              return (
-                <AnimatedIcon
-                  name={`ios-heart-outline`}
-                  style={[
-                    styles.bottomButtons,
-                    {
-                      color: focused ? "lightgray" : "gray",
-                    },
-                  ]}
-                />
-              );
-            },
+          initialParams={{
+            name: "ios-heart-outline",
           }}
         />
         <Tab.Screen
           name="Settings"
           component={Test}
-          options={{
-            tabBarIcon: ({ focused }) => {
-              return (
-                <AnimatedIcon
-                  name={`ios-settings-outline`}
-                  style={[
-                    styles.bottomButtons,
-                    {
-                      color: focused ? "lightgray" : "gray",
-                    },
-                  ]}
-                />
-              );
-            },
+          initialParams={{
+            name: "ios-settings-outline",
           }}
         />
       </Tab.Navigator>
