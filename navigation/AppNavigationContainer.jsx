@@ -2,11 +2,11 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Homescreen from "./screens/Homescreen";
-import Test from "./screens/test/Test";
-import WishlistScreen from "./screens/WishlistScreen";
-import CartScreen from "./screens/CartScreen";
-import BottomTab from "./components/BottomTab";
+import Homescreen from "../screens/Homescreen";
+import Test from "../screens/test/Test";
+import WishlistScreen from "../screens/WishlistScreen";
+import CartScreen from "../screens/CartScreen";
+import BottomTab from "../components/BottomTab";
 import { useSharedValue } from "react-native-reanimated";
 
 const Stack = createNativeStackNavigator();

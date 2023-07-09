@@ -7,12 +7,13 @@ import ChangeHomeView from "../components/ChangeHomeView";
 import UserProfileView from "../components/UserProfileView";
 import TagsScrollView from "../components/TagsScrollView";
 import MasonryGridFlashlist from "../components/MasonryGridFlashlist";
-import BottomTab from "../components/BottomTab";
 import { useSharedValue } from "react-native-reanimated";
 
 const Homescreen = ({ navigation, route }) => {
-  const listScrollY = route.params?.listScrollY;
-  const bottomPosition = route.params?.bottomPosition;
+  // const listScrollY = route.params?.listScrollY;
+  // const bottomPosition = route.params?.bottomPosition;
+  const listScrollY = useSharedValue(0);
+  const bottomPosition = useSharedValue(20);
   const [data, setData] = useState(null);
   useEffect(() => {
     fetch("https://dummyjson.com/products/")

@@ -17,15 +17,13 @@ import { useSelector } from "react-redux";
 
 const AnimatedIcon = Animated.createAnimatedComponent(Ionicons);
 const BottomTab = ({
+  state,
+  descriptors,
+  navigation,
   tabs = ["home", "cart", "heart", "settings"],
-  listScrollY,
-  bottomPosition,
 }) => {
-  const navigation = useNavigation();
-  const pressHandler = useCallback((screen) => {
-    navigation.navigate(screen);
-  }, []);
-
+  const listScrollY = useSharedValue(0);
+  const bottomPosition = useSharedValue(20);
   const { screen } = useSelector((state) => ({
     screen: state.bottomsheet_states.screen,
   }));
@@ -40,18 +38,54 @@ const BottomTab = ({
   const bottomStyle = useAnimatedStyle(() => ({
     bottom: bottomPosition.value,
   }));
+
   return (
     <Animated.View style={[styles.container, bottomStyle]}>
-      {tabs.map((value, index) => {
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : route.name;
+
+        const isFocused = state.index === index;
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: "tabPress",
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            // The `merge: true` option makes sure that the params inside the tab screen are preserved
+            navigation.navigate({ name: route.name, merge: true });
+          }
+        };
+
+        const onLongPress = () => {
+          navigation.emit({
+            type: "tabLongPress",
+            target: route.key,
+          });
+        };
+
         return (
           <AnimatedIcon
+            accessibilityRole="button"
+            accessibilityState={isFocused ? { selected: true } : {}}
+            accessibilityLabel={options.tabBarAccessibilityLabel}
+            testID={options.tabBarTestID}
+            onPress={onPress}
             key={index}
-            onPress={() => pressHandler(value)}
-            name={`ios-${value}-outline`}
+            onLongPress={onLongPress}
+            name={`ios-${label.toLowerCase()}-outline`}
             style={[
               styles.bottomButtons,
               {
-                color: index === 0 ? "lightgray" : "gray",
+                color: isFocused ? "lightgray" : "gray",
               },
             ]}
           />
