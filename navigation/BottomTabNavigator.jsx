@@ -15,44 +15,42 @@ const AnimatedIcon = Animated.createAnimatedComponent(Ionicons);
 
 export default function BottomTabNavigator() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        tabBar={(props) => <BottomTab {...props} />}
-        screenOptions={{
-          tabBarHideOnKeyboard: true,
-          header: () => null,
+    <Tab.Navigator
+      tabBar={(props) => <BottomTab {...props} />}
+      screenOptions={{
+        tabBarHideOnKeyboard: true,
+        header: () => null,
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        initialParams={{
+          name: "ios-home-outline",
         }}
-      >
-        <Tab.Screen
-          name="Home"
-          initialParams={{
-            name: "ios-home-outline",
-          }}
-          component={Homescreen}
-        />
-        <Tab.Screen
-          name="Cart"
-          component={CartScreen}
-          initialParams={{
-            name: "ios-cart-outline",
-          }}
-        />
-        <Tab.Screen
-          name="Wishlist"
-          component={WishlistScreen}
-          initialParams={{
-            name: "ios-heart-outline",
-          }}
-        />
-        <Tab.Screen
-          name="Settings"
-          component={Test}
-          initialParams={{
-            name: "ios-settings-outline",
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+        component={Homescreen}
+      />
+      <Tab.Screen
+        name="Cart"
+        component={CartScreen}
+        initialParams={{
+          name: "ios-cart-outline",
+        }}
+      />
+      <Tab.Screen
+        name="Wishlist"
+        component={WishlistScreen}
+        initialParams={{
+          name: "ios-heart-outline",
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={Test}
+        initialParams={{
+          name: "ios-settings-outline",
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 

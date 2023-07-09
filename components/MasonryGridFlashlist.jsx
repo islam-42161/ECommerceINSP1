@@ -15,6 +15,7 @@ import Animated, {
   useDerivedValue,
   withTiming,
 } from "react-native-reanimated";
+import { LinearGradient } from "expo-linear-gradient";
 
 const AnimatedMasonry = Animated.createAnimatedComponent(MasonryFlashList);
 
@@ -22,7 +23,12 @@ const { width } = Dimensions.get("window");
 const COL_NUM = 2;
 const IMAGE_WIDTH = width / COL_NUM;
 const item_image_heights = [IMAGE_WIDTH * 0.7, IMAGE_WIDTH * 1.4];
-const MasonryGridFlashlist = ({ data, listScrollY, bottomPosition }) => {
+const MasonryGridFlashlist = ({
+  data,
+  listScrollY,
+  bottomPosition,
+  navigation,
+}) => {
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       listScrollY.value = event.contentOffset.y;
@@ -47,6 +53,11 @@ const MasonryGridFlashlist = ({ data, listScrollY, bottomPosition }) => {
         ListFooterComponentStyle={{ padding: 60 }}
         renderItem={({ item }) => (
           <Pressable
+            onPress={() =>
+              navigation.navigate("item_details", {
+                item: item,
+              })
+            }
             style={[
               styles.itemContainer,
               {
@@ -64,10 +75,12 @@ const MasonryGridFlashlist = ({ data, listScrollY, bottomPosition }) => {
                   uri: item.thumbnail,
                 }}
               />
+              <LinearGradient colors={["transparent", "black"]}>
+                <Text numberOfLines={2} style={styles.title}>
+                  {item.title} • ${item.price}
+                </Text>
+              </LinearGradient>
             </View>
-            <Text numberOfLines={2} style={styles.title}>
-              {item.title} • ${item.price}
-            </Text>
           </Pressable>
         )}
       />
@@ -111,6 +124,6 @@ const styles = StyleSheet.create({
     color: "lightgray",
     textTransform: "capitalize",
     textAlignVertical: "center",
-    padding: IMAGE_WIDTH * 0.03,
+    padding: IMAGE_WIDTH * 0.06,
   },
 });

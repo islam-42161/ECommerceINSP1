@@ -29,8 +29,8 @@ const Homescreen = ({ navigation, route }) => {
         data={data}
         bottomPosition={bottomPosition}
         listScrollY={listScrollY}
+        navigation={navigation}
       />
-      {/* <BottomTab /> */}
       <>
         <Searchscreen showPreference={true} />
         <PreferenceScreen />

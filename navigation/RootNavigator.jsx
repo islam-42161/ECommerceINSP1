@@ -8,11 +8,13 @@ import WishlistScreen from "../screens/WishlistScreen";
 import CartScreen from "../screens/CartScreen";
 import BottomTab from "../components/BottomTab";
 import { useSharedValue } from "react-native-reanimated";
+import BottomTabNavigator from "./BottomTabNavigator";
+import ItemDetails from "../screens/ItemDetails";
 
 const Stack = createNativeStackNavigator();
 const Screen = Stack.Screen;
 const Navigator = Stack.Navigator;
-const AppNavigationContainer = () => {
+const RootNavigator = () => {
   const listScrollY = useSharedValue(0);
   const bottomPosition = useSharedValue(20);
   return (
@@ -21,25 +23,22 @@ const AppNavigationContainer = () => {
         screenOptions={{
           header: () => null,
         }}
-        initialRouteName="home"
+        initialRouteName="bottom_navigator"
       >
         <Screen
-          name="home"
-          component={Homescreen}
+          name="bottom_navigator"
+          component={BottomTabNavigator}
           initialParams={{
             listScrollY: listScrollY,
             bottomPosition: bottomPosition,
           }}
         />
-        <Screen name="cart" component={CartScreen} />
-        <Screen name="heart" component={WishlistScreen} />
-        <Screen name="settings" component={Test} />
+        <Screen name="item_details" component={ItemDetails} />
       </Navigator>
-      <BottomTab bottomPosition={bottomPosition} listScrollY={listScrollY} />
     </NavigationContainer>
   );
 };
 
-export default AppNavigationContainer;
+export default RootNavigator;
 
 const styles = StyleSheet.create({});

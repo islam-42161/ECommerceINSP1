@@ -27,36 +27,37 @@ import {
 } from "../redux/slices/ItemDetailsStates";
 const { height, width } = Dimensions.get("window");
 
-const ItemDetails = () => {
+const ItemDetails = ({ navigation, route }) => {
+  const { item } = route.params;
 
   // image scrollx value
   const animatedScrollX = useSharedValue(0);
   const imageCarouselRef = useAnimatedRef();
 
-  const { wishlisted, activeColorIndex} = useSelector((state) => ({
+  const { wishlisted, activeColorIndex } = useSelector((state) => ({
     wishlisted: state.item_details_states.wishlisted,
     activeColorIndex: state.item_details_states.activeColorIndex,
   }));
   const dispatch = useDispatch();
-  
-  const colors = ["#151515",'lightblue', "lightgreen", "hotpink"];
+
+  const colors = ["#151515", "lightblue", "lightgreen", "hotpink"];
   const COLOR_SIZE = 30;
   const COLOR_GAP = 5;
   const activeColorPosition = useSharedValue(0);
-  const backgroundColorAnimated = useSharedValue('#151515');
+  const backgroundColorAnimated = useSharedValue("#151515");
 
   // changing background color on color position change
-  useDerivedValue(()=>{
-      backgroundColorAnimated.value =  interpolateColor(
-        activeColorPosition.value,
-        colors.map((_,index)=>(index*(COLOR_GAP+COLOR_SIZE))),
-        colors
-        )
-    },[activeColorPosition.value])
+  useDerivedValue(() => {
+    backgroundColorAnimated.value = interpolateColor(
+      activeColorPosition.value,
+      colors.map((_, index) => index * (COLOR_GAP + COLOR_SIZE)),
+      colors
+    );
+  }, [activeColorPosition.value]);
 
-  const ambienceStyle = useAnimatedStyle(()=>({
-    backgroundColor: backgroundColorAnimated.value
-  }))
+  const ambienceStyle = useAnimatedStyle(() => ({
+    backgroundColor: backgroundColorAnimated.value,
+  }));
 
   const selectedColorPositionStyle = useAnimatedStyle(() => ({
     transform: [
@@ -68,16 +69,15 @@ const ItemDetails = () => {
 
   const handleColorPress = (index) => {
     //35 = indicator size(30) + gap between indicators(5)
-    activeColorPosition.value = withTiming(index * (COLOR_SIZE+COLOR_GAP))
+    activeColorPosition.value = withTiming(index * (COLOR_SIZE + COLOR_GAP));
   };
-  
 
   return (
-    <Animated.View style={[styles.container,ambienceStyle]}>
+    <Animated.View style={[styles.container, ambienceStyle]}>
       <View style={styles.headerBar}>
         <Ionicons
           name="chevron-back-sharp"
-          onPress={() => console.log("back button functioning")}
+          onPress={() => navigation.goBack()}
           style={[styles.headerButtons]}
         />
         <Ionicons
@@ -89,23 +89,24 @@ const ItemDetails = () => {
       <ImageCarousel
         animatedScrollX={animatedScrollX}
         animatedRef={imageCarouselRef}
-        ambienceColor = {backgroundColorAnimated}
+        ambienceColor={backgroundColorAnimated}
+        images={item.images}
       />
 
       {/* Bottom Info */}
       <Animated.View style={[styles.bottomInfo]}>
         <DotsCarousel
+          items={item.images.map((_, index) => index)}
           animatedRef={imageCarouselRef}
           animatedScrollX={animatedScrollX}
         />
 
         {/* title */}
         <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
-          Bottle
+          {item.title}
         </Text>
         <Text style={styles.subTitle} numberOfLines={3}>
-          Water Bottle - what you need for training. Stylish, comfortable and
-          practical to use. Suitable for men and women.
+          {item.description}
         </Text>
 
         {/* choice section */}
@@ -115,41 +116,41 @@ const ItemDetails = () => {
             style={styles.colorChoice}
             colors={["white", "transparent", "white"]}
           > */}
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ gap: COLOR_GAP }}
-            >
-              <Animated.View
-                style={[
-                  {
-                    backgroundColor: "transparent",
-                    borderWidth: 3,
-                    borderColor: "gray",
-                    height: COLOR_SIZE,
-                    width: COLOR_SIZE,
-                    borderRadius: COLOR_SIZE/2,
-                    position: "absolute",
-                    zIndex: 5,
-                  },
-                  selectedColorPositionStyle,
-                ]}
-              />
-              {colors.map((color, index) => (
-                <Pressable
-                  key={index}
-                  style={{
-                    backgroundColor: color,
-                    width: COLOR_SIZE,
-                    height: COLOR_SIZE,
-                    borderRadius: COLOR_SIZE / 2,
-                    elevation:2
-                    // overflow:'hidden'
-                  }}
-                  onPress={() => handleColorPress(index)}
-                ></Pressable>
-              ))}
-            </ScrollView>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ gap: COLOR_GAP }}
+          >
+            <Animated.View
+              style={[
+                {
+                  backgroundColor: "transparent",
+                  borderWidth: 3,
+                  borderColor: "gray",
+                  height: COLOR_SIZE,
+                  width: COLOR_SIZE,
+                  borderRadius: COLOR_SIZE / 2,
+                  position: "absolute",
+                  zIndex: 5,
+                },
+                selectedColorPositionStyle,
+              ]}
+            />
+            {colors.map((color, index) => (
+              <Pressable
+                key={index}
+                style={{
+                  backgroundColor: color,
+                  width: COLOR_SIZE,
+                  height: COLOR_SIZE,
+                  borderRadius: COLOR_SIZE / 2,
+                  elevation: 2,
+                  // overflow:'hidden'
+                }}
+                onPress={() => handleColorPress(index)}
+              ></Pressable>
+            ))}
+          </ScrollView>
           {/* </LinearGradient> */}
 
           <View style={styles.addremoveCart}>
@@ -160,14 +161,16 @@ const ItemDetails = () => {
             <Text style={{ fontSize: 14 }}>2</Text>
             <AntDesign
               name="plus"
-              style={[{
-                padding: 10,
-                backgroundColor: "#1A1A1A",
-                borderRadius: width / 8,
-                color: "white",
-                marginLeft: 8,
-                fontSize: 10,
-              }]}
+              style={[
+                {
+                  padding: 10,
+                  backgroundColor: "#1A1A1A",
+                  borderRadius: width / 8,
+                  color: "white",
+                  marginLeft: 8,
+                  fontSize: 10,
+                },
+              ]}
             />
           </View>
         </View>
@@ -189,7 +192,7 @@ const ItemDetails = () => {
               color: "#1A1A1A",
             }}
           >
-            $123.54
+            ${item.price.toFixed(2)}
           </Text>
 
           {/* cart button */}

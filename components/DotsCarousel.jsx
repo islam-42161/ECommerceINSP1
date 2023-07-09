@@ -31,10 +31,8 @@ const DotsCarousel = ({
   style,
   animatedRef,
 }) => {
-
-
   const gotoIndex = (index) => {
-    runOnUI(scrollTo)(animatedRef, index*width, 0, true);
+    runOnUI(scrollTo)(animatedRef, index * width, 0, true);
   };
 
   return (
@@ -56,7 +54,7 @@ const DotsCarousel = ({
     </ScrollView>
   );
 };
-const Dot = ({ i, animatedScrollX,gotoIndex }) => {
+const Dot = ({ i, animatedScrollX, gotoIndex }) => {
   const animatedDotStyle = useAnimatedStyle(() => ({
     transform: [
       {
@@ -69,10 +67,7 @@ const Dot = ({ i, animatedScrollX,gotoIndex }) => {
     ],
   }));
   return (
-    <Pressable
-      style={styles.dot}
-      onPress={()=>gotoIndex(i)}
-    >
+    <Pressable style={styles.dot} onPress={() => gotoIndex(i)}>
       <Animated.View style={[styles.activeDot, animatedDotStyle]} />
     </Pressable>
   );
