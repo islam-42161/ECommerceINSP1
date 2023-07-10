@@ -15,8 +15,8 @@ const Stack = createNativeStackNavigator();
 const Screen = Stack.Screen;
 const Navigator = Stack.Navigator;
 const RootNavigator = () => {
-  const listScrollY = useSharedValue(0);
-  const bottomPosition = useSharedValue(20);
+  // const listScrollY = useSharedValue(0);
+  // const bottomPosition = useSharedValue(20);
   return (
     <NavigationContainer>
       <Navigator
@@ -28,10 +28,10 @@ const RootNavigator = () => {
         <Screen
           name="bottom_navigator"
           component={BottomTabNavigator}
-          initialParams={{
-            listScrollY: listScrollY,
-            bottomPosition: bottomPosition,
-          }}
+          // initialParams={{
+          //   listScrollY: listScrollY,
+          //   bottomPosition: bottomPosition,
+          // }}
         />
         <Screen name="item_details" component={ItemDetails} />
       </Navigator>
