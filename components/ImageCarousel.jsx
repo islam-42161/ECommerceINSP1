@@ -56,7 +56,8 @@ const ImageCarousel = ({
               placeholder={placeholder_blurhash}
               style={{ flex: 1 }}
               transition={1000}
-              contentFit="contain"
+              // contentFit="contain"
+              cachePolicy={"memory-disk"}
             />
           </View>
         ))}

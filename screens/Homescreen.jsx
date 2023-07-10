@@ -16,10 +16,10 @@ const Homescreen = ({ navigation, route }) => {
   const bottomPosition = useSharedValue(20);
   const [data, setData] = useState(null);
   useEffect(() => {
-    fetch("https://dummyjson.com/products/")
+    fetch("https://api.escuelajs.co/api/v1/products")
       .then((response) => response.json())
       .then((json) => {
-        setData(json.products);
+        setData(json);
       });
   }, []);
   return (

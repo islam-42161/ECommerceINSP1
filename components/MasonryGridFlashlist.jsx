@@ -16,6 +16,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 
 const AnimatedMasonry = Animated.createAnimatedComponent(MasonryFlashList);
 
@@ -72,8 +73,13 @@ const MasonryGridFlashlist = ({
               <Image
                 style={StyleSheet.absoluteFillObject}
                 source={{
-                  uri: item.thumbnail,
+                  uri: item.images[0],
                 }}
+              />
+              <Ionicons
+                onPress={() => console.log("pressed wishlist")}
+                name="ios-heart-outline"
+                style={styles.wishlistIcon}
               />
               <LinearGradient colors={["transparent", "black"]}>
                 <Text numberOfLines={2} style={styles.title}>
@@ -116,7 +122,20 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: IMAGE_WIDTH * 0.12,
     overflow: "hidden",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
+  },
+  wishlistIcon: {
+    height: 30,
+    width: 30,
+    fontSize: 16,
+    textAlignVertical: "center",
+    textAlign: "center",
+    color: "lightgray",
+    backgroundColor: "rgba(0,0,0,0.3)",
+    borderRadius: 15,
+    margin: 10,
+    alignSelf: "flex-end",
+    // elevation: 5,
   },
   title: {
     fontSize: IMAGE_WIDTH * 0.06,
