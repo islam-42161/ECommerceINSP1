@@ -13,11 +13,10 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const AnimatedIcon = Animated.createAnimatedComponent(Ionicons);
 const BottomTab = ({ state, descriptors, navigation }) => {
-  const listScrollY = useSharedValue(0);
   const bottomPosition = useSharedValue(20);
   const { screen } = useSelector((state) => ({
     screen: state.bottomsheet_states.screen,
@@ -35,7 +34,11 @@ const BottomTab = ({ state, descriptors, navigation }) => {
   }));
 
   return (
-    <Animated.View style={[styles.container, bottomStyle]}>
+    <Animated.View
+      entering={SlideInDown}
+      exiting={SlideOutDown}
+      style={[styles.container, bottomStyle]}
+    >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -96,8 +99,10 @@ export default BottomTab;
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    left: 20,
-    right: 20,
+    left: "8%",
+    right: "8%",
+    // left: 20,
+    // right: 20,
     alignItems: "center",
     justifyContent: "space-evenly",
     flexDirection: "row",

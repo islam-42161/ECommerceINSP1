@@ -8,10 +8,9 @@ import CartScreen from "../screens/CartScreen";
 import Test from "../screens/test/Test";
 import BottomTab from "../components/BottomTab";
 import { Ionicons } from "@expo/vector-icons";
-import Animated from "react-native-reanimated";
+import Animated, { useSharedValue } from "react-native-reanimated";
 
 const Tab = createBottomTabNavigator();
-const AnimatedIcon = Animated.createAnimatedComponent(Ionicons);
 
 export default function BottomTabNavigator() {
   return (

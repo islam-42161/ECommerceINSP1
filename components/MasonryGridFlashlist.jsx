@@ -6,14 +6,12 @@ import {
   Text,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { FlashList, MasonryFlashList } from "@shopify/flash-list";
+import React from "react";
+import { MasonryFlashList } from "@shopify/flash-list";
 import { Image } from "expo-image";
-import TagsScrollView from "./TagsScrollView";
 import Animated, {
   useAnimatedScrollHandler,
-  useDerivedValue,
-  withTiming,
+  useSharedValue,
 } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
@@ -24,19 +22,19 @@ const { width } = Dimensions.get("window");
 const COL_NUM = 2;
 const IMAGE_WIDTH = width / COL_NUM;
 const item_image_heights = [IMAGE_WIDTH * 0.7, IMAGE_WIDTH * 1.4];
-const MasonryGridFlashlist = ({
-  data,
-  listScrollY,
-  bottomPosition,
-  navigation,
-}) => {
+
+const MasonryGridFlashlist = ({ data, navigation, lastContentOffset }) => {
   const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      listScrollY.value = event.contentOffset.y;
-      if (event.velocity?.y > 0.5) {
-        bottomPosition.value = withTiming(-100);
+    onBeginDrag: (e) => {
+      lastContentOffset.value = e.contentOffset.y;
+    },
+    onEndDrag: (e) => {
+      // console.log(e.contentOffset.y - lastContentOffset.value);
+      lastContentOffset.value = e.contentOffset.y - lastContentOffset.value;
+      if (lastContentOffset.value > 0) {
+        console.log("scrolling down");
       } else {
-        bottomPosition.value = withTiming(20);
+        console.log("scrolling up");
       }
     },
   });
@@ -46,7 +44,7 @@ const MasonryGridFlashlist = ({
       <AnimatedMasonry
         onScroll={scrollHandler}
         data={data}
-        estimatedItemSize={200}
+        estimatedItemSize={IMAGE_WIDTH * 0.7}
         keyExtractor={(_, index) => index}
         numColumns={COL_NUM}
         showsVerticalScrollIndicator={false}
@@ -73,7 +71,8 @@ const MasonryGridFlashlist = ({
               <Image
                 style={StyleSheet.absoluteFillObject}
                 source={{
-                  uri: item.images[0],
+                  // uri: item.images[0],
+                  uri: item.thumbnail,
                 }}
               />
               <Ionicons
@@ -81,7 +80,11 @@ const MasonryGridFlashlist = ({
                 name="ios-heart-outline"
                 style={styles.wishlistIcon}
               />
-              <LinearGradient colors={["transparent", "black"]}>
+              <LinearGradient
+                // style={{ flex: 1, justifyContent: "flex-end" }}
+                style={{ padding: IMAGE_WIDTH * 0.06 }}
+                colors={["transparent", "black"]}
+              >
                 <Text numberOfLines={2} style={styles.title}>
                   {item.title} • ${item.price}
                 </Text>
@@ -131,7 +134,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     textAlign: "center",
     color: "lightgray",
-    backgroundColor: "rgba(0,0,0,0.3)",
+    backgroundColor: "rgba(0,0,0,0.4)",
     borderRadius: 15,
     margin: 10,
     alignSelf: "flex-end",
@@ -143,6 +146,6 @@ const styles = StyleSheet.create({
     color: "lightgray",
     textTransform: "capitalize",
     textAlignVertical: "center",
-    padding: IMAGE_WIDTH * 0.06,
+    // padding: IMAGE_WIDTH * 0.06,
   },
 });

@@ -25,6 +25,7 @@ import {
   setActiveColorIndex,
   toggleWishlisted,
 } from "../redux/slices/ItemDetailsStates";
+import ColorPick from "../components/ColorPick";
 const { height, width } = Dimensions.get("window");
 
 const ItemDetails = ({ navigation, route }) => {
@@ -40,37 +41,10 @@ const ItemDetails = ({ navigation, route }) => {
   }));
   const dispatch = useDispatch();
 
-  const colors = ["#151515", "lightblue", "lightgreen", "hotpink"];
-  const COLOR_SIZE = 30;
-  const COLOR_GAP = 5;
-  const activeColorPosition = useSharedValue(0);
   const backgroundColorAnimated = useSharedValue("#151515");
-
-  // changing background color on color position change
-  useDerivedValue(() => {
-    backgroundColorAnimated.value = interpolateColor(
-      activeColorPosition.value,
-      colors.map((_, index) => index * (COLOR_GAP + COLOR_SIZE)),
-      colors
-    );
-  }, [activeColorPosition.value]);
-
   const ambienceStyle = useAnimatedStyle(() => ({
     backgroundColor: backgroundColorAnimated.value,
   }));
-
-  const selectedColorPositionStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX: activeColorPosition.value,
-      },
-    ],
-  }));
-
-  const handleColorPress = (index) => {
-    //35 = indicator size(30) + gap between indicators(5)
-    activeColorPosition.value = withTiming(index * (COLOR_SIZE + COLOR_GAP));
-  };
 
   return (
     <Animated.View style={[styles.container, ambienceStyle]}>
@@ -105,54 +79,19 @@ const ItemDetails = ({ navigation, route }) => {
         <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
           {item.title}
         </Text>
+        {/* description */}
         <Text style={styles.subTitle} numberOfLines={3}>
           {item.description}
         </Text>
 
         {/* choice section */}
         <View style={styles.choice}>
-          {/* <LinearGradient
-
-            style={styles.colorChoice}
-            colors={["white", "transparent", "white"]}
-          > */}
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ gap: COLOR_GAP }}
-          >
-            <Animated.View
-              style={[
-                {
-                  backgroundColor: "transparent",
-                  borderWidth: 3,
-                  borderColor: "gray",
-                  height: COLOR_SIZE,
-                  width: COLOR_SIZE,
-                  borderRadius: COLOR_SIZE / 2,
-                  position: "absolute",
-                  zIndex: 5,
-                },
-                selectedColorPositionStyle,
-              ]}
+          {item.colors === undefined ? null : (
+            <ColorPick
+              colors={item.colors}
+              backgroundColorAnimated={backgroundColorAnimated}
             />
-            {colors.map((color, index) => (
-              <Pressable
-                key={index}
-                style={{
-                  backgroundColor: color,
-                  width: COLOR_SIZE,
-                  height: COLOR_SIZE,
-                  borderRadius: COLOR_SIZE / 2,
-                  elevation: 2,
-                  // overflow:'hidden'
-                }}
-                onPress={() => handleColorPress(index)}
-              ></Pressable>
-            ))}
-          </ScrollView>
-          {/* </LinearGradient> */}
-
+          )}
           <View style={styles.addremoveCart}>
             <AntDesign
               name="minus"

@@ -2,11 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   items: 0,
-  data: null,
   wishlisted: false,
   seeExtra: true,
-  activeColorIndex:0,
-  ambienceColor:'#151515'
+  activeColorIndex: 0,
+  ambienceColor: "#151515",
 };
 
 const ItemDetailsStates = createSlice({
@@ -16,26 +15,28 @@ const ItemDetailsStates = createSlice({
     setItems: (state, action) => {
       state.items = action.payload;
     },
-    setData: (state, action) => {
-      state.data = action.payload;
-    },
     toggleWishlisted: (state) => {
       state.wishlisted = !state.wishlisted;
     },
     setSeeExtra: (state, action) => {
       state.seeExtra = action.payload;
     },
-    setActiveColorIndex:(state,action)=>{
-state.activeColorIndex = action.payload
+    setActiveColorIndex: (state, action) => {
+      state.activeColorIndex = action.payload;
     },
-    setAmbienceColor:(state,action)=>{
-      state.ambienceColor = action.payload
-    }
+    setAmbienceColor: (state, action) => {
+      state.ambienceColor = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setItems, setData, toggleWishlisted, setSeeExtra,setActiveColorIndex,setAmbienceColor} =
-  ItemDetailsStates.actions;
+export const {
+  setItems,
+  toggleWishlisted,
+  setSeeExtra,
+  setActiveColorIndex,
+  setAmbienceColor,
+} = ItemDetailsStates.actions;
 
 export default ItemDetailsStates.reducer;

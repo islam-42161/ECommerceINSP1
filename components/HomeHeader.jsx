@@ -15,13 +15,13 @@ import SearchBar from "./SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { setScreen } from "../redux/slices/bottomsheetSlice";
 import TagsScrollView from "./TagsScrollView";
+import Animated, { SlideInUp, SlideOutUp } from "react-native-reanimated";
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
-const HomeHeader = () => {
+const HomeHeader = ({ welcome_message, lastContentOffset, categories }) => {
   const { view } = useSelector((state) => ({
     view: state.homescreen_states.view,
   }));
-
   const handleViewChange = () => {
     dispatch(setScreen("change_home_list_view"));
   };
@@ -43,13 +43,18 @@ const HomeHeader = () => {
           onPress={handleUserPress}
         />
       </View>
-      <Text numberOfLines={2} adjustsFontSizeToFit style={styles.headertext}>
-        We have prepared new products{" "}
-        <Text style={styles.specialText}>for you ✌️</Text>
-      </Text>
+      <Animated.Text
+        numberOfLines={2}
+        adjustsFontSizeToFit
+        style={styles.headertext}
+      >
+        <Text style={styles.specialText}>{welcome_message.split("!")[0]}!</Text>
+        {welcome_message.split("!")[1]}!{welcome_message.split("!")[2]}
+      </Animated.Text>
 
       <SearchBar showPreference searchable={false} />
-      <TagsScrollView />
+      {/* <TagsScrollView /> */}
+      <TagsScrollView tags={categories} />
     </View>
   );
 };

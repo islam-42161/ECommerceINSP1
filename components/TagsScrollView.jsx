@@ -36,6 +36,35 @@ const Tag = ({ value, containerRef, indicatorPosition, tagsScrollX }) => {
     </Text>
   );
 };
+
+const Preloader = () => {
+  console.log("loaded preloader");
+  return (
+    <View style={styles.mainContainer}>
+      <Animated.ScrollView
+        style={{ width: "100%" }}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.tagsConainerStyle}
+      >
+        {new Array(6).fill("loader").map((_, index) => {
+          return (
+            <View
+              key={index}
+              style={{
+                backgroundColor: "rgba(255,255,255,0.1)",
+                width: 80,
+                height: 20,
+                borderRadius: 10,
+                // marginHorizontal: 10,
+              }}
+            />
+          );
+        })}
+      </Animated.ScrollView>
+    </View>
+  );
+};
 const TagsScrollView = ({
   tags = [
     "All",
@@ -76,7 +105,7 @@ const TagsScrollView = ({
     tagsScrollX.value = event.contentOffset.x;
   });
 
-  return (
+  return tags ? (
     <View style={styles.mainContainer}>
       <Animated.ScrollView
         style={{ width: "100%" }}
@@ -100,6 +129,8 @@ const TagsScrollView = ({
         })}
       </Animated.ScrollView>
     </View>
+  ) : (
+    <Preloader />
   );
 };
 
@@ -122,7 +153,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE,
     flex: 1,
     fontWeight: "bold",
-    textTransform: "uppercase",
+    textTransform: "capitalize",
     paddingLeft: 10,
     color: "gray",
   },
