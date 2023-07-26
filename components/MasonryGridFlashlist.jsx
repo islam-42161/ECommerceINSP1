@@ -10,31 +10,46 @@ import React from "react";
 import { MasonryFlashList } from "@shopify/flash-list";
 import { Image } from "expo-image";
 import Animated, {
+  Extrapolate,
+  interpolate,
   useAnimatedScrollHandler,
   useSharedValue,
+  withTiming,
 } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
+import HomeHeader from "./HomeHeader";
 
 const AnimatedMasonry = Animated.createAnimatedComponent(MasonryFlashList);
 
-const { width } = Dimensions.get("window");
+const { height, width } = Dimensions.get("window");
 const COL_NUM = 2;
 const IMAGE_WIDTH = width / COL_NUM;
 const item_image_heights = [IMAGE_WIDTH * 0.7, IMAGE_WIDTH * 1.4];
 
-const MasonryGridFlashlist = ({ data, navigation, lastContentOffset }) => {
+const MasonryGridFlashlist = ({
+  data,
+  navigation,
+  lastContentOffset,
+  headerPositionY,
+}) => {
   const scrollHandler = useAnimatedScrollHandler({
     onBeginDrag: (e) => {
       lastContentOffset.value = e.contentOffset.y;
     },
     onEndDrag: (e) => {
       // console.log(e.contentOffset.y - lastContentOffset.value);
-      lastContentOffset.value = e.contentOffset.y - lastContentOffset.value;
-      if (lastContentOffset.value > 0) {
-        console.log("scrolling down");
+      // lastContentOffset.value = e.contentOffset.y - lastContentOffset.value;
+      // if (lastContentOffset.value > 0) {
+      //   console.log("scrolling down");
+      // } else {
+      //   console.log("scrolling up");
+      // }
+      console.log(e.velocity.y);
+      if (e.velocity.y < 0) {
+        headerPositionY.value = withTiming(-400);
       } else {
-        console.log("scrolling up");
+        headerPositionY.value = withTiming(0);
       }
     },
   });
@@ -70,6 +85,8 @@ const MasonryGridFlashlist = ({ data, navigation, lastContentOffset }) => {
             <View style={styles.item}>
               <Image
                 style={StyleSheet.absoluteFillObject}
+                // placeholder={"L6Pj0^jE.AyE_3t7t7R**0o#DgR4"}
+                transition={500}
                 source={{
                   // uri: item.images[0],
                   uri: item.thumbnail,

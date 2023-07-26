@@ -15,10 +15,22 @@ import SearchBar from "./SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { setScreen } from "../redux/slices/bottomsheetSlice";
 import TagsScrollView from "./TagsScrollView";
-import Animated, { SlideInUp, SlideOutUp } from "react-native-reanimated";
+import Animated, {
+  Extrapolate,
+  SlideInUp,
+  SlideOutUp,
+  interpolate,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
-const HomeHeader = ({ welcome_message, lastContentOffset, categories }) => {
+const HomeHeader = ({
+  welcome_message,
+  lastContentOffset,
+  categories,
+  headerPositionY,
+  navigation,
+}) => {
   const { view } = useSelector((state) => ({
     view: state.homescreen_states.view,
   }));
@@ -29,17 +41,32 @@ const HomeHeader = ({ welcome_message, lastContentOffset, categories }) => {
     dispatch(setScreen("user-profile-view"));
   };
   const dispatch = useDispatch();
+
+  const headerStyle = useAnimatedStyle(() => ({
+    top: headerPositionY.value,
+    // transform: [
+    //   {
+    //     translateY: headerPositionY.value,
+    //   },
+    // ],
+  }));
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <MaterialIcons
+        {/* <MaterialIcons
           name={view}
           style={styles.headerbuttons}
           onPress={handleViewChange}
+        /> */}
+        <SearchBar
+          showPreference={false}
+          searchable={false}
+          navigation={navigation}
         />
+
         <Ionicons
           name="ios-person-circle-sharp"
-          style={styles.headerbuttons}
+          style={[styles.headerbuttons]}
           onPress={handleUserPress}
         />
       </View>
@@ -52,9 +79,9 @@ const HomeHeader = ({ welcome_message, lastContentOffset, categories }) => {
         {welcome_message.split("!")[1]}!{welcome_message.split("!")[2]}
       </Animated.Text>
 
-      <SearchBar showPreference searchable={false} />
+      {/* <SearchBar showPreference searchable={false} /> */}
       {/* <TagsScrollView /> */}
-      <TagsScrollView tags={categories} />
+      {/* <TagsScrollView categories={categories} /> */}
     </View>
   );
 };
@@ -64,7 +91,6 @@ export default HomeHeader;
 const styles = StyleSheet.create({
   container: {
     paddingTop: 1.5 * STATUSBAR_HEIGHT,
-    padding: 30,
     overflow: "hidden",
     justifyContent: "space-between",
     rowGap: 30,
@@ -72,6 +98,9 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
+    columnGap: 20,
+    width: "100%",
   },
   headerbuttons: {
     width: 40,
@@ -82,7 +111,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderRadius: 15,
     color: "white",
-    elevation: 5,
   },
   headertext: {
     fontSize: 30,

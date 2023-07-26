@@ -20,7 +20,7 @@ const ChangeHomeView = () => {
   const dispatch = useDispatch();
   const handleViewChange = (view_name) => {
     dispatch(setView(view_name));
-    dispatch(setScreen('none'));
+    dispatch(setScreen("none"));
   };
   return screen === "change_home_list_view" ? (
     <BottomSheet topPosition={"80%"} contentContainerStyle={styles.container}>
@@ -64,6 +64,5 @@ const styles = StyleSheet.create({
     fontSize: 24,
     borderRadius: 20,
     color: "white",
-    elevation: 5,
   },
 });

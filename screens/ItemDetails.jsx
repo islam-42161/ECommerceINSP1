@@ -230,6 +230,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderRadius: 14,
     color: "white",
-    elevation: 5,
   },
 });

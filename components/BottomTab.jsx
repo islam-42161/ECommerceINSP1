@@ -34,11 +34,7 @@ const BottomTab = ({ state, descriptors, navigation }) => {
   }));
 
   return (
-    <Animated.View
-      entering={SlideInDown}
-      exiting={SlideOutDown}
-      style={[styles.container, bottomStyle]}
-    >
+    <Animated.View style={[styles.container, bottomStyle]}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -99,8 +95,8 @@ export default BottomTab;
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    left: "8%",
-    right: "8%",
+    left: "6%",
+    right: "6%",
     // left: 20,
     // right: 20,
     alignItems: "center",

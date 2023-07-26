@@ -1,55 +1,53 @@
-import { Keyboard, Pressable, StyleSheet } from "react-native";
+import { Keyboard, Pressable, StatusBar, StyleSheet, View } from "react-native";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setScreen } from "../redux/slices/bottomsheetSlice";
-import BottomSheet from "../components/BottomSheet";
+import { useSelector } from "react-redux";
 import { EvilIcons } from "@expo/vector-icons";
 import SearchBar from "../components/SearchBar";
-import { Image } from "expo-image";
+import PreferenceScreen from "../components/PreferenceScreen";
+import TagsScrollView from "../components/TagsScrollView";
 
-const Searchscreen = ({showPreference=true}) => {
-  const dispatch = useDispatch();
-  // const keyboardref = useRef();
-  const { screen } = useSelector((state) => ({
-    screen: state.bottomsheet_states.screen
+const STATUSBAR_HEIGHT = StatusBar.currentHeight;
+
+const Searchscreen = ({ showPreference = true, navigation }) => {
+  const { categories } = useSelector((state) => ({
+    categories: state.homescreen_states.categories,
   }));
-  
-  return screen === 'search'?(
-    <BottomSheet>
-      <Pressable
-        style={styles.bottomSheetContentStyle}
-        onPress={() => Keyboard.dismiss()}
-      >
+  return (
+    <Pressable
+      style={styles.bottomSheetContentStyle}
+      onPress={() => Keyboard.dismiss()}
+    >
+      <View style={styles.headerbar}>
+        <SearchBar
+          showPreference={showPreference}
+          searchable={true}
+          focus={true}
+        />
         <EvilIcons
           name="close"
           style={styles.closebutton}
-          onPress={() => dispatch(setScreen('none'))}
+          onPress={() => navigation.goBack()}
         />
-        <SearchBar showPreference={showPreference} searchable={true} focus={true}/>
-        <Image
-          source={{
-            uri: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e3b670100497525.5f0a205f0a3fb.gif",
-          }}
-          style={{
-            height: 500,
-            width: 300,
-            alignSelf: "center",
-          }}
-          contentFit="contain"
-        />
-      </Pressable>
-    </BottomSheet>
-  ):null;
+      </View>
+      <TagsScrollView categories={categories} />
+      <>
+        <PreferenceScreen categories={categories} />
+      </>
+    </Pressable>
+  );
 };
 
 export default Searchscreen;
 
 const styles = StyleSheet.create({
   bottomSheetContentStyle: {
+    paddingTop: STATUSBAR_HEIGHT * 1.5,
+    paddingHorizontal: "6%",
     rowGap: 20,
-    backgroundColor: "#151515",
-    padding: 20,
+    // backgroundColor: "red",
     flex: 1,
+    justifyContent: "flex-start",
+    backgroundColor: "#151515",
   },
   closebutton: {
     width: 30,
@@ -60,7 +58,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderRadius: 15,
     color: "white",
-    elevation: 5,
-    alignSelf: "flex-end",
+    // alignSelf: "flex-end",
+  },
+  headerbar: {
+    flexDirection: "row",
+    alignItems: "center",
+    // backgroundColor: "red",
+    columnGap: 40,
   },
 });

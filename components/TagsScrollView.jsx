@@ -38,7 +38,6 @@ const Tag = ({ value, containerRef, indicatorPosition, tagsScrollX }) => {
 };
 
 const Preloader = () => {
-  console.log("loaded preloader");
   return (
     <View style={styles.mainContainer}>
       <Animated.ScrollView
@@ -54,7 +53,7 @@ const Preloader = () => {
               style={{
                 backgroundColor: "rgba(255,255,255,0.1)",
                 width: 80,
-                height: 20,
+                height: 12,
                 borderRadius: 10,
                 // marginHorizontal: 10,
               }}
@@ -65,8 +64,9 @@ const Preloader = () => {
     </View>
   );
 };
+
 const TagsScrollView = ({
-  tags = [
+  categories = [
     "All",
     "Newest",
     "Popular",
@@ -104,6 +104,8 @@ const TagsScrollView = ({
   const scrollHandler = useAnimatedScrollHandler((event) => {
     tagsScrollX.value = event.contentOffset.x;
   });
+
+  const tags = categories ? ["All", ...categories] : undefined;
 
   return tags ? (
     <View style={styles.mainContainer}>
