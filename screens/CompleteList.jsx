@@ -16,7 +16,7 @@ const CompleteList = ({ navigation, route }) => {
   const handleViewChange = () => {
     dispatch(setScreen("change_home_list_view"));
   };
-  const { all_items } = route.params;
+  const { all_items, welcome_text } = route.params;
 
   return (
     <View style={styles.container}>
@@ -31,6 +31,7 @@ const CompleteList = ({ navigation, route }) => {
           showPreference={true}
           searchable={false}
           navigation={navigation}
+          welcome_message={welcome_text}
         />
         <MaterialIcons
           name={view}

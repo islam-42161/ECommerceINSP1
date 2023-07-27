@@ -52,6 +52,7 @@ const ListPreview = ({
   icon = "fire",
   color = "red",
   navigation,
+  welcome_text,
 }) => {
   return (
     <View style={styles.container}>
@@ -89,6 +90,7 @@ const ListPreview = ({
           onPress={() =>
             navigation.navigate("complete_list", {
               all_items: all_items,
+              welcome_text: welcome_text,
             })
           }
         >
@@ -125,6 +127,7 @@ const ListPreview = ({
           onPress={() =>
             navigation.navigate("complete_list", {
               all_items: all_items,
+              welcome_text: welcome_text,
             })
           }
         >

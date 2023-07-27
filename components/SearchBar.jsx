@@ -32,7 +32,9 @@ const SearchBar = ({
     if (searchable) {
       keyboardref.current.focus();
     } else {
-      navigation.navigate("search_screen");
+      navigation.navigate("search_screen", {
+        welcome_message: welcome_message,
+      });
     }
   };
 

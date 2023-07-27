@@ -8,10 +8,11 @@ import TagsScrollView from "../components/TagsScrollView";
 
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
-const Searchscreen = ({ showPreference = true, navigation }) => {
+const Searchscreen = ({ showPreference = true, navigation, route }) => {
   const { categories } = useSelector((state) => ({
     categories: state.homescreen_states.categories,
   }));
+  const { welcome_message } = route.params;
   return (
     <Pressable
       style={styles.bottomSheetContentStyle}
@@ -22,6 +23,7 @@ const Searchscreen = ({ showPreference = true, navigation }) => {
           showPreference={showPreference}
           searchable={true}
           focus={true}
+          welcome_message={welcome_message}
         />
         <EvilIcons
           name="close"

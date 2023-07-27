@@ -19,9 +19,8 @@ const person_name = "Muaz";
 
 const welcome_messages = [
   "Find what you need",
-  "Search for products or services",
+  "Search for products",
   "Enter your query here",
-  "Type or speak to search",
   "Discover amazing deals",
   "Explore our catalog",
   "Shop with ease",
@@ -92,6 +91,7 @@ const Homescreen = ({ navigation, route }) => {
             preview_items={homescreen_items.slice(0, 9)}
             color="red"
             navigation={navigation}
+            welcome_text={welcome_text}
           />
           <ListPreview
             title="Recently Viewed"
@@ -100,6 +100,7 @@ const Homescreen = ({ navigation, route }) => {
             // data={homescreen_items.slice(9, 18)}
             preview_items={homescreen_items.slice(9, 18)}
             navigation={navigation}
+            welcome_text={welcome_text}
           />
           <ListPreview
             title="Suggested"
@@ -108,6 +109,7 @@ const Homescreen = ({ navigation, route }) => {
             // data={homescreen_items.slice(18, 27)}
             preview_items={homescreen_items.slice(18, 27)}
             navigation={navigation}
+            welcome_text={welcome_text}
           />
         </ScrollView>
       ) : null}
