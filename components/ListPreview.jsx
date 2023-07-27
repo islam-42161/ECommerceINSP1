@@ -90,7 +90,7 @@ const ListPreview = ({
           onPress={() =>
             navigation.navigate("complete_list", {
               all_items: all_items,
-              welcome_text: welcome_text,
+              welcome_text: title,
             })
           }
         >
@@ -127,7 +127,7 @@ const ListPreview = ({
           onPress={() =>
             navigation.navigate("complete_list", {
               all_items: all_items,
-              welcome_text: welcome_text,
+              welcome_text: title,
             })
           }
         >
@@ -192,10 +192,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: ITEM_WIDTH * 0.08,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     color: "lightgray",
     textTransform: "capitalize",
-    textAlignVertical: "center",
+    // textAlignVertical: "center",
     // padding: IMAGE_WIDTH * 0.06,
     width: ITEM_WIDTH,
   },

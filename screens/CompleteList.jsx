@@ -6,6 +6,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import SearchBar from "../components/SearchBar";
+import TagsScrollView from "../components/TagsScrollView";
 import { setScreen } from "../redux/slices/bottomsheetSlice";
 import ChangeHomeView from "../components/ChangeHomeView";
 import PreferenceScreen from "../components/PreferenceScreen";
@@ -13,8 +14,9 @@ import PreferenceScreen from "../components/PreferenceScreen";
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 const CompleteList = ({ navigation, route }) => {
   const dispatch = useDispatch();
-  const { view } = useSelector((state) => ({
+  const { view, categories } = useSelector((state) => ({
     view: state.homescreen_states.view,
+    categories: state.homescreen_states.categories,
   }));
   const handleViewChange = () => {
     dispatch(setScreen("change_home_list_view"));
@@ -42,6 +44,10 @@ const CompleteList = ({ navigation, route }) => {
           onPress={handleViewChange}
         />
       </View>
+      {/* body */}
+      <View style={styles.body}>
+        <TagsScrollView categories={categories} />
+      </View>
       <>
         <ChangeHomeView />
         <PreferenceScreen />
@@ -54,11 +60,11 @@ export default CompleteList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#141414",
     paddingTop: STATUSBAR_HEIGHT * 1.5,
     paddingHorizontal: "6%",
+    rowGap: 20,
   },
   header: {
     flexDirection: "row",
@@ -76,5 +82,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderRadius: 15,
     color: "white",
+  },
+  body: {
+    flex: 1,
+    rowGap: 20,
   },
 });

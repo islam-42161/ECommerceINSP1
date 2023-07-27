@@ -55,7 +55,7 @@ const SearchBar = ({
   return (
     <View style={[styles.searchsection, style]}>
       <Pressable style={styles.textinput} onPress={handlePress}>
-        <EvilIcons style={styles.searchicon} name="search" />
+        <EvilIcons style={styles.icon} name="search" />
 
         <TextInput
           placeholder={welcome_message}
@@ -86,14 +86,14 @@ const SearchBar = ({
             Clear
           </Animated.Text>
         ) : null}
+        {showPreference ? (
+          <FontAwesome
+            name="sliders"
+            style={[styles.icon, { fontSize: 12 }]}
+            onPress={handlePreferencePress}
+          />
+        ) : null}
       </Pressable>
-      {showPreference ? (
-        <FontAwesome
-          name="sliders"
-          style={[styles.preferenceicon]}
-          onPress={handlePreferencePress}
-        />
-      ) : null}
 
       {/* <PreferenceScreen/> */}
     </View>
@@ -103,17 +103,22 @@ const SearchBar = ({
 export default SearchBar;
 
 const styles = StyleSheet.create({
-  searchicon: {
-    width: 24,
-    height: 24,
+  icon: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+    backgroundColor: "#343434",
+    textAlign: "center",
+    textAlignVertical: "center",
     fontSize: 24,
     color: "white",
+    // elevation: 10,
   },
   textinput: {
     flexDirection: "row",
     borderRadius: 30,
     backgroundColor: "#343434",
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     paddingVertical: 2.5,
     alignItems: "center",
     columnGap: 10,
@@ -124,16 +129,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     columnGap: 10,
     flex: 1,
-  },
-  preferenceicon: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-    backgroundColor: "#343434",
-    textAlign: "center",
-    textAlignVertical: "center",
-    fontSize: 12,
-    color: "white",
   },
   clearTextStyle: {
     fontSize: 12,
