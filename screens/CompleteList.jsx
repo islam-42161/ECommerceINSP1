@@ -6,6 +6,9 @@ import { EvilIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import SearchBar from "../components/SearchBar";
+import { setScreen } from "../redux/slices/bottomsheetSlice";
+import ChangeHomeView from "../components/ChangeHomeView";
+import PreferenceScreen from "../components/PreferenceScreen";
 
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 const CompleteList = ({ navigation, route }) => {
@@ -39,6 +42,10 @@ const CompleteList = ({ navigation, route }) => {
           onPress={handleViewChange}
         />
       </View>
+      <>
+        <ChangeHomeView />
+        <PreferenceScreen />
+      </>
     </View>
   );
 };
