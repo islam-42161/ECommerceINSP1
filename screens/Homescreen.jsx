@@ -16,18 +16,17 @@ import {
 import ListPreview from "../components/ListPreview";
 
 const person_name = "Muaz";
-welcome_messages = [
-  `Hi, ${person_name}! Shop with endless possibilities! 🛍️`,
-  `Hi, ${person_name}! Discover limitless shopping! 🌟`,
-  `Hi, ${person_name}! Step into convenience and endless possibilities! 🚀`,
-  `Hi, ${person_name}! Explore limitless shopping! 🌈`,
-  `Hi, ${person_name}! Embark on a shopping adventure! 🎁`,
-  `Hi, ${person_name}! Get ready for an extraordinary shopping experience! 🌟`,
-  `Hi, ${person_name}! Get ready for the ultimate shopping journey! ⭐`,
-  `Hi, ${person_name}! Indulge in seamless shopping! 🌟`,
-  `Hi, ${person_name}! Unleash your shopping desires! 🛍️`,
-];
 
+const welcome_messages = [
+  "Find what you need",
+  "Search for products or services",
+  "Enter your query here",
+  "Type or speak to search",
+  "Discover amazing deals",
+  "Explore our catalog",
+  "Shop with ease",
+  "What are you looking for?",
+];
 const welcome_text =
   welcome_messages[Math.floor(Math.random() * welcome_messages.length)];
 

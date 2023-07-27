@@ -20,7 +20,7 @@ const SearchBar = ({
   focus = false,
   navigation,
   style,
-  placeholder_text = "Search",
+  welcome_message = "Search",
 }) => {
   const { screen, search_text } = useSelector((state) => ({
     screen: state.bottomsheet_states.screen,
@@ -56,7 +56,7 @@ const SearchBar = ({
         <EvilIcons style={styles.searchicon} name="search" />
 
         <TextInput
-          placeholder="Search"
+          placeholder={welcome_message}
           placeholderTextColor={"gray"}
           style={{
             padding: 5,

@@ -62,6 +62,7 @@ const HomeHeader = ({
           showPreference={false}
           searchable={false}
           navigation={navigation}
+          welcome_message={welcome_message}
         />
 
         <Ionicons
@@ -70,14 +71,14 @@ const HomeHeader = ({
           onPress={handleUserPress}
         />
       </View>
-      <Animated.Text
+      {/* <Animated.Text
         numberOfLines={2}
         adjustsFontSizeToFit
         style={styles.headertext}
       >
         <Text style={styles.specialText}>{welcome_message.split("!")[0]}!</Text>
         {welcome_message.split("!")[1]}!{welcome_message.split("!")[2]}
-      </Animated.Text>
+      </Animated.Text> */}
 
       {/* <SearchBar showPreference searchable={false} /> */}
       {/* <TagsScrollView /> */}
