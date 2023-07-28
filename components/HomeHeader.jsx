@@ -28,7 +28,6 @@ const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 const HomeHeader = ({
   welcome_message,
-  lastContentOffset,
   categories,
   headerPositionY,
   navigation,

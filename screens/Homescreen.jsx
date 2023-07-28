@@ -30,7 +30,6 @@ const welcome_text =
   welcome_messages[Math.floor(Math.random() * welcome_messages.length)];
 
 const Homescreen = ({ navigation, route }) => {
-  const lastContentOffset = useSharedValue(0);
   const headerPositionY = useSharedValue(0);
   const dispatch = useDispatch();
   const { homescreen_items, categories } = useSelector((state) => ({
@@ -68,7 +67,6 @@ const Homescreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <HomeHeader
-        lastContentOffset={lastContentOffset}
         headerPositionY={headerPositionY}
         welcome_message={welcome_text}
         categories={categories}
@@ -80,9 +78,11 @@ const Homescreen = ({ navigation, route }) => {
         data={homescreen_items}
         navigation={navigation}
       /> */}
+      <TagsScrollView categories={categories} />
       {homescreen_items ? (
         <ScrollView
           showsVerticalScrollIndicator={false}
+          style={{ flex: 1 }}
           contentContainerStyle={{ paddingBottom: 150, rowGap: 30 }}
         >
           <ListPreview
@@ -114,7 +114,6 @@ const Homescreen = ({ navigation, route }) => {
         </ScrollView>
       ) : null}
       <>
-        <ChangeHomeView />
         <UserProfileView />
       </>
     </View>
