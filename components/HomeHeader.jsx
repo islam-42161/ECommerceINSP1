@@ -5,6 +5,7 @@ import {
   StatusBar,
   TextInput,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
 import React, { useRef } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -22,6 +23,7 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
+import { Image } from "expo-image";
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 const HomeHeader = ({
@@ -65,11 +67,24 @@ const HomeHeader = ({
           welcome_message={welcome_message}
         />
 
-        <Ionicons
+        <TouchableOpacity
+          onPress={handleUserPress}
+          style={[styles.headerbuttons]}
+        >
+          <View style={styles.imageContainer}>
+            <Image
+              source={{
+                uri: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.explicit.bing.net%2Fth%3Fid%3DOIP.HcDiUVSF_CqQkcTdko02LQHaIS%26pid%3DApi&f=1&ipt=83bc72f204676e87af8f54283b6d26d71e582fcca3ec233d509061fb020d1333&ipo=images",
+              }}
+              style={StyleSheet.absoluteFillObject}
+            />
+          </View>
+        </TouchableOpacity>
+        {/* <Ionicons
           name="ios-person-circle-sharp"
           style={[styles.headerbuttons]}
           onPress={handleUserPress}
-        />
+        /> */}
       </View>
       {/* <Animated.Text
         numberOfLines={2}
@@ -103,15 +118,25 @@ const styles = StyleSheet.create({
     columnGap: 20,
     width: "100%",
   },
+  imageContainer: {
+    borderRadius: 15,
+    height: 30,
+    width: 30,
+    overflow: "hidden",
+  },
   headerbuttons: {
     width: 40,
     height: 40,
+
     backgroundColor: "#343434",
-    textAlign: "center",
-    textAlignVertical: "center",
-    fontSize: 20,
-    borderRadius: 15,
-    color: "white",
+    // textAlign: "center",
+    // textAlignVertical: "center",
+    // fontSize: 24,
+    borderRadius: 20,
+    // color: "white",
+    alignItems: "center",
+
+    justifyContent: "center", // overflow: "hidden",
   },
   headertext: {
     fontSize: 30,

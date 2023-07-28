@@ -27,13 +27,13 @@ const PreferenceScreen = ({ categories }) => {
           justifyContent: "space-between",
           alignItems: "center",
           columnGap: 40,
-          padding: 10,
+          // padding: 10,
           // borderRadius: 10,
           // borderWidth: 2,
           // borderColor: "rgba(255,255,255,0.1)",
         }}
       >
-        <FontAwesome name="sliders" size={24} color="lightgray" />
+        {/* <FontAwesome name="sliders" size={24} color="lightgray" /> */}
 
         <Text
           style={{

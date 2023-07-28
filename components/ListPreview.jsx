@@ -111,6 +111,8 @@ const ListPreview = ({
         horizontal
         contentContainerStyle={styles.listContaienrStyle}
         showsHorizontalScrollIndicator={false}
+        snapToInterval={ITEM_WIDTH + 20}
+        decelerationRate={"fast"}
       >
         {preview_items.map((value, index) => (
           <PreviewItem key={index} item={value} navigation={navigation} />
@@ -166,6 +168,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     rowGap: 10,
+    width: ITEM_WIDTH,
   },
   imageContainer: {
     width: ITEM_WIDTH,
@@ -197,6 +200,6 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
     // textAlignVertical: "center",
     // padding: IMAGE_WIDTH * 0.06,
-    width: ITEM_WIDTH,
+    // width: ITEM_WIDTH,
   },
 });
