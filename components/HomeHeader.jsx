@@ -1,25 +1,10 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  StatusBar,
-  TextInput,
-  Pressable,
-  TouchableOpacity,
-} from "react-native";
-import React, { useRef } from "react";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
+import { StyleSheet, View, StatusBar, TouchableOpacity } from "react-native";
+import React from "react";
 import SearchBar from "./SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { setScreen } from "../redux/slices/bottomsheetSlice";
-import TagsScrollView from "./TagsScrollView";
 import Animated, {
   Extrapolate,
-  SlideInUp,
-  SlideOutUp,
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
@@ -28,32 +13,19 @@ const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 const HomeHeader = ({
   welcome_message,
-  categories,
   headerPositionY,
   navigation,
+  children,
 }) => {
-  const { view } = useSelector((state) => ({
-    view: state.homescreen_states.view,
-  }));
-  const handleViewChange = () => {
-    dispatch(setScreen("change_home_list_view"));
-  };
   const handleUserPress = () => {
     dispatch(setScreen("user-profile-view"));
   };
   const dispatch = useDispatch();
 
-  const headerStyle = useAnimatedStyle(() => ({
-    top: headerPositionY.value,
-    // transform: [
-    //   {
-    //     translateY: headerPositionY.value,
-    //   },
-    // ],
-  }));
+  const headerStyle = useAnimatedStyle(() => ({}));
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <Animated.View style={[headerStyle, styles.header]}>
         {/* <MaterialIcons
           name={view}
           style={styles.headerbuttons}
@@ -84,7 +56,7 @@ const HomeHeader = ({
           style={[styles.headerbuttons]}
           onPress={handleUserPress}
         /> */}
-      </View>
+      </Animated.View>
       {/* <Animated.Text
         numberOfLines={2}
         adjustsFontSizeToFit
@@ -97,6 +69,7 @@ const HomeHeader = ({
       {/* <SearchBar showPreference searchable={false} /> */}
       {/* <TagsScrollView /> */}
       {/* <TagsScrollView categories={categories} /> */}
+      {children}
     </View>
   );
 };
@@ -136,6 +109,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
 
     justifyContent: "center", // overflow: "hidden",
+    elevation: 5,
   },
   headertext: {
     fontSize: 30,

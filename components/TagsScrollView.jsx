@@ -145,7 +145,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     justifyContent: "space-evenly",
-    // paddingHorizontal: 20,
   },
   tagsConainerStyle: {
     columnGap: 20,

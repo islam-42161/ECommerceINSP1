@@ -1,13 +1,12 @@
-import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
-import React, { useCallback, useEffect, useState, useRef } from "react";
+import { StyleSheet, View } from "react-native";
+import React, { useEffect } from "react";
 import HomeHeader from "../components/HomeHeader";
-import Searchscreen from "./Searchscreen";
-import PreferenceScreen from "../components/PreferenceScreen";
-import ChangeHomeView from "../components/ChangeHomeView";
 import UserProfileView from "../components/UserProfileView";
 import TagsScrollView from "../components/TagsScrollView";
-import MasonryGridFlashlist from "../components/MasonryGridFlashlist";
-import { useAnimatedRef, useSharedValue } from "react-native-reanimated";
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from "react-native-reanimated";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCategories,
@@ -63,26 +62,34 @@ const Homescreen = ({ navigation, route }) => {
     getItemsData();
     getCategoriesData();
   }, []);
-
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      // console.log(event.contentOffset.y);
+      headerPositionY.value = event.contentOffset.y;
+      console.log(headerPositionY.value);
+    },
+  });
   return (
     <View style={styles.container}>
-      <HomeHeader
-        headerPositionY={headerPositionY}
-        welcome_message={welcome_text}
-        categories={categories}
-        navigation={navigation}
-      />
       {/* <MasonryGridFlashlist
         lastContentOffset={lastContentOffset}
         headerPositionY={headerPositionY}
         data={homescreen_items}
         navigation={navigation}
       /> */}
-      <TagsScrollView categories={categories} />
+      <HomeHeader
+        headerPositionY={headerPositionY}
+        welcome_message={welcome_text}
+        navigation={navigation}
+      >
+        <TagsScrollView categories={categories} />
+      </HomeHeader>
+
       {homescreen_items ? (
-        <ScrollView
+        <Animated.ScrollView
           showsVerticalScrollIndicator={false}
-          style={{ flex: 1 }}
+          onScroll={scrollHandler}
+          // style={{ flex: 1 }}
           contentContainerStyle={{ paddingBottom: 150, rowGap: 30 }}
         >
           <ListPreview
@@ -111,7 +118,7 @@ const Homescreen = ({ navigation, route }) => {
             navigation={navigation}
             welcome_text={welcome_text}
           />
-        </ScrollView>
+        </Animated.ScrollView>
       ) : null}
       <>
         <UserProfileView />
