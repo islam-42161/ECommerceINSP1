@@ -22,10 +22,26 @@ const HomeHeader = ({
   };
   const dispatch = useDispatch();
 
-  const headerStyle = useAnimatedStyle(() => ({}));
+  const headerStyle = useAnimatedStyle(() => ({
+    // backgroundColor: "#141414",
+    // position: "absolute",
+    // width: "100%",
+    // alignSelf: "center",
+    // zIndex: 100,
+    // transform: [
+    //   {
+    //     translateY: interpolate(
+    //       headerPositionY.value,
+    //       [0, 100],
+    //       [0, -110 + STATUSBAR_HEIGHT * 1.5],
+    //       Extrapolate.CLAMP
+    //     ),
+    //   },
+    // ],
+  }));
   return (
-    <View style={styles.container}>
-      <Animated.View style={[headerStyle, styles.header]}>
+    <Animated.View style={[styles.container, headerStyle]}>
+      <Animated.View style={[styles.header]}>
         {/* <MaterialIcons
           name={view}
           style={styles.headerbuttons}
@@ -45,7 +61,7 @@ const HomeHeader = ({
           <View style={styles.imageContainer}>
             <Image
               source={{
-                uri: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.explicit.bing.net%2Fth%3Fid%3DOIP.HcDiUVSF_CqQkcTdko02LQHaIS%26pid%3DApi&f=1&ipt=83bc72f204676e87af8f54283b6d26d71e582fcca3ec233d509061fb020d1333&ipo=images",
+                uri: "https://themuslim500.com/wp-content/uploads/2018/05/tariq-jameel-0.jpg",
               }}
               style={StyleSheet.absoluteFillObject}
             />
@@ -70,7 +86,7 @@ const HomeHeader = ({
       {/* <TagsScrollView /> */}
       {/* <TagsScrollView categories={categories} /> */}
       {children}
-    </View>
+    </Animated.View>
   );
 };
 
@@ -99,15 +115,14 @@ const styles = StyleSheet.create({
   headerbuttons: {
     width: 40,
     height: 40,
-
     backgroundColor: "#343434",
+    // backgroundColor: "lightgray",
     // textAlign: "center",
     // textAlignVertical: "center",
     // fontSize: 24,
     borderRadius: 20,
     // color: "white",
     alignItems: "center",
-
     justifyContent: "center", // overflow: "hidden",
     elevation: 5,
   },

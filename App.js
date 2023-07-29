@@ -8,12 +8,12 @@ import RootNavigator from "./navigation/RootNavigator";
 
 LogBox.ignoreLogs(["new NativeEventEmitter"]); // Ignore log notification by message
 export default function App() {
-  usePreventScreenCapture();
+  // usePreventScreenCapture();
   return (
     <Provider store={store}>
       {/* <AppNavigationContainer /> */}
       <RootNavigator />
-      <StatusBar style="dark" animated />
+      <StatusBar style="light" animated />
     </Provider>
   );
 }

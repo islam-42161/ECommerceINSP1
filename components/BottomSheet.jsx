@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     top: 0,
     // height: height,
     // width: width,
+    zIndex: 100,
   },
   backdrop: {
     backgroundColor: "rgba(0,0,0,0.5)",

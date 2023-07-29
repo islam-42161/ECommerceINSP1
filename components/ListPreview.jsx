@@ -1,18 +1,19 @@
 import {
   View,
   Text,
-  SectionList,
   Pressable,
   StyleSheet,
   ScrollView,
-  TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { AntDesign } from "@expo/vector-icons";
-const ITEM_WIDTH = 150;
+import { Foundation } from "@expo/vector-icons";
+const ITEM_WIDTH = 100;
+const { width } = Dimensions.get("window");
 const PreviewItem = ({ item, navigation }) => {
   return (
     <Pressable
@@ -39,9 +40,14 @@ const PreviewItem = ({ item, navigation }) => {
           style={styles.wishlistIcon}
         />
       </View>
-      <Text numberOfLines={2} style={styles.title}>
-        {item.title} • ${item.price}
-      </Text>
+      <View style={styles.details}>
+        <Text numberOfLines={2} style={styles.title}>
+          {item.title}
+        </Text>
+        <Text numberOfLines={1} style={[styles.subtitle]}>
+          <Foundation name="dollar" style={styles.subtitle} /> {item.price}
+        </Text>
+      </View>
     </Pressable>
   );
 };
@@ -49,7 +55,7 @@ const ListPreview = ({
   preview_items,
   all_items,
   title = "Hot Deals",
-  icon = "fire",
+  icon = null,
   color = "red",
   navigation,
   welcome_text,
@@ -72,38 +78,24 @@ const ListPreview = ({
             style={{
               fontSize: 18,
               color: "lightgray",
-              fontWeight: "bold",
+              fontWeight: "500",
             }}
           >
             {title}
           </Text>
         </View>
-        <TouchableOpacity
-          style={{
-            paddingHorizontal: 10,
-            paddingVertical: 5,
-            borderRadius: 10,
-            borderWidth: 1,
-            borderColor: "gray",
-            backgroundColor: "rgba(255,255,255,0.1)",
-          }}
+
+        <AntDesign
           onPress={() =>
             navigation.navigate("complete_list", {
               all_items: all_items,
               welcome_text: title,
             })
           }
-        >
-          <Text
-            style={{
-              fontSize: 10,
-              color: "lightgray",
-              fontWeight: "500",
-            }}
-          >
-            See All
-          </Text>
-        </TouchableOpacity>
+          name="arrowright"
+          size={24}
+          color="lightgray"
+        />
       </View>
       {/* items */}
 
@@ -173,7 +165,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: ITEM_WIDTH,
     height: ITEM_WIDTH,
-    borderRadius: ITEM_WIDTH * 0.12,
+    borderRadius: ITEM_WIDTH * 0.2,
     overflow: "hidden",
     justifyContent: "space-between",
   },
@@ -181,25 +173,39 @@ const styles = StyleSheet.create({
     columnGap: 20,
   },
   wishlistIcon: {
-    height: 30,
-    width: 30,
-    fontSize: 16,
+    height: 20,
+    width: 20,
+    fontSize: 14,
     textAlignVertical: "center",
     textAlign: "center",
     color: "lightgray",
     backgroundColor: "rgba(0,0,0,0.4)",
-    borderRadius: 15,
-    margin: 10,
+    borderRadius: 10,
+    margin: 5,
     alignSelf: "flex-end",
     // elevation: 5,
   },
   title: {
-    fontSize: ITEM_WIDTH * 0.08,
-    // fontWeight: "bold",
+    fontSize: ITEM_WIDTH * 0.12,
+    // fontWeight: "900",
     color: "lightgray",
     textTransform: "capitalize",
     // textAlignVertical: "center",
     // padding: IMAGE_WIDTH * 0.06,
     // width: ITEM_WIDTH,
+    // backgroundColor: "yellow",
+  },
+  subtitle: {
+    fontSize: ITEM_WIDTH * 0.12,
+    // fontWeight: "bold",
+    color: "gray",
+    textTransform: "capitalize",
+    // textAlignVertical: "center",
+    // padding: IMAGE_WIDTH * 0.06,
+    // width: ITEM_WIDTH,
+    // backgroundColor: "red",
+  },
+  details: {
+    rowGap: 5,
   },
 });

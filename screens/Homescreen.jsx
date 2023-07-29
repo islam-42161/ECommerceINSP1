@@ -1,10 +1,16 @@
-import { StyleSheet, View } from "react-native";
-import React, { useEffect } from "react";
+import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import React, { useEffect, useRef } from "react";
 import HomeHeader from "../components/HomeHeader";
 import UserProfileView from "../components/UserProfileView";
 import TagsScrollView from "../components/TagsScrollView";
 import Animated, {
+  Extrapolate,
+  interpolate,
+  measure,
+  useAnimatedRef,
   useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
 } from "react-native-reanimated";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +19,8 @@ import {
   setHomescreenItems,
 } from "../redux/slices/HomeScreenSlice";
 import ListPreview from "../components/ListPreview";
+
+const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 const person_name = "Muaz";
 
@@ -62,6 +70,7 @@ const Homescreen = ({ navigation, route }) => {
     getItemsData();
     getCategoriesData();
   }, []);
+
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       // console.log(event.contentOffset.y);
@@ -84,25 +93,29 @@ const Homescreen = ({ navigation, route }) => {
       >
         <TagsScrollView categories={categories} />
       </HomeHeader>
-
       {homescreen_items ? (
         <Animated.ScrollView
           showsVerticalScrollIndicator={false}
           onScroll={scrollHandler}
-          // style={{ flex: 1 }}
-          contentContainerStyle={{ paddingBottom: 150, rowGap: 30 }}
+          contentContainerStyle={{
+            paddingBottom: 150,
+            rowGap: 30,
+            // marginTop: 150,
+            // paddingHorizontal: "6%",
+          }}
         >
           <ListPreview
             title="Hot Deals"
             // data={homescreen_items.slice(0, 9)}
             preview_items={homescreen_items.slice(0, 9)}
             color="red"
+            // icon="fire"
             navigation={navigation}
             welcome_text={welcome_text}
           />
           <ListPreview
             title="Recently Viewed"
-            icon="clock"
+            // icon="clock"
             color="white"
             // data={homescreen_items.slice(9, 18)}
             preview_items={homescreen_items.slice(9, 18)}
@@ -111,15 +124,34 @@ const Homescreen = ({ navigation, route }) => {
           />
           <ListPreview
             title="Suggested"
-            icon="thumb-up"
+            // icon="thumb-up"
             color="lightblue"
             // data={homescreen_items.slice(18, 27)}
             preview_items={homescreen_items.slice(18, 27)}
             navigation={navigation}
             welcome_text={welcome_text}
           />
+          <ListPreview
+            title="Top Trends"
+            // icon="thumb-up"
+            color="lightblue"
+            // data={homescreen_items.slice(18, 27)}
+            preview_items={homescreen_items.slice(27, 36)}
+            navigation={navigation}
+            welcome_text={welcome_text}
+          />
+          <ListPreview
+            title="Discounts"
+            // icon="thumb-up"
+            color="lightblue"
+            // data={homescreen_items.slice(18, 27)}
+            preview_items={homescreen_items.slice(36, 45)}
+            navigation={navigation}
+            welcome_text={welcome_text}
+          />
         </Animated.ScrollView>
       ) : null}
+
       <>
         <UserProfileView />
       </>
