@@ -1,47 +1,79 @@
-import { StyleSheet, View, StatusBar, TouchableOpacity } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  View,
+  StatusBar,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
+import React, { useCallback, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { setScreen } from "../redux/slices/bottomsheetSlice";
 import Animated, {
   Extrapolate,
   interpolate,
+  measure,
+  runOnUI,
+  useAnimatedRef,
   useAnimatedStyle,
+  useDerivedValue,
 } from "react-native-reanimated";
 import { Image } from "expo-image";
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
+const { width } = Dimensions.get("window");
 
 const HomeHeader = ({
   welcome_message,
   headerPositionY,
   navigation,
   children,
+  searchBarHeight,
+  headerHeight,
 }) => {
   const handleUserPress = () => {
     dispatch(setScreen("user-profile-view"));
   };
   const dispatch = useDispatch();
+  // const headerref = useAnimatedRef();
 
+  const containerStyle = useAnimatedStyle(() => ({
+    backgroundColor: "#141414",
+    position: "absolute",
+    width: "100%",
+    alignSelf: "center",
+    zIndex: 10,
+    transform: [
+      {
+        translateY: interpolate(
+          headerPositionY.value,
+          [0, 100],
+          [0, -searchBarHeight.value - 30],
+          Extrapolate.CLAMP
+        ),
+      },
+    ],
+  }));
   const headerStyle = useAnimatedStyle(() => ({
-    // backgroundColor: "#141414",
-    // position: "absolute",
-    // width: "100%",
-    // alignSelf: "center",
-    // zIndex: 100,
-    // transform: [
-    //   {
-    //     translateY: interpolate(
-    //       headerPositionY.value,
-    //       [0, 100],
-    //       [0, -110 + STATUSBAR_HEIGHT * 1.5],
-    //       Extrapolate.CLAMP
-    //     ),
-    //   },
-    // ],
+    opacity: interpolate(
+      headerPositionY.value,
+      [0, 100],
+      [1, 0],
+      Extrapolate.CLAMP
+    ),
   }));
   return (
-    <Animated.View style={[styles.container, headerStyle]}>
-      <Animated.View style={[styles.header]}>
+    <Animated.View
+      onLayout={(e) => {
+        headerHeight.value = e.nativeEvent.layout.height;
+      }}
+      style={[styles.container, containerStyle]}
+    >
+      <Animated.View
+        onLayout={(e) => {
+          searchBarHeight.value = e.nativeEvent.layout.height;
+        }}
+        style={[styles.header, headerStyle]}
+      >
         {/* <MaterialIcons
           name={view}
           style={styles.headerbuttons}
@@ -98,6 +130,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     justifyContent: "space-between",
     rowGap: 30,
+    paddingBottom: 15,
   },
   header: {
     flexDirection: "row",

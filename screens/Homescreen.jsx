@@ -70,12 +70,16 @@ const Homescreen = ({ navigation, route }) => {
     getItemsData();
     getCategoriesData();
   }, []);
+  const searchBarHeight = useSharedValue(0);
+  const headerHeight = useSharedValue(0);
+  useDerivedValue(() => {
+    console.log(searchBarHeight.value);
+  });
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       // console.log(event.contentOffset.y);
       headerPositionY.value = event.contentOffset.y;
-      console.log(headerPositionY.value);
     },
   });
   return (
@@ -90,6 +94,8 @@ const Homescreen = ({ navigation, route }) => {
         headerPositionY={headerPositionY}
         welcome_message={welcome_text}
         navigation={navigation}
+        searchBarHeight={searchBarHeight}
+        headerHeight={headerHeight}
       >
         <TagsScrollView categories={categories} />
       </HomeHeader>
@@ -100,7 +106,7 @@ const Homescreen = ({ navigation, route }) => {
           contentContainerStyle={{
             paddingBottom: 150,
             rowGap: 30,
-            // marginTop: 150,
+            paddingTop: headerHeight.value + 15,
             // paddingHorizontal: "6%",
           }}
         >
