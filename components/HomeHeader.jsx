@@ -12,6 +12,7 @@ import { setScreen } from "../redux/slices/bottomsheetSlice";
 import Animated, {
   Extrapolate,
   interpolate,
+  interpolateColor,
   measure,
   runOnUI,
   useAnimatedRef,
@@ -53,6 +54,15 @@ const HomeHeader = ({
       },
     ],
   }));
+  const borderStyle = useAnimatedStyle(() => ({
+    paddingBottom: 15,
+    borderBottomWidth: 2,
+    borderBottomColor: interpolateColor(
+      headerPositionY.value,
+      [0, 100],
+      ["transparent", "lightgray"]
+    ),
+  }));
   const headerStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
       headerPositionY.value,
@@ -60,6 +70,7 @@ const HomeHeader = ({
       [1, 0],
       Extrapolate.CLAMP
     ),
+    paddingHorizontal: "6%",
   }));
   return (
     <Animated.View
@@ -117,7 +128,7 @@ const HomeHeader = ({
       {/* <SearchBar showPreference searchable={false} /> */}
       {/* <TagsScrollView /> */}
       {/* <TagsScrollView categories={categories} /> */}
-      {children}
+      <Animated.View style={borderStyle}>{children}</Animated.View>
     </Animated.View>
   );
 };
@@ -127,10 +138,10 @@ export default HomeHeader;
 const styles = StyleSheet.create({
   container: {
     paddingTop: 1.5 * STATUSBAR_HEIGHT,
+    // paddingBottom: STATUSBAR_HEIGHT * 0.5,
     overflow: "hidden",
     justifyContent: "space-between",
     rowGap: 30,
-    paddingBottom: 15,
   },
   header: {
     flexDirection: "row",

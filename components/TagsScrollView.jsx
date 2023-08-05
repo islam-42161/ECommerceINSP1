@@ -82,7 +82,7 @@ const TagsScrollView = ({
     "Toys & Games",
   ],
 }) => {
-  const indicatorPosition = useSharedValue(0);
+  const indicatorPosition = useSharedValue(0 + width * 0.06);
   const indicatorStyle = useAnimatedStyle(() => ({
     width: FONT_SIZE / 2,
     height: FONT_SIZE / 2,
@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
   },
   tagsConainerStyle: {
     columnGap: 20,
+    paddingHorizontal: "6%",
     // justifyContent: "space-evenly",
   },
   text: {

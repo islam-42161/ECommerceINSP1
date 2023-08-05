@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#151515",
-    paddingHorizontal: "6%",
+    // paddingHorizontal: "6%",
     rowGap: 30,
   },
 });

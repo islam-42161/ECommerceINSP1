@@ -63,13 +63,7 @@ const ListPreview = ({
   return (
     <View style={styles.container}>
       {/* header */}
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
+      <View style={styles.headerContainer}>
         <View style={styles.headerTitleSection}>
           {icon ? (
             <MaterialCommunityIcons size={24} color={color} name={icon} />
@@ -158,6 +152,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
   },
+  headerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: "6%",
+  },
   itemContainer: {
     rowGap: 10,
     width: ITEM_WIDTH,
@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
   },
   listContaienrStyle: {
     columnGap: 20,
+    paddingHorizontal: "6%",
   },
   wishlistIcon: {
     height: 20,
