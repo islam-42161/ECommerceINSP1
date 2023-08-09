@@ -94,7 +94,7 @@ const HomeHeader = ({
   const headerStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
       headerPositionY.value,
-      [0, 100],
+      [0, -searchBarHeight.value - 30],
       [1, 0],
       Extrapolate.CLAMP
     ),

@@ -5,6 +5,7 @@ import UserProfileView from "../components/UserProfileView";
 import TagsScrollView from "../components/TagsScrollView";
 
 import Animated, {
+  Easing,
   Extrapolate,
   interpolate,
   measure,
@@ -13,6 +14,7 @@ import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
+  withTiming,
 } from "react-native-reanimated";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -90,21 +92,22 @@ const Homescreen = ({ navigation, route }) => {
   // });
 
   const scrollHandler = useAnimatedScrollHandler((event) => {
-    if (event.contentOffset.y > lastY.value) {
-      headerPositionY.value = interpolate(
-        event.contentOffset.y,
-        [0, 100],
-        [0, -searchBarHeight.value - 30],
-        Extrapolate.CLAMP
+    const deltaY = event.contentOffset.y - lastY.value;
+
+    if (deltaY > 0) {
+      headerPositionY.value = Math.max(
+        headerPositionY.value - deltaY,
+        -searchBarHeight.value - 30
       );
     } else {
-      headerPositionY.value = interpolate(
-        event.contentOffset.y,
-        [0, 100],
-        [0, 0],
-        Extrapolate.CLAMP
+      // Adjust the threshold for a smoother hiding effect
+      const hideThreshold = 0;
+      headerPositionY.value = Math.min(
+        headerPositionY.value - deltaY,
+        hideThreshold
       );
     }
+
     lastY.value = event.contentOffset.y;
   });
 
