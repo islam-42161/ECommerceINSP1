@@ -93,19 +93,18 @@ const Homescreen = ({ navigation, route }) => {
 
   const scrollHandler = useAnimatedScrollHandler((event) => {
     const deltaY = event.contentOffset.y - lastY.value;
-
+    console.log(headerPositionY.value, deltaY);
     if (deltaY > 0) {
       headerPositionY.value = Math.max(
         headerPositionY.value - deltaY,
         -searchBarHeight.value - 30
       );
     } else {
-      // Adjust the threshold for a smoother hiding effect
-      const hideThreshold = 0;
-      headerPositionY.value = Math.min(
-        headerPositionY.value - deltaY,
-        hideThreshold
-      );
+      if (event.contentOffset.y <= 0) {
+        headerPositionY.value = 0;
+      } else {
+        headerPositionY.value = Math.min(headerPositionY.value - deltaY, 0);
+      }
     }
 
     lastY.value = event.contentOffset.y;

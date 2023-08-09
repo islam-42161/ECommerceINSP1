@@ -83,7 +83,7 @@ const HomeHeader = ({
       },
     ],
     paddingBottom: 15,
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderBottomColor: interpolateColor(
       headerPositionY.value,
       [0, -searchBarHeight.value - 30],
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 1.5 * STATUSBAR_HEIGHT,
     // paddingBottom: STATUSBAR_HEIGHT * 0.5,
-    overflow: "hidden",
+    // overflow: "hidden",
     justifyContent: "space-between",
     rowGap: 30,
   },
