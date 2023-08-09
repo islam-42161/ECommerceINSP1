@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from "react";
 import HomeHeader from "../components/HomeHeader";
 import UserProfileView from "../components/UserProfileView";
 import TagsScrollView from "../components/TagsScrollView";
+
 import Animated, {
   Extrapolate,
   interpolate,
@@ -35,7 +36,6 @@ const welcome_messages = [
 ];
 const welcome_text =
   welcome_messages[Math.floor(Math.random() * welcome_messages.length)];
-
 const Homescreen = ({ navigation, route }) => {
   const headerPositionY = useSharedValue(0);
   const dispatch = useDispatch();
@@ -72,16 +72,42 @@ const Homescreen = ({ navigation, route }) => {
   }, []);
   const searchBarHeight = useSharedValue(0);
   const headerHeight = useSharedValue(0);
-  useDerivedValue(() => {
-    console.log(searchBarHeight.value);
+  const lastY = useSharedValue(0);
+  // const scrollHandler = useAnimatedScrollHandler({
+  //   onEndDrag: (e) => {
+  //     lastY.value = e.contentOffset.y;
+  //   },
+  //   onScroll: (event) => {
+  //     // console.log(event.contentOffset.y);
+  //     if (event.contentOffset.y > lastY.value) {
+  //       console.log("scrolling down");
+  //     } else {
+  //       console.log("scrolling up");
+  //     }
+  //     headerPositionY.value = event.contentOffset.y - lastY.value;
+  //     //headerPositionY.value = event.contentOffset.y - lastY.value; this might work but conditional approach is left...
+  //   },
+  // });
+
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    if (event.contentOffset.y > lastY.value) {
+      headerPositionY.value = interpolate(
+        event.contentOffset.y,
+        [0, 100],
+        [0, -searchBarHeight.value - 30],
+        Extrapolate.CLAMP
+      );
+    } else {
+      headerPositionY.value = interpolate(
+        event.contentOffset.y,
+        [0, 100],
+        [0, 0],
+        Extrapolate.CLAMP
+      );
+    }
+    lastY.value = event.contentOffset.y;
   });
 
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      // console.log(event.contentOffset.y);
-      headerPositionY.value = event.contentOffset.y;
-    },
-  });
   return (
     <View style={styles.container}>
       {/* <MasonryGridFlashlist
@@ -99,7 +125,7 @@ const Homescreen = ({ navigation, route }) => {
       >
         <TagsScrollView categories={categories} />
       </HomeHeader>
-      {homescreen_items ? (
+      {homescreen_items && headerHeight.value != 0 ? (
         <Animated.ScrollView
           showsVerticalScrollIndicator={false}
           onScroll={scrollHandler}

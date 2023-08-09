@@ -37,6 +37,40 @@ const HomeHeader = ({
   const dispatch = useDispatch();
   // const headerref = useAnimatedRef();
 
+  // const containerStyle = useAnimatedStyle(() => ({
+  //   backgroundColor: "#141414",
+  //   position: "absolute",
+  //   width: "100%",
+  //   alignSelf: "center",
+  //   zIndex: 10,
+  //   transform: [
+  //     {
+  //       translateY: interpolate(
+  //         headerPositionY.value,
+  //         [0, 100],
+  //         [0, -searchBarHeight.value - 30],
+  //         Extrapolate.CLAMP
+  //       ),
+  //     },
+  //   ],
+  //   paddingBottom: 15,
+  //   borderBottomWidth: 2,
+  //   borderBottomColor: interpolateColor(
+  //     headerPositionY.value,
+  //     [0, 100],
+  //     ["transparent", "lightgray"]
+  //   ),
+  // }));
+
+  // const headerStyle = useAnimatedStyle(() => ({
+  //   opacity: interpolate(
+  //     headerPositionY.value,
+  //     [0, 100],
+  //     [1, 0],
+  //     Extrapolate.CLAMP
+  //   ),
+  //   paddingHorizontal: "6%",
+  // }));
   const containerStyle = useAnimatedStyle(() => ({
     backgroundColor: "#141414",
     position: "absolute",
@@ -45,24 +79,18 @@ const HomeHeader = ({
     zIndex: 10,
     transform: [
       {
-        translateY: interpolate(
-          headerPositionY.value,
-          [0, 100],
-          [0, -searchBarHeight.value - 30],
-          Extrapolate.CLAMP
-        ),
+        translateY: headerPositionY.value,
       },
     ],
-  }));
-  const borderStyle = useAnimatedStyle(() => ({
     paddingBottom: 15,
     borderBottomWidth: 2,
     borderBottomColor: interpolateColor(
       headerPositionY.value,
-      [0, 100],
+      [0, -searchBarHeight.value - 30],
       ["transparent", "lightgray"]
     ),
   }));
+
   const headerStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
       headerPositionY.value,
@@ -128,7 +156,7 @@ const HomeHeader = ({
       {/* <SearchBar showPreference searchable={false} /> */}
       {/* <TagsScrollView /> */}
       {/* <TagsScrollView categories={categories} /> */}
-      <Animated.View style={borderStyle}>{children}</Animated.View>
+      {children}
     </Animated.View>
   );
 };
