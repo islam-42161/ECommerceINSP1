@@ -10,13 +10,9 @@ import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import ImageCarousel from "../components/ImageCarousel";
 import Animated, {
-  interpolate,
-  interpolateColor,
   useAnimatedRef,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
-  withTiming,
 } from "react-native-reanimated";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import DotsCarousel from "../components/DotsCarousel";
@@ -26,11 +22,12 @@ import {
   toggleWishlisted,
 } from "../redux/slices/ItemDetailsStates";
 import ColorPick from "../components/ColorPick";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 const { height, width } = Dimensions.get("window");
 
 const ItemDetails = ({ navigation, route }) => {
   const { item } = route.params;
-
+  const pan = Gesture.Pan();
   // image scrollx value
   const animatedScrollX = useSharedValue(0);
   const imageCarouselRef = useAnimatedRef();
@@ -68,82 +65,84 @@ const ItemDetails = ({ navigation, route }) => {
       />
 
       {/* Bottom Info */}
-      <Animated.View style={[styles.bottomInfo]}>
-        <DotsCarousel
-          items={item.images.map((_, index) => index)}
-          animatedRef={imageCarouselRef}
-          animatedScrollX={animatedScrollX}
-        />
+      <GestureDetector gesture={pan}>
+        <Animated.View style={[styles.bottomInfo]}>
+          <DotsCarousel
+            items={item.images.map((_, index) => index)}
+            animatedRef={imageCarouselRef}
+            animatedScrollX={animatedScrollX}
+          />
 
-        {/* title */}
-        <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
-          {item.title}
-        </Text>
-        {/* description */}
-        <Text style={styles.subTitle} numberOfLines={3}>
-          {item.description}
-        </Text>
-
-        {/* choice section */}
-        <View style={styles.choice}>
-          {item.colors === undefined ? null : (
-            <ColorPick
-              colors={item.colors}
-              backgroundColorAnimated={backgroundColorAnimated}
-            />
-          )}
-          <View style={styles.addremoveCart}>
-            <AntDesign
-              name="minus"
-              style={{ padding: 10, borderRadius: width / 8, fontSize: 10 }}
-            />
-            <Text style={{ fontSize: 14 }}>2</Text>
-            <AntDesign
-              name="plus"
-              style={[
-                {
-                  padding: 10,
-                  backgroundColor: "#1A1A1A",
-                  borderRadius: width / 8,
-                  color: "white",
-                  marginLeft: 8,
-                  fontSize: 10,
-                },
-              ]}
-            />
-          </View>
-        </View>
-
-        {/* price and cart button */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          {/* price */}
-          <Text
-            style={{
-              fontSize: 24,
-              fontWeight: "700",
-              letterSpacing: 0,
-              color: "#1A1A1A",
-            }}
-          >
-            ${item.price.toFixed(2)}
+          {/* title */}
+          <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
+            {item.title}
+          </Text>
+          {/* description */}
+          <Text style={styles.subTitle} numberOfLines={3}>
+            {item.description}
           </Text>
 
-          {/* cart button */}
+          {/* choice section */}
+          <View style={styles.choice}>
+            {item.colors === undefined ? null : (
+              <ColorPick
+                colors={item.colors}
+                backgroundColorAnimated={backgroundColorAnimated}
+              />
+            )}
+            <View style={styles.addremoveCart}>
+              <AntDesign
+                name="minus"
+                style={{ padding: 10, borderRadius: width / 8, fontSize: 10 }}
+              />
+              <Text style={{ fontSize: 14 }}>2</Text>
+              <AntDesign
+                name="plus"
+                style={[
+                  {
+                    padding: 10,
+                    backgroundColor: "#1A1A1A",
+                    borderRadius: width / 8,
+                    color: "white",
+                    marginLeft: 8,
+                    fontSize: 10,
+                  },
+                ]}
+              />
+            </View>
+          </View>
 
-          <Animated.Text
-            onPress={() => console.log("add to cart")}
-            style={[styles.addTOCartButton]}
+          {/* price and cart button */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
           >
-            Add to cart
-          </Animated.Text>
-        </View>
-      </Animated.View>
+            {/* price */}
+            <Text
+              style={{
+                fontSize: 24,
+                fontWeight: "700",
+                letterSpacing: 0,
+                color: "#1A1A1A",
+              }}
+            >
+              ${item.price.toFixed(2)}
+            </Text>
+
+            {/* cart button */}
+
+            <Animated.Text
+              onPress={() => console.log("add to cart")}
+              style={[styles.addTOCartButton]}
+            >
+              Add to cart
+            </Animated.Text>
+          </View>
+        </Animated.View>
+      </GestureDetector>
     </Animated.View>
   );
 };
