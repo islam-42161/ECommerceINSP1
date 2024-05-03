@@ -77,7 +77,7 @@ const MasonryGridFlashlist = ({
               {
                 height:
                   item_image_heights[
-                    Math.floor(Math.random() * item_image_heights.length)
+                  Math.floor(Math.random() * item_image_heights.length)
                   ],
               },
             ]}
@@ -94,7 +94,7 @@ const MasonryGridFlashlist = ({
               />
               <Ionicons
                 onPress={() => console.log("pressed wishlist")}
-                name="ios-heart-outline"
+                name="heart-outline"
                 style={styles.wishlistIcon}
               />
               <LinearGradient

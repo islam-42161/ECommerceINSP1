@@ -52,7 +52,7 @@ const ItemDetails = ({ navigation, route }) => {
           style={[styles.headerButtons]}
         />
         <Ionicons
-          name={wishlisted ? "md-heart" : "md-heart-outline"}
+          name={wishlisted ? "heart" : "heart-outline"}
           onPress={() => dispatch(toggleWishlisted(!wishlisted))}
           style={[styles.headerButtons]}
         />

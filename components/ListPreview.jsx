@@ -36,7 +36,7 @@ const PreviewItem = ({ item, navigation }) => {
         />
         <Ionicons
           onPress={() => console.log("pressed wishlist")}
-          name="ios-heart-outline"
+          name="heart-outline"
           style={styles.wishlistIcon}
         />
       </View>

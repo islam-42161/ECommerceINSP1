@@ -1,5 +1,5 @@
-import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
-import React, { useEffect, useRef } from "react";
+import { ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import HomeHeader from "../components/HomeHeader";
 import UserProfileView from "../components/UserProfileView";
 import TagsScrollView from "../components/TagsScrollView";
@@ -7,6 +7,8 @@ import TagsScrollView from "../components/TagsScrollView";
 import Animated, {
   Easing,
   Extrapolate,
+  FadeOutUp,
+  SlideOutUp,
   interpolate,
   measure,
   useAnimatedRef,
@@ -19,6 +21,7 @@ import Animated, {
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCategories,
+  setGreetingsShow,
   setHomescreenItems,
 } from "../redux/slices/HomeScreenSlice";
 import ListPreview from "../components/ListPreview";
@@ -41,10 +44,13 @@ const welcome_text =
 const Homescreen = ({ navigation, route }) => {
   const headerPositionY = useSharedValue(0);
   const dispatch = useDispatch();
-  const { homescreen_items, categories } = useSelector((state) => ({
-    homescreen_items: state.homescreen_states.homescreen_items,
-    categories: state.homescreen_states.categories,
-  }));
+  const { homescreen_items, categories, greetings_show } = useSelector(
+    (state) => ({
+      homescreen_items: state.homescreen_states.homescreen_items,
+      categories: state.homescreen_states.categories,
+      greetings_show: state.homescreen_states.greetings_show,
+    })
+  );
   const getItemsData = () => {
     fetch("https://dummyjson.com/products?limit=100")
       .then((response) => response.json())
@@ -75,22 +81,6 @@ const Homescreen = ({ navigation, route }) => {
   const searchBarHeight = useSharedValue(0);
   const headerHeight = useSharedValue(0);
   const lastY = useSharedValue(0);
-  // const scrollHandler = useAnimatedScrollHandler({
-  //   onEndDrag: (e) => {
-  //     lastY.value = e.contentOffset.y;
-  //   },
-  //   onScroll: (event) => {
-  //     // console.log(event.contentOffset.y);
-  //     if (event.contentOffset.y > lastY.value) {
-  //       console.log("scrolling down");
-  //     } else {
-  //       console.log("scrolling up");
-  //     }
-  //     headerPositionY.value = event.contentOffset.y - lastY.value;
-  //     //headerPositionY.value = event.contentOffset.y - lastY.value; this might work but conditional approach is left...
-  //   },
-  // });
-
   const scrollHandler = useAnimatedScrollHandler((event) => {
     const deltaY = event.contentOffset.y - lastY.value;
     console.log(headerPositionY.value, deltaY);
@@ -110,6 +100,21 @@ const Homescreen = ({ navigation, route }) => {
     lastY.value = event.contentOffset.y;
   });
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      dispatch(setGreetingsShow(false));
+      // setShowText(false);
+    }, 5000);
+    return () => clearTimeout(timer); // This will clear the timer when the component unmounts
+  }, []);
+
+  const greetingsStyle = useAnimatedStyle(() => ({
+    color: "white",
+    paddingHorizontal: "6%",
+    fontSize: 20,
+    fontWeight: "bold",
+  }));
+
   return (
     <View style={styles.container}>
       {/* <MasonryGridFlashlist
@@ -127,6 +132,7 @@ const Homescreen = ({ navigation, route }) => {
       >
         <TagsScrollView categories={categories} />
       </HomeHeader>
+
       {homescreen_items && headerHeight.value != 0 ? (
         <Animated.ScrollView
           showsVerticalScrollIndicator={false}
@@ -138,6 +144,11 @@ const Homescreen = ({ navigation, route }) => {
             // paddingHorizontal: "6%",
           }}
         >
+          {greetings_show && (
+            <Animated.Text style={[greetingsStyle]} exiting={SlideOutUp}>
+              Good Morning, {person_name}
+            </Animated.Text>
+          )}
           <ListPreview
             title="Hot Deals"
             // data={homescreen_items.slice(0, 9)}

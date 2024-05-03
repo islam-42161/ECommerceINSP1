@@ -24,7 +24,7 @@ export default function BottomTabNavigator() {
       <Tab.Screen
         name="Home"
         initialParams={{
-          name: "ios-home-outline",
+          name: "home-outline",
         }}
         component={Homescreen}
       />
@@ -32,21 +32,21 @@ export default function BottomTabNavigator() {
         name="Cart"
         component={CartScreen}
         initialParams={{
-          name: "ios-cart-outline",
+          name: "cart-outline",
         }}
       />
       <Tab.Screen
         name="Wishlist"
         component={WishlistScreen}
         initialParams={{
-          name: "ios-heart-outline",
+          name: "heart-outline",
         }}
       />
       <Tab.Screen
         name="Settings"
         component={Test}
         initialParams={{
-          name: "ios-settings-outline",
+          name: "settings-outline",
         }}
       />
     </Tab.Navigator>

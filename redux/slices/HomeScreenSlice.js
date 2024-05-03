@@ -4,6 +4,7 @@ const initialState = {
   view: "view-quilt",
   homescreen_items: null,
   categories: null,
+  greetings_show: true,
 };
 
 const HomeScreeSlice = createSlice({
@@ -19,11 +20,14 @@ const HomeScreeSlice = createSlice({
     setCategories: (state, action) => {
       state.categories = action.payload;
     },
+    setGreetingsShow: (state, action) => {
+      state.greetings_show = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setView, setHomescreenItems, setCategories } =
+export const { setView, setHomescreenItems, setCategories, setGreetingsShow } =
   HomeScreeSlice.actions;
 
 export default HomeScreeSlice.reducer;
