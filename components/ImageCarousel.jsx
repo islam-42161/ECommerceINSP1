@@ -8,6 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 const { height, width } = Dimensions.get("window");
+const IMAGE_WIDTH = width - 40;
 
 const ImageCarousel = ({
   images = [
@@ -37,26 +38,15 @@ const ImageCarousel = ({
         onScroll={animatedScrollHandler}
         ref={animatedRef}
       >
-        <LinearGradient
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "25%",
-            zIndex: 1,
-            bottom: 0,
-          }}
-          colors={["transparent", "#151515"]}
-        />
-        {/* '#151515' */}
+
         {images.map((uri, key) => (
-          // image container
-          <View key={key} style={{ width: width, overflow: "hidden" }}>
+          <View key={key} style={{ width: IMAGE_WIDTH, height: '100%', overflow: "hidden" }}>
             <Image
               source={{ uri }}
               placeholder={placeholder_blurhash}
-              style={{ flex: 1 }}
+              style={{ flex: 1, }}
               transition={1000}
-              // contentFit="contain"
+              contentFit="contain"
               cachePolicy={"memory-disk"}
             />
           </View>
@@ -70,11 +60,19 @@ export default ImageCarousel;
 
 const styles = StyleSheet.create({
   container: {
-    // width:width,
-    height: "70%",
+    width: IMAGE_WIDTH,
+    // height: "100%",
+    flex: 1,
+    // marginHorizontal: 20,
+    borderRadius: 20,
+    // backgroundColor: '#151515',
+    // backgroundColor: 'white',
+    backgroundColor: "#343434",
     alignItems: "center",
     overflow: "hidden",
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    alignSelf: 'center'
+    // borderBottomLeftRadius: 20,
+    // borderBottomRightRadius: 20,
   },
+
 });

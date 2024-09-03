@@ -2,6 +2,7 @@ import {
   Dimensions,
   Pressable,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -24,6 +25,7 @@ import {
 import ColorPick from "../components/ColorPick";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 const { height, width } = Dimensions.get("window");
+const STATUSBAR_HEIGHT = StatusBar.currentHeight
 
 const ItemDetails = ({ navigation, route }) => {
   const { item } = route.params;
@@ -57,92 +59,96 @@ const ItemDetails = ({ navigation, route }) => {
           style={[styles.headerButtons]}
         />
       </View>
+      {/* <View style={{ flex: 1, justifyContent: 'center' }}> */}
       <ImageCarousel
         animatedScrollX={animatedScrollX}
         animatedRef={imageCarouselRef}
         ambienceColor={backgroundColorAnimated}
         images={item.images}
       />
+      {/* </View> */}
+      {/* Bottom Container */}
+      <View style={styles.bottomContainer}>
+        <DotsCarousel
+          items={item.images.map((_, index) => index)}
+          animatedRef={imageCarouselRef}
+          animatedScrollX={animatedScrollX}
+        />
+        {/* Bottom Info */}
+        <GestureDetector gesture={pan}>
+          <Animated.View style={[styles.bottomInfo]}>
 
-      {/* Bottom Info */}
-      <GestureDetector gesture={pan}>
-        <Animated.View style={[styles.bottomInfo]}>
-          <DotsCarousel
-            items={item.images.map((_, index) => index)}
-            animatedRef={imageCarouselRef}
-            animatedScrollX={animatedScrollX}
-          />
-
-          {/* title */}
-          <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
-            {item.title}
-          </Text>
-          {/* description */}
-          <Text style={styles.subTitle} numberOfLines={3}>
-            {item.description}
-          </Text>
-
-          {/* choice section */}
-          <View style={styles.choice}>
-            {item.colors === undefined ? null : (
-              <ColorPick
-                colors={item.colors}
-                backgroundColorAnimated={backgroundColorAnimated}
-              />
-            )}
-            <View style={styles.addremoveCart}>
-              <AntDesign
-                name="minus"
-                style={{ padding: 10, borderRadius: width / 8, fontSize: 10 }}
-              />
-              <Text style={{ fontSize: 14 }}>2</Text>
-              <AntDesign
-                name="plus"
-                style={[
-                  {
-                    padding: 10,
-                    backgroundColor: "#1A1A1A",
-                    borderRadius: width / 8,
-                    color: "white",
-                    marginLeft: 8,
-                    fontSize: 10,
-                  },
-                ]}
-              />
-            </View>
-          </View>
-
-          {/* price and cart button */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            {/* price */}
-            <Text
-              style={{
-                fontSize: 24,
-                fontWeight: "700",
-                letterSpacing: 0,
-                color: "#1A1A1A",
-              }}
-            >
-              ${item.price.toFixed(2)}
+            {/* title */}
+            <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
+              {item.title}
+            </Text>
+            {/* description */}
+            <Text style={styles.subTitle} numberOfLines={3}>
+              {item.description}
             </Text>
 
-            {/* cart button */}
+            {/* choice section */}
+            <View style={styles.choice}>
+              {item.colors === undefined ? null : (
+                <ColorPick
+                  colors={item.colors}
+                  backgroundColorAnimated={backgroundColorAnimated}
+                />
+              )}
+              <View style={styles.addremoveCart}>
+                <AntDesign
+                  name="minus"
+                  style={{ padding: 10, borderRadius: width / 8, fontSize: 10 }}
+                />
+                <Text style={{ fontSize: 14 }}>2</Text>
+                <AntDesign
+                  name="plus"
+                  style={[
+                    {
+                      padding: 10,
+                      backgroundColor: "#1A1A1A",
+                      borderRadius: width / 8,
+                      color: "white",
+                      marginLeft: 8,
+                      fontSize: 10,
+                    },
+                  ]}
+                />
+              </View>
+            </View>
 
-            <Animated.Text
-              onPress={() => console.log("add to cart")}
-              style={[styles.addTOCartButton]}
+            {/* price and cart button */}
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
-              Add to cart
-            </Animated.Text>
-          </View>
-        </Animated.View>
-      </GestureDetector>
+              {/* price */}
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "700",
+                  letterSpacing: 0,
+                  color: "#1A1A1A",
+                }}
+              >
+                ${item.price.toFixed(2)}
+              </Text>
+
+              {/* cart button */}
+
+              <Animated.Text
+                onPress={() => console.log("add to cart")}
+                style={[styles.addTOCartButton]}
+              >
+                Add to cart
+              </Animated.Text>
+            </View>
+          </Animated.View>
+        </GestureDetector>
+      </View>
     </Animated.View>
   );
 };
@@ -154,21 +160,20 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: "flex-end",
     backgroundColor: "#151515",
+    gap: 20,
+  },
+  bottomContainer: {
+    gap: 20
   },
   bottomInfo: {
-    position: "absolute",
-    bottom: 0,
-    right: 0,
-    left: 0,
-    height: height * 0.4,
     backgroundColor: "white",
     gap: 10,
-    borderRadius: width / 8,
+    borderRadius: 20,
     elevation: 5,
     padding: 20,
-    margin: 10,
+    marginHorizontal: 20,
+    marginBottom: 20,
     justifyContent: "space-between",
-    // zIndex:10
   },
   title: {
     fontSize: 12 * 4,
@@ -211,13 +216,14 @@ const styles = StyleSheet.create({
   headerBar: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 20,
-    paddingVertical: 40,
-    position: "absolute",
-    top: 0,
-    right: 0,
-    left: 0,
-    zIndex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20 + STATUSBAR_HEIGHT,
+    // paddingVertical: 40,
+    // position: "absolute",
+    // top: 0,
+    // right: 0,
+    // left: 0,
+    // zIndex: 1,
   },
   headerButtons: {
     width: 24 + 16,

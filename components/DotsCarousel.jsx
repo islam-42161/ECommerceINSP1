@@ -21,6 +21,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 const { width } = Dimensions.get("window");
+const IMAGE_WIDTH = width - 40;
 
 const INDICATOR_HEIGHT = 5;
 const INDICATOR_WIDTH = 20;
@@ -32,27 +33,33 @@ const DotsCarousel = ({
   animatedRef,
 }) => {
   const gotoIndex = (index) => {
-    runOnUI(scrollTo)(animatedRef, index * width, 0, true);
+    runOnUI(scrollTo)(animatedRef, index * IMAGE_WIDTH, 0, true);
   };
+  if (items.length > 1) {
+    return (
+      <ScrollView
+        style={[styles.dotscontainer]}
+        contentContainerStyle={[styles.dotsContentContainer, style]}
+        pointerEvents="none"
+        horizontal
+        showsHorizontalScrollIndicator={false}
+      >
+        {items.map((element, index) => (
+          <Dot
+            i={index}
+            key={index}
+            animatedScrollX={animatedScrollX}
+            gotoIndex={gotoIndex}
+          />
+        ))}
+      </ScrollView>
+    );
+  }
+  else {
+    return null
+  }
 
-  return (
-    <ScrollView
-      style={[styles.dotscontainer]}
-      contentContainerStyle={[styles.dotsContentContainer, style]}
-      pointerEvents="none"
-      horizontal
-      showsHorizontalScrollIndicator={false}
-    >
-      {items.map((element, index) => (
-        <Dot
-          i={index}
-          key={index}
-          animatedScrollX={animatedScrollX}
-          gotoIndex={gotoIndex}
-        />
-      ))}
-    </ScrollView>
-  );
+
 };
 const Dot = ({ i, animatedScrollX, gotoIndex }) => {
   const animatedDotStyle = useAnimatedStyle(() => ({
@@ -60,7 +67,7 @@ const Dot = ({ i, animatedScrollX, gotoIndex }) => {
       {
         translateX: interpolate(
           animatedScrollX.value,
-          [-width + i * width, i * width, width + i * width],
+          [-IMAGE_WIDTH + i * IMAGE_WIDTH, i * IMAGE_WIDTH, IMAGE_WIDTH + i * IMAGE_WIDTH],
           [-(INDICATOR_WIDTH + GAP), 0, INDICATOR_WIDTH + GAP]
         ),
       },
@@ -91,8 +98,8 @@ const styles = StyleSheet.create({
     borderRadius: INDICATOR_WIDTH / 2,
   },
   dotscontainer: {
-    position: "absolute",
-    top: "-10%",
+    // position: "absolute",
+    // top: "-10%",
     alignSelf: "center",
   },
   dotsContentContainer: {
