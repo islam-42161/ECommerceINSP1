@@ -14,6 +14,29 @@ import Animated, {
 
 const { width, height } = Dimensions.get("window");
 const FONT_SIZE = 12;
+// const Tag = ({ value, containerRef, indicatorPosition, tagsScrollX }) => {
+//   const ref = useRef();
+//   const handlePress = () => {
+//     ref.current.measureLayout(containerRef.current, (x, _, tag_width, __) => {
+//       indicatorPosition.value = withTiming(x, {
+//         duration: 500,
+//       });
+//       // scroll to middle of the page, minus columngap
+//       runOnUI(scrollTo)(containerRef, x - width * 0.33, 0, true);
+//     });
+
+//     // if (indicatorPosition.value < tagsScrollX.value + width / 3) {
+//     //   scrollTo(containerRef, indicatorPosition.value - width / 3, 0, true);
+//     // }
+//     //set tag index here
+//   };
+//   return (
+//     <Text ref={ref} onPress={handlePress} style={styles.text}>
+//       {value}
+//     </Text>
+//   );
+// };
+
 const Tag = ({ value, containerRef, indicatorPosition, tagsScrollX }) => {
   const ref = useRef();
   const handlePress = () => {
@@ -24,18 +47,15 @@ const Tag = ({ value, containerRef, indicatorPosition, tagsScrollX }) => {
       // scroll to middle of the page, minus columngap
       runOnUI(scrollTo)(containerRef, x - width * 0.33, 0, true);
     });
-
-    // if (indicatorPosition.value < tagsScrollX.value + width / 3) {
-    //   scrollTo(containerRef, indicatorPosition.value - width / 3, 0, true);
-    // }
-    //set tag index here
   };
+
   return (
     <Text ref={ref} onPress={handlePress} style={styles.text}>
-      {value}
+      {typeof value === "object" ? value.name : value}
     </Text>
   );
 };
+
 
 const Preloader = () => {
   return (
@@ -67,7 +87,6 @@ const Preloader = () => {
 
 const TagsScrollView = ({
   categories = [
-    "All",
     "Newest",
     "Popular",
     "Men",

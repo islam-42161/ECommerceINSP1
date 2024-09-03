@@ -44,9 +44,7 @@ const PreviewItem = ({ item, navigation }) => {
         <Text numberOfLines={2} style={styles.title}>
           {item.title}
         </Text>
-        <Text numberOfLines={1} style={[styles.subtitle]}>
-          <Foundation name="dollar" style={styles.subtitle} /> {item.price}
-        </Text>
+        <Text numberOfLines={1} style={[styles.subtitle]}><Foundation name="dollar" style={styles.subtitle} /> {item.price}</Text>
       </View>
     </Pressable>
   );

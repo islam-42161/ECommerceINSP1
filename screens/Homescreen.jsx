@@ -1,9 +1,8 @@
 import { ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import HomeHeader from "../components/HomeHeader";
 import UserProfileView from "../components/UserProfileView";
 import TagsScrollView from "../components/TagsScrollView";
-
 import Animated, {
   Easing,
   Extrapolate,
@@ -18,12 +17,6 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setCategories,
-  setGreetingsShow,
-  setHomescreenItems,
-} from "../redux/slices/HomeScreenSlice";
 import ListPreview from "../components/ListPreview";
 
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
@@ -41,43 +34,42 @@ const welcome_messages = [
 ];
 const welcome_text =
   welcome_messages[Math.floor(Math.random() * welcome_messages.length)];
+
 const Homescreen = ({ navigation, route }) => {
   const headerPositionY = useSharedValue(0);
-  const dispatch = useDispatch();
-  const { homescreen_items, categories, greetings_show } = useSelector(
-    (state) => ({
-      homescreen_items: state.homescreen_states.homescreen_items,
-      categories: state.homescreen_states.categories,
-      greetings_show: state.homescreen_states.greetings_show,
-    })
-  );
+  const [homescreenItems, setHomescreenItems] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [greetingsShow, setGreetingsShow] = useState(true);
+
   const getItemsData = () => {
     fetch("https://dummyjson.com/products?limit=100")
       .then((response) => response.json())
       .then((json) => {
-        dispatch(setHomescreenItems(json.products));
+        setHomescreenItems(json.products);
       })
       .catch((reason) => {
         console.log(reason);
         getItemsData();
       });
   };
+
   const getCategoriesData = () => {
     fetch("https://dummyjson.com/products/categories")
       .then((response) => response.json())
       .then((json) => {
-        // console.log(json);
-        dispatch(setCategories(json));
+        setCategories(json);
       })
       .catch((reason) => {
         console.log(reason);
         getCategoriesData();
       });
   };
+
   useEffect(() => {
     getItemsData();
     getCategoriesData();
   }, []);
+
   const searchBarHeight = useSharedValue(0);
   const headerHeight = useSharedValue(0);
   const lastY = useSharedValue(0);
@@ -102,8 +94,7 @@ const Homescreen = ({ navigation, route }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      dispatch(setGreetingsShow(false));
-      // setShowText(false);
+      setGreetingsShow(false);
     }, 5000);
     return () => clearTimeout(timer); // This will clear the timer when the component unmounts
   }, []);
@@ -120,7 +111,7 @@ const Homescreen = ({ navigation, route }) => {
       {/* <MasonryGridFlashlist
         lastContentOffset={lastContentOffset}
         headerPositionY={headerPositionY}
-        data={homescreen_items}
+        data={homescreenItems}
         navigation={navigation}
       /> */}
       <HomeHeader
@@ -133,7 +124,7 @@ const Homescreen = ({ navigation, route }) => {
         <TagsScrollView categories={categories} />
       </HomeHeader>
 
-      {homescreen_items && headerHeight.value != 0 ? (
+      {homescreenItems && headerHeight.value != 0 ? (
         <Animated.ScrollView
           showsVerticalScrollIndicator={false}
           onScroll={scrollHandler}
@@ -141,56 +132,45 @@ const Homescreen = ({ navigation, route }) => {
             paddingBottom: 150,
             rowGap: 30,
             paddingTop: headerHeight.value + 15,
-            // paddingHorizontal: "6%",
           }}
         >
-          {greetings_show && (
+          {greetingsShow && (
             <Animated.Text style={[greetingsStyle]} exiting={SlideOutUp}>
               Good Morning, {person_name}
             </Animated.Text>
           )}
           <ListPreview
             title="Hot Deals"
-            // data={homescreen_items.slice(0, 9)}
-            preview_items={homescreen_items.slice(0, 9)}
+            preview_items={homescreenItems.slice(0, 9)}
             color="red"
-            // icon="fire"
             navigation={navigation}
             welcome_text={welcome_text}
           />
           <ListPreview
             title="Recently Viewed"
-            // icon="clock"
             color="white"
-            // data={homescreen_items.slice(9, 18)}
-            preview_items={homescreen_items.slice(9, 18)}
+            preview_items={homescreenItems.slice(9, 18)}
             navigation={navigation}
             welcome_text={welcome_text}
           />
           <ListPreview
             title="Suggested"
-            // icon="thumb-up"
             color="lightblue"
-            // data={homescreen_items.slice(18, 27)}
-            preview_items={homescreen_items.slice(18, 27)}
+            preview_items={homescreenItems.slice(18, 27)}
             navigation={navigation}
             welcome_text={welcome_text}
           />
           <ListPreview
             title="Top Trends"
-            // icon="thumb-up"
             color="lightblue"
-            // data={homescreen_items.slice(18, 27)}
-            preview_items={homescreen_items.slice(27, 36)}
+            preview_items={homescreenItems.slice(27, 36)}
             navigation={navigation}
             welcome_text={welcome_text}
           />
           <ListPreview
             title="Discounts"
-            // icon="thumb-up"
             color="lightblue"
-            // data={homescreen_items.slice(18, 27)}
-            preview_items={homescreen_items.slice(36, 45)}
+            preview_items={homescreenItems.slice(36, 45)}
             navigation={navigation}
             welcome_text={welcome_text}
           />
@@ -210,7 +190,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#151515",
-    // paddingHorizontal: "6%",
     rowGap: 30,
   },
 });
