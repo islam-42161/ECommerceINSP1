@@ -10,8 +10,7 @@ import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { AntDesign } from "@expo/vector-icons";
-import { Foundation } from "@expo/vector-icons";
+import { AntDesign, Foundation } from "@expo/vector-icons";
 const ITEM_WIDTH = 100;
 const { width } = Dimensions.get("window");
 const PreviewItem = ({ item, navigation }) => {

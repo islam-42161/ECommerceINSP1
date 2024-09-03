@@ -174,6 +174,13 @@ const Homescreen = ({ navigation, route }) => {
             navigation={navigation}
             welcome_text={welcome_text}
           />
+          <ListPreview
+            title="More"
+            color="lightblue"
+            preview_items={homescreenItems.slice(45, 54)}
+            navigation={navigation}
+            welcome_text={welcome_text}
+          />
         </Animated.ScrollView>
       ) : null}
 

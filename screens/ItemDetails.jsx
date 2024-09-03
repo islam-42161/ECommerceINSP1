@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { LinearGradient } from "expo-linear-gradient";
+import { Foundation } from "@expo/vector-icons";
 import ImageCarousel from "../components/ImageCarousel";
 import Animated, {
   useAnimatedRef,
@@ -88,13 +88,23 @@ const ItemDetails = ({ navigation, route }) => {
             </Text>
 
             {/* choice section */}
-            <View style={styles.choice}>
-              {item.colors === undefined ? null : (
-                <ColorPick
-                  colors={item.colors}
-                  backgroundColorAnimated={backgroundColorAnimated}
-                />
-              )}
+            <View style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              gap: 20
+            }}>
+
+              {/* price */}
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "700",
+                  letterSpacing: 0,
+                  color: "#1A1A1A",
+                }}
+              >
+                <Foundation name="dollar" style={styles.dollar} /> {item.price.toFixed(2)}
+              </Text>
               <View style={styles.addremoveCart}>
                 <AntDesign
                   name="minus"
@@ -123,20 +133,15 @@ const ItemDetails = ({ navigation, route }) => {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
+                gap: 20
               }}
             >
-              {/* price */}
-              <Text
-                style={{
-                  fontSize: 24,
-                  fontWeight: "700",
-                  letterSpacing: 0,
-                  color: "#1A1A1A",
-                }}
-              >
-                ${item.price.toFixed(2)}
-              </Text>
-
+              {item.colors === undefined ? null : (
+                <ColorPick
+                  colors={item.colors}
+                  backgroundColorAnimated={backgroundColorAnimated}
+                />
+              )}
               {/* cart button */}
 
               <Animated.Text
@@ -186,11 +191,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     letterSpacing: 0.5,
   },
-  choice: {
-    flexDirection: "row",
-    gap: 20,
-    justifyContent: "space-between",
-  },
   colorChoice: {
     flexDirection: "row",
   },
@@ -203,15 +203,16 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   addTOCartButton: {
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#1A1A1A",
     color: "white",
+    textAlign: "center",
     textAlignVertical: "center",
-    borderRadius: width / 8,
+    // borderRadius: width / 8,
+    borderRadius: 20,
     paddingVertical: 20,
     paddingHorizontal: 40,
     fontWeight: "500",
+    flex: 1,
   },
   headerBar: {
     flexDirection: "row",
@@ -236,4 +237,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     color: "white",
   },
+  dollar: {
+    fontSize: 24
+  }
 });
