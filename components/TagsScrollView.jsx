@@ -86,20 +86,7 @@ const Preloader = () => {
 };
 
 const TagsScrollView = ({
-  categories = [
-    "Newest",
-    "Popular",
-    "Men",
-    "Women",
-    "Kids",
-    "Electronics & Gadgets",
-    "Fashion & Apparel",
-    "Home & Decor",
-    "Health & Beauty",
-    "Sports & Fitness",
-    "Books & Stationery",
-    "Toys & Games",
-  ],
+  categories = [],
 }) => {
   const indicatorPosition = useSharedValue(0 + width * 0.06);
   const indicatorStyle = useAnimatedStyle(() => ({

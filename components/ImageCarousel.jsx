@@ -1,7 +1,7 @@
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, View } from "react-native";
 import React from "react";
 import { Image } from "expo-image";
-import { LinearGradient } from "expo-linear-gradient";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
@@ -18,6 +18,7 @@ const ImageCarousel = ({
   ],
   animatedScrollX,
   animatedRef,
+  navigation
 }) => {
   const placeholder_blurhash =
     "|6PZfSi_.AyE8^m+%gt,o~_3t7t7R*WBs,ofR-a#*0o#DgR4.Tt,ITVYZ~_3R*D%xt%MIpRj%0oJMcV@%itSI9R5x]tRbcIot7-:IoM{%LoeIVjuNHoft7M{RkxuozM{ae%1WBg4tRV@M{kCxuog?vWB9Et7-=NGM{xaae";
@@ -29,7 +30,7 @@ const ImageCarousel = ({
   });
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={styles.container}>
       <Animated.ScrollView
         horizontal
         pagingEnabled
@@ -52,7 +53,15 @@ const ImageCarousel = ({
           </View>
         ))}
       </Animated.ScrollView>
-    </View>
+      <MaterialCommunityIcons
+        name="arrow-expand"
+        onPress={() => navigation.navigate('gallery_carousel', {
+          images: images,
+          active_index: Math.round(animatedScrollX.value / width)
+        })}
+        style={[styles.button]}
+      />
+    </Animated.View>
   );
 };
 
@@ -73,6 +82,20 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
     // borderBottomLeftRadius: 20,
     // borderBottomRightRadius: 20,
+  },
+  button: {
+    width: 24 + 16,
+    height: 24 + 16,
+    padding: 8,
+    backgroundColor: "#151515",
+    textAlign: "center",
+    textAlignVertical: "center",
+    fontSize: 16,
+    borderRadius: 14,
+    color: "white",
+    position: 'absolute',
+    left: 10,
+    bottom: 10
   },
 
 });

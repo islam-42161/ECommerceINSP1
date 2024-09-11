@@ -65,6 +65,7 @@ const ItemDetails = ({ navigation, route }) => {
         animatedRef={imageCarouselRef}
         ambienceColor={backgroundColorAnimated}
         images={item.images}
+        navigation={navigation}
       />
       {/* </View> */}
       {/* Bottom Container */}
